@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_menu"
-        android:name="com.example.cafmealplanner.ui.home.HomeFragment"
+        android:name="com.example.cafmealplanner.ui.Menu.MenuFragment"
         android:label="@string/title_menu"
         tools:layout="@layout/fragment_menu" />
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.example.cafmealplanner.ui.dashboard.DashboardFragment"
+        android:name="com.example.cafmealplanner.ui.Schedule.ScheduleFragment"
         android:label="@string/title_schedule"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.cafmealplanner.ui.notifications.NotificationsFragment"
+        android:name="com.example.cafmealplanner.ui.Profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
