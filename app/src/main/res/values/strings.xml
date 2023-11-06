@@ -3,4 +3,8 @@
     <string name="title_menu">Menu</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_profile">Profile</string>
+    <string name="content_description_default">default image</string>
+    <string name="user_firstName">First Name</string>
+    <string name="user_lastName">Last Name</string>
+    <string name="section_mealPlan">Meal Plan</string>
 </resources>
