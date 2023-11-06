@@ -23,8 +23,8 @@ public class MenuFragment extends Fragment {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        menuViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        //final TextView textView = binding.textHome;
+       // menuViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
