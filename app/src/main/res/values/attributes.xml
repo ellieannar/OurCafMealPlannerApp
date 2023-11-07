@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="mealView">
+        <attr name="mealName" format="string"/>
+        <attr name="mealTags" format="string"/>
+        <attr name="exampleColor" format="string"/>
+        
+    </declare-styleable>
+
+
+</resources>

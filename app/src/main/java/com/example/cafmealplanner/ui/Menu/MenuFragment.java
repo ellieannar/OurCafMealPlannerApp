@@ -1,11 +1,12 @@
 package com.example.cafmealplanner.ui.Menu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.Calendar;
+import java.util.Vector;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
+import com.example.cafmealplanner.mealView;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -26,6 +29,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private Calendar cal = Calendar.getInstance();
     //Current actual date
     private Calendar now = Calendar.getInstance();
+    //testing custom class
 
 
 
@@ -41,6 +45,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 new ViewModelProvider(this).get(MenuViewModel.class);
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         return root;
     }
 
@@ -62,10 +67,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
-        label.setText(monthOfYear[month] + " " + day + ", " + year);
 
-        // TEMPORARY MEALS -------------------------------
+        // views to add meals to
+        LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
+        LinearLayout breakfastItem = new LinearLayout(getContext());
+        breakfastItem.setOrientation(LinearLayout.HORIZONTAL);
 
+        //meals
+        Vector<mealView> meals = new Vector<mealView>(5);
+        meals.add(new mealView(getContext()));
+        meals.add(new mealView(getContext()));
+        meals.add(new mealView(getContext()));
+        meals.add(new mealView(getContext()));
+        meals.add(new mealView(getContext()));
+        for (int i = 0; i < meals.size(); i++) {
+            meals.get(i).setMealName("SAMPLE MEAL " + i);
+            Log.d("CREATED", "mealname: " + i);
+            breakfastItem.addView(meals.get(i));
+        }
+
+        breakfastLinearLayout.addView(breakfastItem);
     }
 
 
