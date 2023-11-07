@@ -3,6 +3,7 @@
     <string name="title_menu">Menu</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_profile">Profile</string>
+    <string name = "current_date">November 5, 2023</string>
     <string name="content_description_default">default image</string>
     <string name="user_firstName">First Name</string>
     <string name="user_lastName">Last Name</string>
