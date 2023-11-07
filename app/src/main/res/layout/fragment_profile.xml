@@ -64,7 +64,7 @@
         android:layout_marginEnd="411dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="298dp"
+        app:layout_constraintGuide_begin="299dp"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
