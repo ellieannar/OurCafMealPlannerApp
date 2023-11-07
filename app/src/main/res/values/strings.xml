@@ -8,4 +8,13 @@
     <string name="user_firstName">First Name</string>
     <string name="user_lastName">Last Name</string>
     <string name="section_mealPlan">Meal Plan</string>
+    <string name = "breakfast_text">Breakfast</string>
+    <string name = "lunch_text">Lunch</string>
+    <string name = "dinner_text">Dinner</string>
+    <string name="dinner_option">Sesame Pork Stir Fry Rice</string>
+    <string name="vegan">v</string>
+    <string name="gluten_free">gf</string>
+    <string name="humane">H</string>
+    <string name="farm_fresh">ff</string>
+    <string name="locally_crafted">lc</string>
 </resources>
