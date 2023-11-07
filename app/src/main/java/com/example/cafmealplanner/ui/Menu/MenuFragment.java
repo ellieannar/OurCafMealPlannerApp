@@ -33,6 +33,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
 
 
+
     //Months indexed
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
@@ -70,23 +71,46 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // views to add meals to
         LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
-        LinearLayout breakfastItem = new LinearLayout(getContext());
-        breakfastItem.setOrientation(LinearLayout.HORIZONTAL);
+        LinearLayout lunchLinearLayout = (LinearLayout)getView().findViewById(R.id.lunchLinearLayout);
+        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
+
+
+        LinearLayout breakfastItems = new LinearLayout(getContext());
+        breakfastItems.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout lunchItems = new LinearLayout(getContext());
+        lunchItems.setOrientation(LinearLayout.VERTICAL);
+
 
         //meals
-        Vector<mealView> meals = new Vector<mealView>(5);
-        meals.add(new mealView(getContext()));
-        meals.add(new mealView(getContext()));
-        meals.add(new mealView(getContext()));
-        meals.add(new mealView(getContext()));
-        meals.add(new mealView(getContext()));
-        for (int i = 0; i < meals.size(); i++) {
-            meals.get(i).setMealName("SAMPLE MEAL " + i);
-            Log.d("CREATED", "mealname: " + i);
-            breakfastItem.addView(meals.get(i));
+        Vector<mealView> breakfastMeals = new Vector<mealView>(5);
+        Vector<mealView> lunchMeals = new Vector<mealView>(5);
+        Vector<mealView> dinnerMeals = new Vector<mealView>(5);
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+
+        for (int i = 0; i < breakfastMeals.size(); i++) {
+            breakfastMeals.get(i).setMealName("SAMPLE MEAL " + i);
+            lunchMeals.get(i).setMealName("SAMPLE MEAL " + i);
+            breakfastItems.addView(breakfastMeals.get(i));
+            lunchItems.addView(lunchMeals.get(i));
         }
 
-        breakfastLinearLayout.addView(breakfastItem);
+        breakfastLinearLayout.addView(breakfastItems);
+        lunchLinearLayout.addView(lunchItems);
     }
 
 
