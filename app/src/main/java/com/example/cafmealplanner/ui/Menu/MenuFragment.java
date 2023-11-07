@@ -1,11 +1,12 @@
 package com.example.cafmealplanner.ui.Menu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.Calendar;
+import java.util.Vector;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
+import com.example.cafmealplanner.mealView;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -26,6 +29,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private Calendar cal = Calendar.getInstance();
     //Current actual date
     private Calendar now = Calendar.getInstance();
+    //testing custom class
+
 
 
 
@@ -41,6 +46,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 new ViewModelProvider(this).get(MenuViewModel.class);
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         return root;
     }
 
@@ -62,10 +68,49 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
-        label.setText(monthOfYear[month] + " " + day + ", " + year);
 
-        // TEMPORARY MEALS -------------------------------
+        // views to add meals to
+        LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
+        LinearLayout lunchLinearLayout = (LinearLayout)getView().findViewById(R.id.lunchLinearLayout);
+        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
 
+
+        LinearLayout breakfastItems = new LinearLayout(getContext());
+        breakfastItems.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout lunchItems = new LinearLayout(getContext());
+        lunchItems.setOrientation(LinearLayout.VERTICAL);
+
+
+        //meals
+        Vector<mealView> breakfastMeals = new Vector<mealView>(5);
+        Vector<mealView> lunchMeals = new Vector<mealView>(5);
+        Vector<mealView> dinnerMeals = new Vector<mealView>(5);
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        breakfastMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        lunchMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+        dinnerMeals.add(new mealView(getContext()));
+
+        for (int i = 0; i < breakfastMeals.size(); i++) {
+            breakfastMeals.get(i).setMealName("SAMPLE MEAL " + i);
+            lunchMeals.get(i).setMealName("SAMPLE MEAL " + i);
+            breakfastItems.addView(breakfastMeals.get(i));
+            lunchItems.addView(lunchMeals.get(i));
+        }
+
+        breakfastLinearLayout.addView(breakfastItems);
+        lunchLinearLayout.addView(lunchItems);
     }
 
 
