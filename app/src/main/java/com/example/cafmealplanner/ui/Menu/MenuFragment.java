@@ -63,6 +63,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
         label.setText(monthOfYear[month] + " " + day + ", " + year);
+
+        // TEMPORARY MEALS -------------------------------
+
     }
 
 
