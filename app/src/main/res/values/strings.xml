@@ -12,5 +12,7 @@
     <string name="wdy">Wednesday</string>
     <string name="thdy">Thursday</string>
     <string name="fdy">Friday</string>
-
+    <string name="bk">Breakfast</string>
+    <string name="lch">Lunch</string>
+    <string name="dnr">Dinner</string>
 </resources>
