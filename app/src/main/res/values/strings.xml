@@ -3,4 +3,14 @@
     <string name="title_menu">Menu</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_profile">Profile</string>
+
+
+    # Strings for schedule
+
+    <string name="mdy">Monday</string>
+    <string name="tdy">Tuesday</string>
+    <string name="wdy">Wednesday</string>
+    <string name="thdy">Thursday</string>
+    <string name="fdy">Friday</string>
+
 </resources>
