@@ -69,6 +69,20 @@
         app:layout_constraintTop_toBottomOf="@+id/dateTextView"
     />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/menuScrollView"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/horizontalLine"
+        >
+    <!-- Begin elements for scroll view -->
+    <LinearLayout
+        android:id="@+id/scrollViewLinearLayout"
+        app:layout_constraintTop_toBottomOf="@id/horizontalLine"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
     <!-- Breakfast textview -->
     <TextView
         android:id="@+id/breakfastTextView"
@@ -95,19 +109,19 @@
 
 
     <!-- Lunch textview -->
-    <TextView
-        android:id="@+id/lunchTextView"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:text="@string/lunch_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/breakfastLinearLayout"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="30dp"
-        android:textColor="@color/black"
+        <TextView
+            android:id="@+id/lunchTextView"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="@string/lunch_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/breakfastLinearLayout"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="30dp"
+            android:textColor="@color/black"
 
-    />
+            />
     <LinearLayout
         android:id = "@+id/lunchLinearLayout"
         android:layout_width="match_parent"
@@ -120,31 +134,32 @@
 
 
     <!-- Dinner textview -->
-    <TextView
-        android:id="@+id/dinnerTextView"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:text="@string/dinner_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lunchLinearLayout"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
-        android:textSize="30dp"
-        android:textColor="@color/black"
+        <TextView
+            android:id="@+id/dinnerTextView"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:text="@string/dinner_text"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lunchLinearLayout"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:textSize="30dp"
+            android:textColor="@color/black"
 
-    />
-    <LinearLayout
-        android:id = "@+id/dinnerLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dinnerTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical"/>
+            />
+        <LinearLayout
+            android:id = "@+id/dinnerLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/dinnerTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
 
 
-
-
+    </ScrollView>
 
 
 />
