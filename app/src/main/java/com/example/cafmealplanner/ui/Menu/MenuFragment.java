@@ -81,36 +81,37 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         LinearLayout lunchItems = new LinearLayout(getContext());
         lunchItems.setOrientation(LinearLayout.VERTICAL);
 
+        LinearLayout dinnerItems = new LinearLayout(getContext());
+        dinnerItems.setOrientation(LinearLayout.VERTICAL);
+
 
         //meals
         Vector<mealView> breakfastMeals = new Vector<mealView>(5);
         Vector<mealView> lunchMeals = new Vector<mealView>(5);
         Vector<mealView> dinnerMeals = new Vector<mealView>(5);
-        breakfastMeals.add(new mealView(getContext()));
-        breakfastMeals.add(new mealView(getContext()));
-        breakfastMeals.add(new mealView(getContext()));
-        breakfastMeals.add(new mealView(getContext()));
-        breakfastMeals.add(new mealView(getContext()));
-        lunchMeals.add(new mealView(getContext()));
-        lunchMeals.add(new mealView(getContext()));
-        lunchMeals.add(new mealView(getContext()));
-        lunchMeals.add(new mealView(getContext()));
-        lunchMeals.add(new mealView(getContext()));
-        dinnerMeals.add(new mealView(getContext()));
-        dinnerMeals.add(new mealView(getContext()));
-        dinnerMeals.add(new mealView(getContext()));
-        dinnerMeals.add(new mealView(getContext()));
-        dinnerMeals.add(new mealView(getContext()));
-
-        for (int i = 0; i < breakfastMeals.size(); i++) {
-            breakfastMeals.get(i).setMealName("SAMPLE MEAL " + i);
-            lunchMeals.get(i).setMealName("SAMPLE MEAL " + i);
-            breakfastItems.addView(breakfastMeals.get(i));
-            lunchItems.addView(lunchMeals.get(i));
+        for (int i = 0; i < 5; i++) {
+            breakfastMeals.add(new mealView(getContext()));
+            lunchMeals.add(new mealView(getContext()));
+            dinnerMeals.add(new mealView(getContext()));
         }
 
+
+
+        for (int i = 0; i < breakfastMeals.size(); i++) {
+            breakfastMeals.get(i).setMealName("TEST");
+            breakfastItems.addView(breakfastMeals.get(i));
+        }
+        for (int i = 0; i < lunchMeals.size(); i++) {
+            lunchMeals.get(i).setMealName("LUNCHES");
+            lunchItems.addView(lunchMeals.get(i));
+        }
+        for (int i = 0; i < dinnerMeals.size(); i++) {
+            dinnerMeals.get(i).setMealName("DIN-DIN");
+            dinnerItems.addView(dinnerMeals.get(i));
+        }
         breakfastLinearLayout.addView(breakfastItems);
         lunchLinearLayout.addView(lunchItems);
+        dinnerLinearLayout.addView(dinnerItems);
     }
 
 
