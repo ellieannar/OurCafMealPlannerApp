@@ -3,16 +3,26 @@
     <string name="title_menu">Menu</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_profile">Profile</string>
-
-
-    # Strings for schedule
-
-    <string name="mdy">Monday</string>
-    <string name="tdy">Tuesday</string>
-    <string name="wdy">Wednesday</string>
-    <string name="thdy">Thursday</string>
-    <string name="fdy">Friday</string>
-    <string name="bk">Breakfast</string>
-    <string name="lch">Lunch</string>
-    <string name="dnr">Dinner</string>
+    <string name = "current_date">November 5, 2023</string>
+    <string name="content_description_default">default image</string>
+    <string name="user_firstName">First Name</string>
+    <string name="user_lastName">Last Name</string>
+    <string name="section_mealPlan">Meal Plan</string>
+    <string name = "breakfast_text">Breakfast</string>
+    <string name = "lunch_text">Lunch</string>
+    <string name = "dinner_text">Dinner</string>
+    <string name="dinner_option">Sesame Pork Stir Fry Rice</string>
+    <string name="vegan">v</string>
+    <string name="gluten_free">gf</string>
+    <string name="humane">H</string>
+    <string name="farm_fresh">ff</string>
+    <string name="locally_crafted">lc</string>
+    <string name="dietary_restrictions">Dietary Restrictions</string>
+    <string name="fav_meals">My Favorite Meals</string>
+    <string name="edit">Edit</string>
+    <string-array
+        name="meal_plan">
+        <item
+            ></item>
+    </string-array>
 </resources>
