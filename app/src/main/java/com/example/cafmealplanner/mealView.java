@@ -74,8 +74,9 @@ public class mealView extends FrameLayout {
 
     public void addTag(TAG_TYPE tagType) {
         TextView t = new TextView(getContext());
-        t.setWidth(80);
-        t.setHeight(80);
+        t.setWidth(100);
+        t.setHeight(100);
+
         t.setGravity(Gravity.CENTER);
         t.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
         t.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners, null));

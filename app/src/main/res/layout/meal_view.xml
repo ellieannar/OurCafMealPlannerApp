@@ -11,7 +11,7 @@
         android:text="@string/dinner_option"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="20dp"
         android:textColor="@color/black"
         android:gravity="center_vertical"
@@ -25,10 +25,12 @@
     <LinearLayout
         android:id="@+id/tagsLinearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="200dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="250dp"
         android:orientation="horizontal"
+        android:divider="@drawable/more_info_button"
+        android:showDividers="middle"
         />
     <!--
     <TextView
@@ -48,6 +50,7 @@
         android:id="@+id/moreInfoButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
+
         android:background="@drawable/more_info_button"
         android:layout_marginLeft="350dp"
         />
