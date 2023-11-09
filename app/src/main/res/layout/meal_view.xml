@@ -17,10 +17,20 @@
         android:gravity="center_vertical"
 
         />
-    <!-- Tag -->
+
 
     <!-- More info button -->
 
+    <!-- Tag -->
+    <LinearLayout
+        android:id="@+id/tagsLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="200dp"
+        android:orientation="horizontal"
+        />
+    <!--
     <TextView
         android:id="@+id/tag"
         android:layout_width="25dp"
@@ -32,12 +42,13 @@
         android:text="@string/humane"
         android:layout_marginLeft="200dp"
         android:textColor="@color/white" />
+        -->
 
     <Button
         android:id="@+id/moreInfoButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:background="@drawable/rounded_corners"
+        android:background="@drawable/more_info_button"
         android:layout_marginLeft="350dp"
         />
 

@@ -103,6 +103,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         }
         for (int i = 0; i < lunchMeals.size(); i++) {
             lunchMeals.get(i).setMealName("LUNCHES");
+            lunchMeals.get(i).addTag(mealView.TAG_TYPE.VEGAN);
+            lunchMeals.get(i).addTag(mealView.TAG_TYPE.HUMANE);
             lunchItems.addView(lunchMeals.get(i));
         }
         for (int i = 0; i < dinnerMeals.size(); i++) {
