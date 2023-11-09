@@ -17,4 +17,12 @@
     <string name="humane">H</string>
     <string name="farm_fresh">ff</string>
     <string name="locally_crafted">lc</string>
+    <string name="dietary_restrictions">Dietary Restrictions</string>
+    <string name="fav_meals">My Favorite Meals</string>
+    <string name="edit">Edit</string>
+    <string-array
+        name="meal_plan">
+        <item
+            ></item>
+    </string-array>
 </resources>
