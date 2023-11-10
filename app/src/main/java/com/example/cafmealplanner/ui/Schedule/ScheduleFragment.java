@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
 
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -31,7 +32,7 @@ public class ScheduleFragment extends Fragment {
         binding = FragmentScheduleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textDashboard;
+        final TextView textView = binding.textView12;
         dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
