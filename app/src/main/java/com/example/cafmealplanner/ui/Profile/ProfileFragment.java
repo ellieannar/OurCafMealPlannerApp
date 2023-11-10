@@ -26,7 +26,7 @@ public class ProfileFragment extends Fragment {
 
         /*final TextView textView = binding.textView3;
         profileViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
-
+//branch commit
         return root;
     }
 
