@@ -11,12 +11,12 @@
     <!-- Default profile image -->
     <ImageView
         android:id="@+id/profileImage"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_height="150dp"
         android:scaleType="fitXY"
         android:contentDescription="@string/app_name"
         android:src="@drawable/profile_default_foreground"
-        android:paddingLeft="-30dp"
+        android:paddingLeft="-20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -56,14 +56,14 @@
         app:layout_constraintGuide_begin="299dp"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <!-- Horizontal Dividing Line -->
     -->
+    <!-- Line to separate meal plan section-->
     <View
         android:id="@+id/horizontalLine"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray"
-        android:layout_marginTop="-40dp"
+        android:layout_marginTop="-20dp"
         app:layout_constraintTop_toBottomOf="@+id/profileImage"
         />
 
@@ -74,18 +74,19 @@
         android:layout_height="wrap_content"
         android:text="@string/section_mealPlan"
         app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="20dp"
         app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
-    <!-- Guideline to separate dietary restrictions section -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline2"
+    <!-- Meal plan display label -->
+    <TextView
+        android:id="@+id/mealPlanDisplayView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="411dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="350dp"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="10 meals/week"
+        app:layout_constraintStart_toStartOf="parent"
+        android:paddingLeft="20dp"
+        app:layout_constraintTop_toBottomOf="@+id/mealPlanTextView" />
+
 
     <!-- Dietary restrictions section label -->
     <TextView
@@ -96,16 +97,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mealPlanTextView" />
 
-    <!-- Guideline to separate favorite meals -->
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="411dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_begin="404dp"
-        app:layout_constraintStart_toStartOf="parent" />
+
 
     <!-- Favorite meals section label -->
     <TextView
