@@ -63,7 +63,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
-        label.setText(monthOfYear[month] + " " + (day + 1) + ", " + year);
+        label.setText(monthOfYear[month] + " " + day + ", " + year);
 
         // views to add meals to
         LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
@@ -85,26 +85,90 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         Vector<mealView> breakfastMeals = new Vector<mealView>(5);
         Vector<mealView> lunchMeals = new Vector<mealView>(5);
         Vector<mealView> dinnerMeals = new Vector<mealView>(5);
-        for (int i = 0; i < 5; i++) {
-            breakfastMeals.add(new mealView(getContext()));
-            lunchMeals.add(new mealView(getContext()));
-            dinnerMeals.add(new mealView(getContext()));
-        }
+
+        // Using meals offered by caf on 11/10/2023
+
+        //breakfast items
+        mealView temp = new mealView(getContext());
+        temp.setMealName("quick oats");
+        temp.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
+        temp.addTag(mealView.TAG_TYPE.VEGAN);
+        breakfastMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("hot breakfast bar");
+        temp.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
+        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+        breakfastMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("Biola's broken egg bar");
+        temp.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
+        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+        breakfastMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("biscuit and gravy");
+        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
+        temp.addTag(mealView.TAG_TYPE.HUMANE);
+        breakfastMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("breakfast pastries");
+        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
+        temp.addTag(mealView.TAG_TYPE.LOCALLY_CRAFTED);
+        breakfastMeals.add(temp);
 
 
+        //lunch items
+        temp = new mealView(getContext());
+        temp.setMealName("clam chowder");
+        temp.addTag(mealView.TAG_TYPE.SEAFOOD);
+        lunchMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("baked teriyaki chicken leg");
+        temp.addTag(mealView.TAG_TYPE.HUMANE);
+        lunchMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("Biola's classic daily house-made pizza");
+        lunchMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("spinach and artichoke pizza");
+        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+        lunchMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("sugar rush");
+        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
+        lunchMeals.add(temp);
 
+        //dinner items
+        temp = new mealView(getContext());
+        temp.setMealName("clam chowder");
+        temp.addTag(mealView.TAG_TYPE.SEAFOOD);
+        dinnerMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("italian beef stew");
+        temp.addTag(mealView.TAG_TYPE.HUMANE);
+        dinnerMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("classic cheese burger");
+        temp.addTag(mealView.TAG_TYPE.HUMANE);
+        dinnerMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("Biola's classic daily house-made pizza");
+        dinnerMeals.add(temp);
+        temp = new mealView(getContext());
+        temp.setMealName("sugar rush");
+        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
+        dinnerMeals.add(temp);
+
+        // add meals to view
         for (int i = 0; i < breakfastMeals.size(); i++) {
-            breakfastMeals.get(i).setMealName("TEST");
             breakfastItems.addView(breakfastMeals.get(i));
         }
         for (int i = 0; i < lunchMeals.size(); i++) {
-            lunchMeals.get(i).setMealName("LUNCHES");
-            lunchMeals.get(i).addTag(mealView.TAG_TYPE.VEGAN);
-            lunchMeals.get(i).addTag(mealView.TAG_TYPE.HUMANE);
             lunchItems.addView(lunchMeals.get(i));
         }
         for (int i = 0; i < dinnerMeals.size(); i++) {
-            dinnerMeals.get(i).setMealName("DIN-DIN");
             dinnerItems.addView(dinnerMeals.get(i));
         }
         breakfastLinearLayout.addView(breakfastItems);
@@ -127,7 +191,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             month = cal.get(Calendar.MONTH);
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
-            label.setText(monthOfYear[month] + " " + (day + 1) + ", " + year);
+            label.setText(monthOfYear[month] + " " + day + ", " + year);
         } else if (v == getView().findViewById(R.id.backDayButton)) {
             //move back one day
             cal.add(Calendar.DAY_OF_YEAR, -1);
@@ -136,7 +200,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
             //display
-            label.setText(monthOfYear[month] + " " + (day+1) + ", " + year);
+            label.setText(monthOfYear[month] + " " + day + ", " + year);
         }
 
 
