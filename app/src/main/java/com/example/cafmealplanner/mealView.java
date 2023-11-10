@@ -76,7 +76,7 @@ public class mealView extends FrameLayout {
         TextView t = new TextView(getContext());
         t.setWidth(100);
         t.setHeight(100);
-
+        t.setTextSize(20);
         t.setGravity(Gravity.CENTER);
         t.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
         t.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners, null));
@@ -84,13 +84,23 @@ public class mealView extends FrameLayout {
         switch (tagType){
             case VEGAN:
                 t.setText("v");
-                t.setTextSize(20);
                 t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.green, null));
                 break;
             case HUMANE:
-                t.setText("H");
-                t.setTextSize(20);
+                t.setText("h");
                 t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.lightBlue, null));
+                break;
+            case FARM_FRESH:
+                t.setText("ff");
+                t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.pink, null));
+                break;
+            case GLUTEN_FREE:
+                t.setText("gf");
+                t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.yellow, null));
+                break;
+            case LOCALLY_CRAFTED:
+                t.setText("lc");
+                t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkBlue, null));
                 break;
         }
 
