@@ -25,4 +25,7 @@
         <item
             ></item>
     </string-array>
+
+    <!--Test strings 4 meal info page-->
+    <string name="view_meal">Go To Meal Info</string>
 </resources>
