@@ -3,11 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/mealViewFrameLayout">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="50dp">
 
-    <!-- Title of food -->
 
 
     <!-- More info button -->
@@ -23,26 +19,30 @@
         android:textColor="@color/black"
 
         />
-<!-- Tags -->
+
+
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:gravity="right"
+    >
+    <!-- Tags -->
     <LinearLayout
         android:id="@+id/tagsLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:paddingLeft="50dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         />
-
-
-</LinearLayout>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/moreInfoButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
+
         android:background="@drawable/more_info_button"
-        android:layout_marginLeft="360dp"
          />
+</LinearLayout>
     <!-- Horizontal dividing line after food item -->
     <View
         android:id="@+id/menuItemDivider"
@@ -54,3 +54,65 @@
         />
 
 </FrameLayout>
+
+
+
+    <!--
+        <?xml version="1.0" encoding="utf-8"?>
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:id="@+id/mealViewFrameLayout">
+
+
+
+
+
+    <TextView
+        android:id="@+id/foodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="10dp"
+        android:text="@string/dinner_option"
+        android:textColor="@color/black"
+
+        />
+
+    <LinearLayout
+        android:id="@+id/tagsLinearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:paddingLeft="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/moreInfoButton"
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/moreInfoButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/more_info_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <View
+        android:id="@+id/menuItemDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"
+        android:layout_marginLeft="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+
+        />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    -->

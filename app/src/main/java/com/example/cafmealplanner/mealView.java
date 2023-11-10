@@ -20,7 +20,7 @@ public class mealView extends FrameLayout {
 
     public enum TAG_TYPE {
         VEGAN, GLUTEN_FREE, HUMANE, FARM_FRESH,
-        LOCALLY_CRAFTED
+        LOCALLY_CRAFTED, VEGETARIAN, SEAFOOD
     }
 
 
@@ -83,7 +83,7 @@ public class mealView extends FrameLayout {
 
         switch (tagType){
             case VEGAN:
-                t.setText("v");
+                t.setText("vg");
                 t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.green, null));
                 break;
             case HUMANE:
@@ -102,12 +102,24 @@ public class mealView extends FrameLayout {
                 t.setText("lc");
                 t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkBlue, null));
                 break;
+            case VEGETARIAN:
+                t.setText("v");
+                t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkGreen, null));
+                break;
+            case SEAFOOD:
+                t.setText("s");
+                t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkPink, null));
+                break;
         }
 
         tagsLinearLayout.addView(t);
 
     }
 
+
+    public String getFoodTitle() {
+        return (String) nameOfMealTextView.getText() ;
+    }
 
 
 
