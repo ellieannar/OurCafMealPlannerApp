@@ -27,17 +27,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     //Local Calendar for current (viewed) date
     private Calendar cal = Calendar.getInstance();
+
     //Current actual date
     private Calendar now = Calendar.getInstance();
-    //testing custom class
-
-
-
 
     //Months indexed
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
-
 
     //Default on create view
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -68,6 +63,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
+        label.setText(monthOfYear[month] + " " + (day + 1) + ", " + year);
 
         // views to add meals to
         LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
@@ -131,7 +127,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             month = cal.get(Calendar.MONTH);
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
-            label.setText(monthOfYear[month] + " " + day + ", " + year);
+            label.setText(monthOfYear[month] + " " + (day + 1) + ", " + year);
         } else if (v == getView().findViewById(R.id.backDayButton)) {
             //move back one day
             cal.add(Calendar.DAY_OF_YEAR, -1);
@@ -140,7 +136,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
             //display
-            label.setText(monthOfYear[month] + " " + day + ", " + year);
+            label.setText(monthOfYear[month] + " " + (day+1) + ", " + year);
         }
 
 
