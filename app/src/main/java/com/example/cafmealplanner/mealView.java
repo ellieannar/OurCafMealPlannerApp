@@ -49,7 +49,7 @@ public class mealView extends FrameLayout {
     }
 
     private void initMealView(Context context) {
-        //LayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
         LayoutInflater.from(context).inflate(R.layout.meal_view, this, true);
         frameLayout = findViewById(R.id.mealViewFrameLayout);
         nameOfMealTextView = findViewById(R.id.foodTitle);
@@ -66,12 +66,14 @@ public class mealView extends FrameLayout {
 
     }
 
-
+    //allows caller to set the meal name
     public void setMealName(String name) {
         nameOfMealTextView = findViewById(R.id.foodTitle);
         nameOfMealTextView.setText(name);
     }
 
+
+    //allows caller to create a tag for meal item
     public void addTag(TAG_TYPE tagType) {
         TextView t = new TextView(getContext());
         t.setWidth(100);
@@ -116,7 +118,7 @@ public class mealView extends FrameLayout {
 
     }
 
-
+    //returns food title to caller
     public String getFoodTitle() {
         return (String) nameOfMealTextView.getText() ;
     }
