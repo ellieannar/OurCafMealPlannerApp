@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -12,15 +14,15 @@ import com.example.cafmealplanner.R;
 
 import java.util.Vector;
 
-public class dietaryRestriction extends FrameLayout {
+public class dietaryRestriction extends LinearLayout {
 
     enum restrictionType {
         GLUTEN_FREE, DAIRY_FREE, VEGETARIAN, VEGAN, SEAFOOD
     }
 
-    private FrameLayout frameLayout;
-    private CheckBox restriction;
-    private Vector<String> allDietaryRestrictions;
+    private LinearLayout linearLayout;
+    private CheckBox restrictionCheckBox;
+    private TextView restrictionTextView;
 
     public dietaryRestriction(@NonNull Context context) {
         super(context);
@@ -43,52 +45,46 @@ public class dietaryRestriction extends FrameLayout {
     private void initDietaryRestriction(Context context) {
         //LayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LayoutInflater.from(context).inflate(R.layout.dietary_restriction, this, true);
-        frameLayout = findViewById(R.id.dietaryRestrictionFrameLayout);
-        restriction = findViewById(R.id.singleRestriction);
-
+        linearLayout = findViewById(R.id.dietaryRestrictionsLinearLayout);
+        restrictionCheckBox = findViewById(R.id.restrictionCheckBox);
+        restrictionTextView = findViewById(R.id.restrictionTextView);
     }
 
-
-    private void addRestriction(restrictionType t) {
-        switch (t){
-            case GLUTEN_FREE:
-                allDietaryRestrictions.add("Gluten Free");
-                break;
-            case DAIRY_FREE:
-                allDietaryRestrictions.add("Dairy Free");
-                break;
-            case VEGETARIAN:
-                allDietaryRestrictions.add("Vegetarian");
-                break;
-            case VEGAN:
-                allDietaryRestrictions.add("Vegan");
-                break;
-            case SEAFOOD:
-                allDietaryRestrictions.add("Seafood");
-                break;
-        }
-
-
-    }
 
     public void setRestriction(restrictionType r) {
         switch (r){
             case GLUTEN_FREE:
-                restriction.setText("Gluten Free");
+                restrictionTextView.setText("Gluten Free");
                 break;
             case DAIRY_FREE:
-                restriction.setText("Dairy Free");
+                restrictionTextView.setText("Dairy Free");
                 break;
             case VEGETARIAN:
-                restriction.setText("Vegetarian");
+                restrictionTextView.setText("Vegetarian");
                 break;
             case VEGAN:
-                restriction.setText("Vegan");
+                restrictionTextView.setText("Vegan");
                 break;
             case SEAFOOD:
-                restriction.setText("No Seafood");
+                restrictionTextView.setText("No Seafood");
                 break;
         }
+    }
+
+    public String getRestriction() {
+        return (String) restrictionTextView.getText();
+    }
+
+    public Boolean restrictionIsEnabled() {
+        return restrictionCheckBox.isChecked();
+    }
+
+    public void hideCheckbox() {
+        restrictionCheckBox.setVisibility(INVISIBLE);
+    }
+
+    public void showCheckbox() {
+        restrictionCheckBox.setVisibility(VISIBLE);
     }
 
 }

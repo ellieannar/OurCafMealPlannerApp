@@ -17,12 +17,14 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentProfileBinding;
 
+import java.util.Vector;
+
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private FragmentProfileBinding binding;
 
     private Boolean editMode = false;
-
+    public dietaryRestriction[] allDietaryRestrictions = new dietaryRestriction[5];
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -44,6 +46,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         LinearLayout dietaryLinearLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
 
+        //set up dietary restriction array
+        dietaryRestriction r = new dietaryRestriction(getContext());
+        r.setRestriction(dietaryRestriction.restrictionType.GLUTEN_FREE);
+        allDietaryRestrictions[0] = r;
+        r = new dietaryRestriction(getContext());
+        r.setRestriction(dietaryRestriction.restrictionType.DAIRY_FREE);
+        allDietaryRestrictions[1] = r;
+        r = new dietaryRestriction(getContext());
+        r.setRestriction(dietaryRestriction.restrictionType.VEGETARIAN);
+        allDietaryRestrictions[2] = r;
+        r = new dietaryRestriction(getContext());
+        r.setRestriction(dietaryRestriction.restrictionType.VEGAN);
+        allDietaryRestrictions[3] = r;
+        r = new dietaryRestriction(getContext());
+        r.setRestriction(dietaryRestriction.restrictionType.SEAFOOD);
+        allDietaryRestrictions[4] = r;
+
         if (editMode == true) {
             editModeTurnedOn();
         } else {
@@ -57,9 +76,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         Button editButton = getView().findViewById(R.id.profileEditButton);
         if (v == editButton && !editMode) {
             editMode = true;
+            editButton.setText("Done");
             editModeTurnedOn();
         } else if (v == editButton) {
             editMode = false;
+            editButton.setText("Edit");
             editModeTurnedOff();
         }
 
@@ -68,36 +89,41 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
 
     private void editModeTurnedOn() {
-        Log.d("ON", "editModeTurnedOn");
         displayAllDietaryRestrictions();
 
     }
 
     private void editModeTurnedOff() {
-        Log.d("OFF", "editModeTurnedOff");
+        displaySelectedRestrictions();
     }
 
 
 
 
     private void displayAllDietaryRestrictions() {
-        LinearLayout dietaryLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
 
-        dietaryRestriction r = new dietaryRestriction(getContext());
-        r.setRestriction(dietaryRestriction.restrictionType.GLUTEN_FREE);
-        dietaryLayout.addView(r);
-        r = new dietaryRestriction(getContext());
-        r.setRestriction(dietaryRestriction.restrictionType.DAIRY_FREE);
-        dietaryLayout.addView(r);
-        r = new dietaryRestriction(getContext());
-        r.setRestriction(dietaryRestriction.restrictionType.VEGETARIAN);
-        dietaryLayout.addView(r);
-        r = new dietaryRestriction(getContext());
-        r.setRestriction(dietaryRestriction.restrictionType.VEGAN);
-        dietaryLayout.addView(r);
-        r = new dietaryRestriction(getContext());
-        r.setRestriction(dietaryRestriction.restrictionType.SEAFOOD);
-        dietaryLayout.addView(r);
+        LinearLayout dietaryLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
+        dietaryLayout.removeAllViews();
+
+        for (int i = 0; i < 5; i++) {
+            allDietaryRestrictions[i].showCheckbox();
+            dietaryLayout.addView(allDietaryRestrictions[i]);
+        }
+
+    }
+
+    private void displaySelectedRestrictions() {
+
+        LinearLayout dietaryLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
+        dietaryLayout.removeAllViews();
+
+        for (int i = 0; i < 5; i++) {
+            if (allDietaryRestrictions[i].restrictionIsEnabled()) {
+                allDietaryRestrictions[i].hideCheckbox();
+                dietaryLayout.addView(allDietaryRestrictions[i]);
+
+            }
+        }
 
     }
 

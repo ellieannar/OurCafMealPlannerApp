@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:id="@+id/dietaryRestrictionFrameLayout">
+    android:id="@+id/dietaryRestrictionLinearLayout">
 
-    <CheckBox android:id="@+id/singleRestriction"
+    <CheckBox android:id="@+id/restrictionCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dietary_restrictions" />
-</FrameLayout>
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/restrictionTextView"
+        android:text="@string/dietary_restrictions"
+
+
+        />
+    </LinearLayout>
+
+
