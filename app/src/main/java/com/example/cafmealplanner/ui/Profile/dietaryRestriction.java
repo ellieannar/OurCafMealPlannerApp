@@ -43,14 +43,13 @@ public class dietaryRestriction extends LinearLayout {
     }
 
     private void initDietaryRestriction(Context context) {
-        //LayoutParams = LayoutParams(LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         LayoutInflater.from(context).inflate(R.layout.dietary_restriction, this, true);
         linearLayout = findViewById(R.id.dietaryRestrictionsLinearLayout);
         restrictionCheckBox = findViewById(R.id.restrictionCheckBox);
         restrictionTextView = findViewById(R.id.restrictionTextView);
     }
 
-
+    // funtion that can be called to set the restriction type
     public void setRestriction(restrictionType r) {
         switch (r){
             case GLUTEN_FREE:
@@ -71,18 +70,22 @@ public class dietaryRestriction extends LinearLayout {
         }
     }
 
+    //return the restriction type
     public String getRestriction() {
         return (String) restrictionTextView.getText();
     }
 
+
+    // return if the checkbox is selected or not
     public Boolean restrictionIsEnabled() {
         return restrictionCheckBox.isChecked();
     }
 
+    //allows caller to hide checkbox if desired - making non-editable
     public void hideCheckbox() {
         restrictionCheckBox.setVisibility(INVISIBLE);
     }
-
+    //allows caller to show checkbox - enable editing
     public void showCheckbox() {
         restrictionCheckBox.setVisibility(VISIBLE);
     }

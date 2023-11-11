@@ -4,18 +4,20 @@
     android:layout_height="wrap_content"
     android:id="@+id/dietaryRestrictionLinearLayout">
 
+    <!-- Checkbox allowing enable/disable -->
     <CheckBox android:id="@+id/restrictionCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
+    <!-- Textview displaying restriction type -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/restrictionTextView"
         android:text="@string/dietary_restrictions"
-
-
         />
-    </LinearLayout>
+
+</LinearLayout>
 
 

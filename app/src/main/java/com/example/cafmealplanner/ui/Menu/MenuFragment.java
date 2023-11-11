@@ -45,6 +45,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         return root;
     }
 
+
     //function for when view is created
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         //Back day and forward day buttons
@@ -65,12 +66,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         TextView label = getView().findViewById(R.id.dateTextView);
         label.setText(monthOfYear[month] + " " + day + ", " + year);
 
-        // views to add meals to
+        // views to add meal subview meals to
         LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
         LinearLayout lunchLinearLayout = (LinearLayout)getView().findViewById(R.id.lunchLinearLayout);
         LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
 
-
+        //subviews to add each meal to
         LinearLayout breakfastItems = new LinearLayout(getContext());
         breakfastItems.setOrientation(LinearLayout.VERTICAL);
 
@@ -81,7 +82,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
 
-        //meals
+        //vector of meal items
         Vector<mealView> breakfastMeals = new Vector<mealView>(5);
         Vector<mealView> lunchMeals = new Vector<mealView>(5);
         Vector<mealView> dinnerMeals = new Vector<mealView>(5);
