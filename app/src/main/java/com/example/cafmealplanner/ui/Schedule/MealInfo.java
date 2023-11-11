@@ -1,6 +1,5 @@
 package com.example.cafmealplanner.ui.Schedule;
 
-import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.cafmealplanner.R;
-import com.example.cafmealplanner.mealView;
+import com.example.cafmealplanner.ui.Menu.mealView;
 
 import android.widget.ImageButton;
 import android.content.Intent;

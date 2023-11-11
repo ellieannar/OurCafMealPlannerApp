@@ -22,7 +22,7 @@
         />
 
     <!-- Text area for user first name -->
-    <TextView
+    <EditText
         android:id="@+id/firstNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
          />
 
     <!-- Text area for user last name -->
-    <TextView
+    <EditText
         android:id="@+id/lastNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

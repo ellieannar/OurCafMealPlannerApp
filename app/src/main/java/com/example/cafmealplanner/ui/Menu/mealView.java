@@ -1,4 +1,4 @@
-package com.example.cafmealplanner;
+package com.example.cafmealplanner.ui.Menu;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
+
+import com.example.cafmealplanner.R;
 
 import java.util.ArrayList;
 

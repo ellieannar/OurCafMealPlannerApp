@@ -1,11 +1,13 @@
 package com.example.cafmealplanner.ui.Profile;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -73,6 +75,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         allDietaryRestrictions[4] = r;
 
 
+        EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+
+        hideEditText(firstName);
+        hideEditText(lastName);
+
+
 
     }
 
@@ -98,13 +107,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private void editModeTurnedOn() {
         displayAllDietaryRestrictions();
         showSpinner();
+        EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        EditText lastName = getView().findViewById(R.id.lastNameTextView);
 
+        showEditText(firstName);
+        showEditText(lastName);
 
     }
     //call corresponding functions when edit mode turned off
     private void editModeTurnedOff() {
         displaySelectedRestrictions();
         hideSpinner();
+        EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+
+        hideEditText(firstName);
+        hideEditText(lastName);
     }
 
 
@@ -158,6 +176,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
 
 
+    }
+
+    void hideEditText(EditText e) {
+        e.setFocusable(false);
+        e.setEnabled(false);
+        e.setCursorVisible(false);
+        e.setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    void showEditText(EditText e) {
+        e.setEnabled(true);
+        e.setCursorVisible(true);
+        e.setFocusableInTouchMode(true);
     }
 
 
