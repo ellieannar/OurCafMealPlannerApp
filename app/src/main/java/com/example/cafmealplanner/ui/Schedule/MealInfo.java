@@ -47,7 +47,7 @@ public class MealInfo extends Fragment {
             dinnerMeals.add(new mealView(getContext()));
         }
 
-        for (int i = 0; i < dinnerMeals.size(); i++) {
+        for (int i = 0; i < dinnerMeals.size(); i++) { // All the food options are pasta for some reason
             dinnerMeals.get(i).setMealName("PASTA");
             dinnerItems.addView(dinnerMeals.get(i));
         }

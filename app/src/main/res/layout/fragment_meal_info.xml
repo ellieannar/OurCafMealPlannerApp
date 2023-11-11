@@ -31,9 +31,9 @@
         android:id="@+id/meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="160dp"
-        android:layout_marginBottom="595dp"
-        android:text="@string/breakfast_text"
+        android:layout_marginEnd="188dp"
+        android:layout_marginBottom="592dp"
+        android:text="@string/dinner_text"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
