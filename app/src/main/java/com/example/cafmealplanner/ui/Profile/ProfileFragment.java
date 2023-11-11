@@ -179,6 +179,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     void hideEditText(EditText e) {
+        if (e.getText().toString().matches("")) {
+            e.setText("Name");
+        }
         e.setFocusable(false);
         e.setEnabled(false);
         e.setCursorVisible(false);
