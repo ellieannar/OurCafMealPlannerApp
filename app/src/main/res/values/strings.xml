@@ -26,6 +26,7 @@
             ></item>
     </string-array>
 
-    <!--Test strings 4 meal info page-->
-    <string name="view_meal">Go To Meal Info</string>
+    <string name="location">Home Cooking</string>
+    <string name="rate_this">Submit</string>
+    <string name="personal_rating">Your Rating:</string>
 </resources>
