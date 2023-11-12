@@ -1,6 +1,7 @@
 package com.example.cafmealplanner.ui.Schedule;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,11 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     private FragmentScheduleBinding binding;
+    private mealButton sundayButtons[] = new mealButton[3];
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,6 +43,8 @@ public class ScheduleFragment extends Fragment {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         setupLinearLayouts();
+        Button editButton = view.findViewById(R.id.edit_schedule);
+        editButton.setOnClickListener(this);
 
     }
 
@@ -53,6 +58,7 @@ public class ScheduleFragment extends Fragment {
         m.setDay(mealButton.dayOfWeek.SUNDAY);
         m.setMeal(mealButton.mealTime.BREAKFAST);
         m.setFill(mealButton.buttonSelection.EMPTY);
+        sundayButtons[0] = m;
         day.addView(m);
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.SUNDAY);
@@ -175,14 +181,24 @@ public class ScheduleFragment extends Fragment {
 
     }
 
-/*
+
+    //click handler
     public void onClick(View v) {
-        if (v == getView().findViewById(R.id.goToMealInfo)) {
-            // If the button is clicked, change fragments
-            Fragment fragment = new MealInfo();
-            getParentFragmentManager().beginTransaction().replace(this, fragment).commit();
+        Fragment f;
+        Button b = getView().findViewById(R.id.edit_schedule);
+        if (v == b) {
+            f = new MealInfo();
+            replaceFragment(f);
         }
-    }*/
+    }
+
+
+    public void replaceFragment(Fragment f) {
+        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+        transaction.replace(R.id.nav_host_fragment_activity_main, f);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 
 
     @Override

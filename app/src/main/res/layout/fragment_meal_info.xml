@@ -37,6 +37,14 @@
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/meal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:orientation="vertical"
+        android:id="@+id/mealInfoLinearLayout"
+        />
 
     <ImageButton
         android:id="@+id/backToSchedule"
