@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -40,8 +41,8 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         binding = FragmentMealInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //final TextView textView = binding.textView12;
-        //dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        container.removeAllViews();
+
         return root;
     }
 
@@ -56,7 +57,6 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.mealInfoLinearLayout);
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
-        Log.d("Made it all the way here!", "onViewCreated: ");
 
         mealView dinnerMeals[] = new mealView[5];
         for (int i = 0; i < 5; i++) {
@@ -72,7 +72,16 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-
+        if (v == getView().findViewById(R.id.backToSchedule)){
+            // Create new fragment and transaction
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
+            // Replace whatever is in the fragment_container view with this fragment
+            transaction.replace(R.id.nav_host_fragment_activity_main, ScheduleFragment.class, null);
+            // Commit the transaction
+            transaction.commit();
+        }
     }
 
 

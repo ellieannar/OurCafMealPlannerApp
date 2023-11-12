@@ -1,6 +1,7 @@
 package com.example.cafmealplanner.ui.Menu;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,13 +12,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
+import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -32,6 +37,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     //Months indexed
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
+    //Track all the more info buttons we will have
+    Vector<mealView> breakfastMeals;
+    Vector<mealView> lunchMeals;
+    Vector<mealView> dinnerMeals;
+
+
     //Default on create view
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +50,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 new ViewModelProvider(this).get(MenuViewModel.class);
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        container.removeAllViews();
+
+
 
         return root;
     }
@@ -54,6 +68,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         forwardDay.setOnClickListener(this);
         backDay.setOnClickListener(this);
 
+
         //get current date to display
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
@@ -63,6 +78,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
         label.setText(monthOfYear[month] + " " + day + ", " + year);
+
+
 
         // views to add meal subview meals to
         LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
@@ -79,11 +96,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
+        //allow detection of breakfast buttons
+        breakfastItems.setOnClickListener(this);
+        breakfastLinearLayout.setOnClickListener(this);
 
         //vector of meal items
-        Vector<mealView> breakfastMeals = new Vector<mealView>(5);
-        Vector<mealView> lunchMeals = new Vector<mealView>(5);
-        Vector<mealView> dinnerMeals = new Vector<mealView>(5);
+        breakfastMeals = new Vector<mealView>(5);
+        lunchMeals = new Vector<mealView>(5);
+        dinnerMeals = new Vector<mealView>(5);
 
         // Using meals offered by caf on 11/10/2023
 
@@ -163,6 +183,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         // add meals to view
         for (int i = 0; i < breakfastMeals.size(); i++) {
             breakfastItems.addView(breakfastMeals.get(i));
+            breakfastMeals.get(i).setOnClickListener(this);
         }
         for (int i = 0; i < lunchMeals.size(); i++) {
             lunchItems.addView(lunchMeals.get(i));
@@ -200,6 +221,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
             //display
             label.setText(monthOfYear[month] + " " + day + ", " + year);
+        } else {
+            Log.d("TAG", "onClick: WE'VE DONE IT BOIZ");
+
         }
 
 
@@ -219,6 +243,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             getView().findViewById(R.id.forwardDayButton).setVisibility(View.VISIBLE);
         }
     }
+
+
+    public void testingFunction() {
+        Log.d("IT WORKED", "testingFunction");
+    }
+
+
 
     @Override
     public void onDestroyView() {
