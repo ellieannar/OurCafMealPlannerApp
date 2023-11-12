@@ -1,7 +1,6 @@
 package com.example.cafmealplanner.ui.Menu;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +18,6 @@ import java.util.Vector;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
-import com.example.cafmealplanner.mealView;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 

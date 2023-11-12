@@ -1,24 +1,30 @@
 package com.example.cafmealplanner.ui.Profile;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentProfileBinding;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
@@ -29,7 +35,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private Boolean editMode = false;
     //Keep track of all 5 dietary restrictions
     public dietaryRestriction[] allDietaryRestrictions = new dietaryRestriction[5];
-
+    public favoriteMeal[] allMeals = new favoriteMeal[10];
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -73,6 +79,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         allDietaryRestrictions[4] = r;
 
 
+        EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+
+        hideEditText(firstName);
+        hideEditText(lastName);
+
+        setupFavoriteMeals();
 
     }
 
@@ -98,13 +111,27 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private void editModeTurnedOn() {
         displayAllDietaryRestrictions();
         showSpinner();
+        EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        EditText lastName = getView().findViewById(R.id.lastNameTextView);
 
+        showEditText(firstName);
+        showEditText(lastName);
+
+        openFavoriteMeals();
 
     }
     //call corresponding functions when edit mode turned off
     private void editModeTurnedOff() {
         displaySelectedRestrictions();
         hideSpinner();
+        EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+
+        hideEditText(firstName);
+        hideEditText(lastName);
+
+        closeFavoriteMeals();
+
     }
 
 
@@ -142,6 +169,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         String[] items = new String[]{"20 Flex", "15 Flex", "12 Flex", "10 Flex", "175 Block", "5 Flex", "20 Block"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,items);
         mealPlanSpinner.setAdapter(adapter);
+        mealPlanSpinner.setSelection(adapter.getPosition(mealPlan.getText().toString()));
     }
 
     //hide the spinner when no longer editing
@@ -157,6 +185,61 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }
 
 
+
+    }
+
+    void hideEditText(EditText e) {
+        if (e.getText().toString().matches("")) {
+            e.setText("Name");
+        }
+        e.setFocusable(false);
+        e.setEnabled(false);
+        e.setCursorVisible(false);
+        e.setBackgroundColor(Color.TRANSPARENT);
+        e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.black, null));
+    }
+
+    void showEditText(EditText e) {
+        e.setEnabled(true);
+        e.setCursorVisible(true);
+        e.setFocusableInTouchMode(true);
+        e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.darkBlue, null));
+
+    }
+
+    void setupFavoriteMeals() {
+        LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
+
+        String s[] = {"Pizza", "Pasta", "Soup", "Poke", "Salad", "Teriyaki", "Hamburger", "Italian Beef Stew", "Quick Oats", "Hot breakfast bar"};
+
+        for (int i = 0; i < 10; i++) {
+            favoriteMeal f = new favoriteMeal(getContext());
+            f.setMealName(s[i]);
+            allMeals[i] = f;
+        }
+
+    }
+
+    void openFavoriteMeals() {
+        LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
+        favMeals.removeAllViews();
+        for (int i = 0; i < 10; i++) {
+            allMeals[i].showCheckbox();
+            favMeals.addView(allMeals[i]);
+        }
+    }
+
+    void closeFavoriteMeals() {
+        LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
+        ScrollView favScroll = getView().findViewById(R.id.favoriteMealsScrollView);
+        favMeals.removeAllViews();
+        for (int i = 0; i < 10; i++) {
+            if (allMeals[i].isChecked()) {
+                allMeals[i].hideCheckbox();
+                favMeals.addView(allMeals[i]);
+            }
+        }
+        favScroll.fullScroll(ScrollView.FOCUS_UP);
 
     }
 

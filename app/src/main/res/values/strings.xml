@@ -25,8 +25,18 @@
         <item
             ></item>
     </string-array>
-
+    <string name="meal_plan_default">12 Flex</string>
     <string name="location">Home Cooking</string>
     <string name="rate_this">Submit</string>
     <string name="personal_rating">Your Rating:</string>
+    <string name="sampleMealName">Sample Meal</string>
+
+
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
 </resources>
