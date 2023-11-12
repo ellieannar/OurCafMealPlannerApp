@@ -39,24 +39,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         View root = binding.getRoot();
 
         container.removeAllViews();
-        /*
 
-
-        View v = inflater.inflate(R.layout.fragment_schedule,container,false);
-        FoodInfo secondFragment = new FoodInfo();
-        Button edit = v.findViewById(R.id.edit_schedule);
-
-        edit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Log.d("GETTING CLICKED", "onClick: ");
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction().replace(R.id.nav_host_fragment_activity_main,new FoodInfo())
-                        .addToBackStack(null).commit();
-            }
-        });
-
-         */
 
         return root;
     }
