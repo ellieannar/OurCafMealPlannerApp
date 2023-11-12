@@ -3,6 +3,7 @@ package com.example.cafmealplanner.ui.Menu;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
@@ -25,7 +27,8 @@ import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
 import java.util.ArrayList;
 
 
-public class mealView extends FrameLayout{
+
+public class mealView extends FrameLayout implements View.OnClickListener {
 
 
     public enum TAG_TYPE {
@@ -38,6 +41,7 @@ public class mealView extends FrameLayout{
     private TextView nameOfMealTextView;
     private ArrayList<TextView> tagsTextViews;
     private LinearLayout tagsLinearLayout;
+    private Button infoButton;
 
 
     public mealView(@NonNull Context context) {
@@ -73,7 +77,15 @@ public class mealView extends FrameLayout{
         );
         this.setLayoutParams(layoutParams);
 
+        infoButton = findViewById(R.id.moreInfoButton);
 
+        infoButton.setOnClickListener(this);
+
+    }
+
+    @Override
+    public void onClick(View view){
+        Toast.makeText(getContext(), "To be implemented soon...", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -133,6 +145,12 @@ public class mealView extends FrameLayout{
     public String getFoodTitle() {
         return (String) nameOfMealTextView.getText() ;
     }
+
+
+    public int getMyId() {
+        return infoButton.getId();
+    }
+
 
 
 }
