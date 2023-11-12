@@ -25,8 +25,9 @@
         <item
             ></item>
     </string-array>
-
+    <string name="meal_plan_default">12 Flex</string>
     <string name="location">Home Cooking</string>
     <string name="rate_this">Submit</string>
     <string name="personal_rating">Your Rating:</string>
+    <string name="sampleMealName">Sample Meal</string>
 </resources>
