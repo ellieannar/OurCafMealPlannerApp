@@ -1,23 +1,31 @@
 package com.example.cafmealplanner.ui.Menu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.ui.Schedule.MealInfo;
+import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
 
 import java.util.ArrayList;
 
 
-public class mealView extends FrameLayout {
+public class mealView extends FrameLayout{
 
 
     public enum TAG_TYPE {
@@ -64,6 +72,7 @@ public class mealView extends FrameLayout {
                 LayoutParams.WRAP_CONTENT  // Height
         );
         this.setLayoutParams(layoutParams);
+
 
 
     }
@@ -124,7 +133,6 @@ public class mealView extends FrameLayout {
     public String getFoodTitle() {
         return (String) nameOfMealTextView.getText() ;
     }
-
 
 
 }

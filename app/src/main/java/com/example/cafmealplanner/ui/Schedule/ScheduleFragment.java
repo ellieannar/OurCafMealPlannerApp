@@ -184,21 +184,14 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     //click handler
     public void onClick(View v) {
-        Fragment f;
         Button b = getView().findViewById(R.id.edit_schedule);
         if (v == b) {
-            f = new MealInfo();
-            replaceFragment(f);
+
         }
     }
 
 
-    public void replaceFragment(Fragment f) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.nav_host_fragment_activity_main, f);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
+
 
 
     @Override

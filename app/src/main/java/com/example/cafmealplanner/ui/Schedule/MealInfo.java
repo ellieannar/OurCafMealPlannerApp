@@ -4,6 +4,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
@@ -71,11 +72,11 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if (v == getView().findViewById(R.id.backToSchedule)) {
-            // Start the schedule activity if the button is clicked
-            Intent intent = new Intent(getContext(), ScheduleFragment.class);
-            startActivity(intent);
-        }
+
     }
+
+
+
+
 
 }
