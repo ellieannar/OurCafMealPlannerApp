@@ -40,8 +40,8 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         binding = FragmentMealInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //final TextView textView = binding.textView12;
-        //dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        container.removeAllViews();
+
         return root;
     }
 

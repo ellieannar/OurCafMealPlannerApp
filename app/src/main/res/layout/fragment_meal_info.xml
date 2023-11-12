@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.Schedule.MealInfo">
+    tools:context=".ui.Schedule.MealInfo"
+    android:id="@+id/mealInfoFragment"
+    >
 
     <TextView
         android:id="@+id/meal"

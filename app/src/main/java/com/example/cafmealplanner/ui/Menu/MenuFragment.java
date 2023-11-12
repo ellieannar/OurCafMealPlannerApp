@@ -39,6 +39,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 new ViewModelProvider(this).get(MenuViewModel.class);
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        container.removeAllViews();
 
         return root;
     }

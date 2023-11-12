@@ -21,7 +21,7 @@ import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
 
 import java.util.Vector;
 
-public class FoodInfo extends Fragment {
+public class FoodInfo extends Fragment implements View.OnClickListener {
 
     private FoodInfoViewModel mViewModel;
 
@@ -32,6 +32,7 @@ public class FoodInfo extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        container.removeAllViews();
         return inflater.inflate(R.layout.fragment_food_info, container, false);
     }
 

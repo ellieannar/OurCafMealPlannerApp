@@ -44,6 +44,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        container.removeAllViews();
 
         return root;
     }

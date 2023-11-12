@@ -21,6 +21,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.ui.Menu.FoodInfo;
+import com.example.cafmealplanner.ui.Menu.FoodInfoViewModel;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
@@ -36,8 +38,26 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         binding = FragmentScheduleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        //final TextView textView = binding.textView12;
-        //dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        container.removeAllViews();
+        /*
+
+
+        View v = inflater.inflate(R.layout.fragment_schedule,container,false);
+        FoodInfo secondFragment = new FoodInfo();
+        Button edit = v.findViewById(R.id.edit_schedule);
+
+        edit.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Log.d("GETTING CLICKED", "onClick: ");
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction().replace(R.id.nav_host_fragment_activity_main,new FoodInfo())
+                        .addToBackStack(null).commit();
+            }
+        });
+
+         */
+
         return root;
     }
 
@@ -186,7 +206,14 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         Button b = getView().findViewById(R.id.edit_schedule);
         if (v == b) {
-
+            // Create new fragment and transaction
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
+            // Replace whatever is in the fragment_container view with this fragment
+            transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+            // Commit the transaction
+            transaction.commit();
         }
     }
 
