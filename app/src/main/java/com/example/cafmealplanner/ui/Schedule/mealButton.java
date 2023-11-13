@@ -2,7 +2,10 @@ package com.example.cafmealplanner.ui.Schedule;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +74,11 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
     public void setFill(buttonSelection b) {
         selected = b;
+        if (b == buttonSelection.FILLED) {
+            button.setImageResource(R.drawable.baseline_circle_24);
+            button.setColorFilter(Color.argb(255, 194, 216, 188));
+
+        }
     }
 
     public void setMeal (mealTime m) {
