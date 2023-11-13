@@ -130,7 +130,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextNumber3"
+        android:id="@+id/rateThis"
         android:layout_width="62dp"
         android:layout_height="41dp"
         android:layout_marginStart="20dp"

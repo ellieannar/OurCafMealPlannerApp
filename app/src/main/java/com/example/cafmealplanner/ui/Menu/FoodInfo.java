@@ -70,8 +70,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == getView().findViewById(R.id.rating)) {
             // Get the rating the user entered
-            EditText rating = getView().findViewById(R.id.rating);
-            Integer numStars = Integer.parseInt(String.valueOf(rating));
+            EditText rating = getView().findViewById(R.id.rateThis);
+            Integer numStars = Integer.valueOf(rating.getText().toString());
 
             for (int i = 0; i < numStars; i++) {
                 ImageView star;
