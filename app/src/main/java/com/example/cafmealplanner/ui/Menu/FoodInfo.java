@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -75,7 +76,24 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == getView().findViewById(R.id.rateThis)) {
             // Get the rating the user entered
-            // and change the equivalent number of stars to yellow
+            EditText rating = getView().findViewById(R.id.rating);
+            Integer numStars = Integer.parseInt(String.valueOf(rating));
+
+            for (int i = 0; i < numStars; i++) {
+                ImageView star;
+                if (i == 0)
+                    star = getView().findViewById(R.id.star1);
+                else if (i == 1)
+                    star = getView().findViewById(R.id.star2);
+                else if (i == 2)
+                    star = getView().findViewById(R.id.star3);
+                else if (i == 3)
+                    star = getView().findViewById(R.id.star4);
+                else
+                    star = getView().findViewById(R.id.star5);
+
+                star.setImageResource(R.drawable.more_info_button); // Stand in for yellow stars working on it
+            }
         }
 
         else if (v == getView().findViewById(R.id.backToMenu)){

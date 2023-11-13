@@ -35,6 +35,8 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     private MealInfoViewModel mViewModel;
     private FragmentMealInfoBinding binding;
 
+    Vector<mealView> dinnerMeals;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -56,18 +58,20 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         // Add some meal views
 
-        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.mealInfoLinearLayout);
+        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
-        mealView dinnerMeals[] = new mealView[5];
+        dinnerMeals = new Vector<mealView>(5);
         for (int i = 0; i < 5; i++) {
-            dinnerMeals[i] = new mealView(getContext());
+            mealView temp = new mealView(getContext());
+            temp.setMealName("PASTA");
+            temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+            dinnerMeals.add(temp);
         }
 
-        for (int i = 0; i<5; i++) { // All the food options are pasta for some reason
-            dinnerMeals[i].setMealName("PASTA");
-            dinnerItems.addView(dinnerMeals[i]);
+        for (int i = 0; i < dinnerMeals.size(); i++) {
+            dinnerItems.addView(dinnerMeals.get(i));
         }
 
         dinnerLinearLayout.addView(dinnerItems);
