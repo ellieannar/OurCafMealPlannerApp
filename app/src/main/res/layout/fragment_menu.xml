@@ -48,6 +48,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/gray"
         android:gravity="center"
         android:text="@string/current_date"
         android:textAlignment="center"
