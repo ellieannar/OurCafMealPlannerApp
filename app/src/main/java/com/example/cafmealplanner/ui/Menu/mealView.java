@@ -90,6 +90,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         //Alert app that more info about specific meal should now be displayed.
         Intent intent = new Intent("filter_string");
         intent.putExtra("mealName", nameOfMealTextView.getText().toString());
+        intent.putExtra("audience", "forMenu");
         // put your all data using put extra
 
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);

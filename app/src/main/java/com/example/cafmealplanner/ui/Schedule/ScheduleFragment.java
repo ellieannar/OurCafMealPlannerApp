@@ -57,10 +57,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     public BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent != null) {
-                String str = intent.getStringExtra("mealName");
-                Log.d("TAG", "It was received " + str);
-                displayMealInfo(str);
+            if (intent != null && intent.getExtras().getString("audience").equals("forSchedule")) {
+                displayMealInfo();
             }
         }
     };
@@ -69,8 +67,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         setupLinearLayouts();
         Button editButton = view.findViewById(R.id.edit_schedule);
         editButton.setOnClickListener(this);
-
-
 
     }
 
@@ -210,6 +206,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     //click handler
     public void onClick(View v) {
+        /*
         Button b = getView().findViewById(R.id.edit_schedule);
         if (v == b) {
             // Create new fragment and transaction
@@ -221,19 +218,21 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             // Commit the transaction
             transaction.commit();
         }
+         */
     }
 
 
-    private void displayMealInfo(String title) {
+    private void displayMealInfo() {
         // Create new fragment and transaction
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
         // Replace whatever is in the fragment_container view with this fragment
-        transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+        transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
         // Commit the transaction
         transaction.commit();
     }
+
 
 
 

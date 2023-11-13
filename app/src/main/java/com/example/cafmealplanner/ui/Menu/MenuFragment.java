@@ -257,16 +257,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     public BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent != null) {
-                String str = intent.getStringExtra("mealName");
-                Log.d("TAG", "It was received " + str);
-                displayMealInfo(str);
+            if (intent != null && intent.getExtras().getString("audience").equals("forMenu")) {
+                displayFoodInfo();
             }
         }
     };
 
 
-    private void displayMealInfo(String title) {
+    private void displayFoodInfo() {
         // Create new fragment and transaction
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
