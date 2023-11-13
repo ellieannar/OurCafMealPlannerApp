@@ -3,30 +3,19 @@ package com.example.cafmealplanner.ui.Menu;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
-import com.example.cafmealplanner.ui.Schedule.MealInfo;
-import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
-
-import java.util.ArrayList;
-
 
 
 public class mealView extends FrameLayout implements View.OnClickListener {
@@ -38,9 +27,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     }
 
 
-    private FrameLayout frameLayout;
     private TextView nameOfMealTextView;
-    private ArrayList<TextView> tagsTextViews;
     private LinearLayout tagsLinearLayout;
     private Button infoButton;
 
@@ -66,7 +53,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     private void initMealView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.meal_view, this, true);
-        frameLayout = findViewById(R.id.mealViewFrameLayout);
+        FrameLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         tagsLinearLayout = findViewById(R.id.tagsLinearLayout);
 

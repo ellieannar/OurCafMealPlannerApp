@@ -21,13 +21,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
-import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -51,8 +49,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     //Default on create view
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        MenuViewModel menuViewModel =
-                new ViewModelProvider(this).get(MenuViewModel.class);
+        //MenuViewModel menuViewModel =
+                //new ViewModelProvider(this).get(MenuViewModel.class);
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         container.removeAllViews();
@@ -109,9 +107,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         breakfastLinearLayout.setOnClickListener(this);
 
         //vector of meal items
-        breakfastMeals = new Vector<mealView>(5);
-        lunchMeals = new Vector<mealView>(5);
-        dinnerMeals = new Vector<mealView>(5);
+        breakfastMeals = new Vector<>(5);
+        lunchMeals = new Vector<>(5);
+        dinnerMeals = new Vector<>(5);
 
         // Using meals offered by caf on 11/10/2023
 

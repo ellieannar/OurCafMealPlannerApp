@@ -2,9 +2,7 @@ package com.example.cafmealplanner.ui.Menu;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,17 +19,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
-import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
 
 import java.util.Vector;
 
 public class FoodInfo extends Fragment implements View.OnClickListener {
 
-    private FoodInfoViewModel mViewModel;
 
-    public static FoodInfo newInstance() {
-        return new FoodInfo();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -42,7 +35,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Create a vector of strings to keep all the ingredients
-        Vector<String> ingredientNames = new Vector<String>(3);
+        Vector<String> ingredientNames = new Vector<>(3);
 
         for (int i = 0; i < 3; i++) {
             ingredientNames.add(new String());
@@ -77,7 +70,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         if (v == getView().findViewById(R.id.rateThis)) {
             // Get the rating the user entered
             EditText rating = getView().findViewById(R.id.rating);
-            Integer numStars = Integer.parseInt(String.valueOf(rating));
+            int numStars = Integer.parseInt(String.valueOf(rating));
 
             for (int i = 0; i < numStars; i++) {
                 ImageView star;
