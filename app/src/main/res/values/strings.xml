@@ -39,4 +39,5 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam porttitor ipsum vel elit tincidunt ultrices. Curabitur at velit tincidunt, ultricies libero sed, vehicula libero. Phasellus dignissim dui sed tellus dictum feugiat. Aenean vel purus sed dui cursus sodales at a nunc. Sed varius blandit turpis, quis fringilla orci pellentesque eget. Morbi felis lorem, auctor ac eleifend at, elementum vitae ante. Sed sed finibus dui.</string>
 </resources>
