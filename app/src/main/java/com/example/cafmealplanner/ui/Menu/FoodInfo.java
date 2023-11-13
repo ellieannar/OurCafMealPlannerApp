@@ -1,8 +1,10 @@
 package com.example.cafmealplanner.ui.Menu;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -73,8 +75,13 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             EditText rating = getView().findViewById(R.id.rateThis);
             Integer numStars = Integer.valueOf(rating.getText().toString());
 
-            for (int i = 0; i < numStars; i++) {
-                ImageView star;
+            int i;
+            ImageView star;
+
+            // Change the number of stars the user entered to yellow
+
+            for (i = 0; i < numStars; i++) {
+
                 if (i == 0)
                     star = getView().findViewById(R.id.star1);
                 else if (i == 1)
@@ -86,7 +93,34 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
                 else
                     star = getView().findViewById(R.id.star5);
 
-                star.setImageResource(R.drawable.more_info_button); // Stand in for yellow stars working on it
+                star.setImageResource(R.drawable.sss);
+                star.setAdjustViewBounds(true);
+
+                star.setMaxHeight(50);
+                star.setMaxWidth(50);
+            }
+
+            // Change the remaining amount of stars to gray
+
+            while (i < 5) {
+                if (i == 0)
+                    star = getView().findViewById(R.id.star1);
+                else if (i == 1)
+                    star = getView().findViewById(R.id.star2);
+                else if (i == 2)
+                    star = getView().findViewById(R.id.star3);
+                else if (i == 3)
+                    star = getView().findViewById(R.id.star4);
+                else
+                    star = getView().findViewById(R.id.star5);
+
+                star.setImageResource(R.drawable.gray_star);
+
+                star.setAdjustViewBounds(true);
+                star.setMaxHeight(50);
+                star.setMaxWidth(50);
+
+                i++;
             }
         }
 
