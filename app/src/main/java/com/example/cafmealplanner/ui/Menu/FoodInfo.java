@@ -43,15 +43,12 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Create a vector of strings to keep all the ingredients
         Vector<String> ingredientNames = new Vector<String>(3);
-
-        for (int i = 0; i < 3; i++) {
-            ingredientNames.add(new String());
-        }
-
-        // Populate the ingredients list with dummy strings
-        ingredientNames.get(0).equals("Noodles");
-        ingredientNames.get(1).equals("Sauce");
-        ingredientNames.get(2).equals("Breadsticks");
+        ingredientNames.add(new String("White jasmine rice"));
+        ingredientNames.add(new String("chopped pork"));
+        ingredientNames.add(new String("mushrooms"));
+        ingredientNames.add(new String("celery"));
+        ingredientNames.add(new String("cabbage"));
+        ingredientNames.add(new String("sesame"));
 
         // Display the ingredients list in the text view
         TextView ingredientsList = getView().findViewById(R.id.ingredients);
