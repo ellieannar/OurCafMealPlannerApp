@@ -2,9 +2,7 @@ package com.example.cafmealplanner.ui.Menu;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
-import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
 
 import java.util.Vector;
 
@@ -62,7 +59,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
 
         // Implement the "rate this" button
-        Button addRating = getView().findViewById(R.id.rateThis);
+        Button addRating = getView().findViewById(R.id.rating);
         addRating.setOnClickListener((View.OnClickListener) this);
         getView().findViewById(R.id.backToMenu).setOnClickListener(this);
 
@@ -71,7 +68,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if (v == getView().findViewById(R.id.rateThis)) {
+        if (v == getView().findViewById(R.id.rating)) {
             // Get the rating the user entered
             EditText rating = getView().findViewById(R.id.rating);
             Integer numStars = Integer.parseInt(String.valueOf(rating));
@@ -93,11 +90,12 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             }
         }
 
-        else if (v == getView().findViewById(R.id.backToMenu)){
+        else if (v == getView().findViewById(R.id.backToMenu)) {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
+
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
             // Commit the transaction
