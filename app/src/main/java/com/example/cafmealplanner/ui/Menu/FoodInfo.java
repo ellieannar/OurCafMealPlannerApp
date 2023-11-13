@@ -1,5 +1,7 @@
 package com.example.cafmealplanner.ui.Menu;
 
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
@@ -9,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,12 +66,28 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         // Implement the "rate this" button
         Button addRating = getView().findViewById(R.id.rateThis);
         addRating.setOnClickListener((View.OnClickListener) this);
+        getView().findViewById(R.id.backToMenu).setOnClickListener(this);
+
+        //allow info text to scroll
+        ingredientsList.setMovementMethod(new ScrollingMovementMethod());
     }
 
     public void onClick(View v) {
         if (v == getView().findViewById(R.id.rateThis)) {
             // Get the rating the user entered
             // and change the equivalent number of stars to yellow
+        }
+
+        else if (v == getView().findViewById(R.id.backToMenu)){
+            // Create new fragment and transaction
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
+            // Replace whatever is in the fragment_container view with this fragment
+            transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
+            // Commit the transaction
+
+            transaction.commit();
         }
     }
 }

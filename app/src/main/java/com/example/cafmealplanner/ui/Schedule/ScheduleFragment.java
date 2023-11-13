@@ -1,5 +1,8 @@
 package com.example.cafmealplanner.ui.Schedule;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
@@ -41,8 +45,23 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         container.removeAllViews();
 
 
+        //button clicks manager
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.registerReceiver(receiver, new IntentFilter("filter_string"));
+
         return root;
     }
+
+
+    //button clicks
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getExtras().getString("audience").equals("forSchedule")) {
+                displayMealInfo();
+            }
+        }
+    };
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         setupLinearLayouts();
@@ -71,7 +90,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.SUNDAY);
         m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
 
         //Monday
@@ -84,7 +103,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.MONDAY);
         m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.MONDAY);
@@ -97,17 +116,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.TUESDAY);
         m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.TUESDAY);
         m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.TUESDAY);
         m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
 
         //Wednesday
@@ -133,7 +152,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.THURSDAY);
         m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.THURSDAY);
@@ -143,7 +162,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.THURSDAY);
         m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
 
         //Friday
@@ -156,7 +175,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.FRIDAY);
         m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.FRIDAY);
@@ -179,7 +198,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         m = new mealButton(getContext());
         m.setDay(mealButton.dayOfWeek.SATURDAY);
         m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
+        m.setFill(mealButton.buttonSelection.FILLED);
         day.addView(m);
 
     }
@@ -187,6 +206,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     //click handler
     public void onClick(View v) {
+        /*
         Button b = getView().findViewById(R.id.edit_schedule);
         if (v == b) {
             // Create new fragment and transaction
@@ -198,7 +218,22 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             // Commit the transaction
             transaction.commit();
         }
+         */
     }
+
+
+    private void displayMealInfo() {
+        // Create new fragment and transaction
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
+        // Commit the transaction
+        transaction.commit();
+    }
+
+
 
 
 

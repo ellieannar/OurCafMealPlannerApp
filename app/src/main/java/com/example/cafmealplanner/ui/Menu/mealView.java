@@ -19,6 +19,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.ui.Schedule.MealInfo;
@@ -85,8 +86,14 @@ public class mealView extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        Toast.makeText(getContext(), "To be implemented soon...", Toast.LENGTH_SHORT).show();
 
+        //Alert app that more info about specific meal should now be displayed.
+        Intent intent = new Intent("filter_string");
+        intent.putExtra("mealName", nameOfMealTextView.getText().toString());
+        intent.putExtra("audience", "forMenu");
+        // put your all data using put extra
+
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
     //allows caller to set the meal name

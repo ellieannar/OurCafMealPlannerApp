@@ -1,5 +1,6 @@
 package com.example.cafmealplanner.ui.Schedule;
 
+import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -80,9 +82,13 @@ public class MealInfo extends Fragment implements View.OnClickListener {
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, ScheduleFragment.class, null);
             // Commit the transaction
+
             transaction.commit();
         }
     }
+
+
+
 
 
 
