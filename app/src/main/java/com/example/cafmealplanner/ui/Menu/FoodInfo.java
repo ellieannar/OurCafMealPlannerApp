@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,11 +27,7 @@ import java.util.Vector;
 
 public class FoodInfo extends Fragment implements View.OnClickListener {
 
-    private FoodInfoViewModel mViewModel;
 
-    public static FoodInfo newInstance() {
-        return new FoodInfo();
-    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -95,6 +92,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
                 star.setImageResource(R.drawable.sss);
                 star.setAdjustViewBounds(true);
+
 
                 star.setMaxHeight(50);
                 star.setMaxWidth(50);
