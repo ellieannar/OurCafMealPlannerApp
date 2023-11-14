@@ -1,10 +1,10 @@
 package com.example.cafmealplanner.ui.Menu;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,7 +21,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
-import com.example.cafmealplanner.ui.Schedule.ScheduleFragment;
 
 import java.util.Vector;
 
@@ -43,15 +42,12 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Create a vector of strings to keep all the ingredients
         Vector<String> ingredientNames = new Vector<String>(3);
-
-        for (int i = 0; i < 3; i++) {
-            ingredientNames.add(new String());
-        }
-
-        // Populate the ingredients list with dummy strings
-        ingredientNames.get(0).equals("Noodles");
-        ingredientNames.get(1).equals("Sauce");
-        ingredientNames.get(2).equals("Breadsticks");
+        ingredientNames.add(new String("White jasmine rice"));
+        ingredientNames.add(new String("chopped pork"));
+        ingredientNames.add(new String("mushrooms"));
+        ingredientNames.add(new String("celery"));
+        ingredientNames.add(new String("cabbage"));
+        ingredientNames.add(new String("sesame"));
 
         // Display the ingredients list in the text view
         TextView ingredientsList = getView().findViewById(R.id.ingredients);
@@ -65,7 +61,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
 
         // Implement the "rate this" button
-        Button addRating = getView().findViewById(R.id.rateThis);
+        Button addRating = getView().findViewById(R.id.rating);
         addRating.setOnClickListener((View.OnClickListener) this);
         getView().findViewById(R.id.backToMenu).setOnClickListener(this);
 
@@ -74,13 +70,18 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View v) {
-        if (v == getView().findViewById(R.id.rateThis)) {
+        if (v == getView().findViewById(R.id.rating)) {
             // Get the rating the user entered
-            EditText rating = getView().findViewById(R.id.rating);
-            Integer numStars = Integer.parseInt(String.valueOf(rating));
+            EditText rating = getView().findViewById(R.id.rateThis);
+            Integer numStars = Integer.valueOf(rating.getText().toString());
 
-            for (int i = 0; i < numStars; i++) {
-                ImageView star;
+            int i;
+            ImageView star;
+
+            // Change the number of stars the user entered to yellow
+
+            for (i = 0; i < numStars; i++) {
+
                 if (i == 0)
                     star = getView().findViewById(R.id.star1);
                 else if (i == 1)
@@ -92,15 +93,43 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
                 else
                     star = getView().findViewById(R.id.star5);
 
-                star.setImageResource(R.drawable.more_info_button); // Stand in for yellow stars working on it
+                star.setImageResource(R.drawable.sss);
+                star.setAdjustViewBounds(true);
+
+                star.setMaxHeight(50);
+                star.setMaxWidth(50);
+            }
+
+            // Change the remaining amount of stars to gray
+
+            while (i < 5) {
+                if (i == 0)
+                    star = getView().findViewById(R.id.star1);
+                else if (i == 1)
+                    star = getView().findViewById(R.id.star2);
+                else if (i == 2)
+                    star = getView().findViewById(R.id.star3);
+                else if (i == 3)
+                    star = getView().findViewById(R.id.star4);
+                else
+                    star = getView().findViewById(R.id.star5);
+
+                star.setImageResource(R.drawable.gray_star);
+
+                star.setAdjustViewBounds(true);
+                star.setMaxHeight(50);
+                star.setMaxWidth(50);
+
+                i++;
             }
         }
 
-        else if (v == getView().findViewById(R.id.backToMenu)){
+        else if (v == getView().findViewById(R.id.backToMenu)) {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
+
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
             // Commit the transaction
