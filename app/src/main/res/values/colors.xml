@@ -5,7 +5,7 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="biolaBlack">#221F1F</color>
     <color name="white">#FFFFFFFF</color>
 
     <!-- Our custom colors -->
@@ -23,5 +23,5 @@
     <color name="gray_600">#FF757575</color>
 
 
-    <color name="exampleColor">#FF0000</color>
+    <color name="biolaRed">#B41225</color>
 </resources>

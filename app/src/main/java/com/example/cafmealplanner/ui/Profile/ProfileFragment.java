@@ -130,7 +130,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         hideEditText(firstName);
         hideEditText(lastName);
-
         closeFavoriteMeals();
 
     }
@@ -191,18 +190,31 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     void hideEditText(EditText e) {
         if (e.getText().toString().matches("")) {
-            e.setText("Name");
+            if (e == getView().findViewById(R.id.firstNameTextView)) {
+                e.setHint("First Name");
+            } else {
+                e.setHint("Last Name");
+            }
+
         }
+
         e.setFocusable(false);
         e.setEnabled(false);
         e.setCursorVisible(false);
         e.setBackgroundColor(Color.TRANSPARENT);
-        e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.black, null));
+        e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.biolaBlack, null));
     }
 
     void showEditText(EditText e) {
         e.setEnabled(true);
         e.setCursorVisible(true);
+        if (e.getText().toString().matches("")) {
+            if (e == getView().findViewById(R.id.firstNameTextView)) {
+                e.setHint("First Name");
+            } else {
+                e.setHint("Last Name");
+            }
+        }
         e.setFocusableInTouchMode(true);
         e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.darkBlue, null));
 
