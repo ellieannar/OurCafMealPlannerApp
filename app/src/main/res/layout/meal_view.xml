@@ -15,7 +15,7 @@
         android:layout_marginLeft="20dp"
         android:gravity="center_vertical"
         android:text="@string/dinner_option"
-        android:textColor="@color/black"
+        android:textColor="@color/biolaBlack"
 
         />
 

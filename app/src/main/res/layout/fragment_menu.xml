@@ -20,7 +20,7 @@
         app:icon="?attr/actionModeCloseDrawable"
         app:iconPadding="0dp"
         app:iconGravity = "textStart"
-        app:iconTint="@color/black"
+        app:iconTint="@color/biolaBlack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
     />
@@ -37,7 +37,7 @@
         app:icon="?attr/actionModeCloseDrawable"
         app:iconGravity="textStart"
         app:iconPadding="0dp"
-        app:iconTint="@color/black"
+        app:iconTint="@color/biolaBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:scaleX="-1"
@@ -53,7 +53,7 @@
         android:gravity="center"
         android:text="@string/current_date"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@color/biolaBlack"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -97,7 +97,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
         android:textSize="30sp"
-        android:textColor="@color/black"
+        android:textColor="@color/biolaBlack"
 
     />
     <!-- Food options -->
@@ -122,7 +122,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
             android:textSize="30sp"
-            android:textColor="@color/black"
+            android:textColor="@color/biolaBlack"
 
             />
     <LinearLayout
@@ -147,7 +147,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
             android:textSize="30sp"
-            android:textColor="@color/black"
+            android:textColor="@color/biolaBlack"
 
             />
         <LinearLayout

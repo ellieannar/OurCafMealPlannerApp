@@ -197,7 +197,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         e.setEnabled(false);
         e.setCursorVisible(false);
         e.setBackgroundColor(Color.TRANSPARENT);
-        e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.black, null));
+        e.setTextColor(ResourcesCompat.getColor(getResources(), R.color.biolaBlack, null));
     }
 
     void showEditText(EditText e) {
