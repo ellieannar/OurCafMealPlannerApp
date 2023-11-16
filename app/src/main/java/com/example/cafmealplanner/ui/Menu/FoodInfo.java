@@ -82,17 +82,14 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             Button editRating = getView().findViewById(R.id.rating);
 
             if (!editRatingOn) {
-
-                setEditingMode(); // Change the appearance of the stars to indicate editing mode is on
-
                 editRating.setText("Submit");
                 editRatingOn = true;
+                setStarAppearance(); // Change the appearance of the stars to indicate editing mode
             }
             else {
-                exitEditingMode(); // Change the appearance of the stars to indicate editing mode is off
-
                 editRating.setText("Edit");
                 editRatingOn = false;
+                setStarAppearance(); // Change the appearance of the stars to indicate non-editing mode
             }
         }
         else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
@@ -124,11 +121,12 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
     }
 
-    public void setEditingMode() {
+    public void setStarAppearance() {
         int i;
         ImageButton star = new ImageButton(getContext());
 
-        // The current star rating will determine the number of "filled" stars
+        // The current star rating will determine the number of filled or yellow stars
+        // depending on whether we are in editing mode or not
         for (i = 0; i < starRating; i++) {
             if (i == 0)
                 star.findViewById(R.id.star1);
@@ -141,13 +139,18 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             else if (i == 4)
                 star.findViewById(R.id.star5);
 
-            star.setImageResource(R.drawable.filled_star);
+            if (editRatingOn)
+                star.setImageResource(R.drawable.filled_star);
+            else
+                star.setImageResource(R.drawable.sss);
+
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
             star.setMaxWidth(50);
         }
 
-        // The rest of the stars will be "blank"
+        // The rest of the stars will be gray or blank, depending on whether
+        // we are in editing mode or not
         while (i < 5) {
             if (i == 0)
                 star.findViewById(R.id.star1);
@@ -160,58 +163,19 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             else if (i == 4)
                 star.findViewById(R.id.star5);
 
-            star.setImageResource(R.drawable.blank_star);
+            if (editRatingOn)
+                star.setImageResource(R.drawable.blank_star);
+            else
+                star.setImageResource(R.drawable.gray_star);
+
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
             star.setMaxWidth(50);
-        }
-    }
-
-    public void exitEditingMode() {
-        int i;
-        ImageButton star = new ImageButton(getContext());
-
-        // The current star rating will determine the number of yellow stars
-        for (i = 0; i < starRating; i++) {
-            if (i == 0)
-                star.findViewById(R.id.star1);
-            else if (i == 1)
-                star.findViewById(R.id.star2);
-            else if (i == 2)
-                star.findViewById(R.id.star3);
-            else if (i == 3)
-                star.findViewById(R.id.star4);
-            else if (i == 4)
-                star.findViewById(R.id.star5);
-
-            star.setImageResource(R.drawable.sss);
-            star.setAdjustViewBounds(true);
-            star.setMaxHeight(57);
-            star.setMaxWidth(57);
-        }
-
-        // The rest of the stars will be gray
-        while (i < 5) {
-            if (i == 0)
-                star.findViewById(R.id.star1);
-            else if (i == 1)
-                star.findViewById(R.id.star2);
-            else if (i == 2)
-                star.findViewById(R.id.star3);
-            else if (i == 3)
-                star.findViewById(R.id.star4);
-            else if (i == 4)
-                star.findViewById(R.id.star5);
-
-            star.setImageResource(R.drawable.gray_star);
-            star.setAdjustViewBounds(true);
-            star.setMaxHeight(57);
-            star.setMaxWidth(57);
         }
     }
 
     public void setRating(int numStars) {
         starRating = numStars; // Adjust the official star rating
-        setEditingMode();
+        setStarAppearance(); // Change the appearance of the stars to reflect this
     }
 }
