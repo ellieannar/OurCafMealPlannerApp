@@ -186,8 +186,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             star.setImageResource(R.drawable.sss);
             star.setAdjustViewBounds(true);
-            star.setMaxHeight(50);
-            star.setMaxWidth(50);
+            star.setMaxHeight(57);
+            star.setMaxWidth(57);
         }
 
         // The rest of the stars will be gray
@@ -205,8 +205,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             star.setImageResource(R.drawable.gray_star);
             star.setAdjustViewBounds(true);
-            star.setMaxHeight(50);
-            star.setMaxWidth(50);
+            star.setMaxHeight(57);
+            star.setMaxWidth(57);
         }
     }
 
