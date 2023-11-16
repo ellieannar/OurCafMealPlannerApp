@@ -1,6 +1,8 @@
 package com.example.cafmealplanner.ui.Profile;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
@@ -9,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.example.cafmealplanner.R;
 
@@ -21,7 +24,7 @@ public class dietaryRestriction extends LinearLayout {
     }
 
     private LinearLayout linearLayout;
-    private CheckBox restrictionCheckBox;
+    private AppCompatCheckBox restrictionCheckBox;
     private TextView restrictionTextView;
 
     public dietaryRestriction(@NonNull Context context) {
@@ -47,6 +50,20 @@ public class dietaryRestriction extends LinearLayout {
         linearLayout = findViewById(R.id.dietaryRestrictionsLinearLayout);
         restrictionCheckBox = findViewById(R.id.restrictionCheckBox);
         restrictionTextView = findViewById(R.id.restrictionTextView);
+       /*
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][] {
+                        new int[] { -android.R.attr.checked }, // unchecked
+                        new int[] {  android.R.attr.checked }  // checked
+                },
+                new int[] {
+                        R.color.biolaBlack,
+                        R.color.biolaRed
+                }
+        );
+        restrictionCheckBox.setButtonTintList(colorStateList);
+
+        */
     }
 
     // funtion that can be called to set the restriction type

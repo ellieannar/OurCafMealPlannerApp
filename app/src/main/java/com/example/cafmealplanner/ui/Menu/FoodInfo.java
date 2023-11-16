@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +83,9 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             Button editRating = getView().findViewById(R.id.rating);
 
             if (!editRatingOn) {
-                editRating.setText("Submit");
                 editRatingOn = true;
+                editRating.setText("Submit");
+                Log.d("CLICKED", "onClick: ");
                 setStarAppearance(); // Change the appearance of the stars to indicate editing mode
             }
             else {
@@ -92,7 +94,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
                 setStarAppearance(); // Change the appearance of the stars to indicate non-editing mode
             }
         }
-        else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
+        else if (v == getView().findViewById(R.id.star1)) { // Only edit the star rating in editing mode
             setRating(1);
         }
         else if (v == getView().findViewById(R.id.star2) && editRatingOn) {
@@ -119,59 +121,38 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             transaction.commit();
         }
+
     }
 
     public void setStarAppearance() {
         int i;
         ImageButton star = new ImageButton(getContext());
-
+        ImageButton starRatings[] = {getView().findViewById(R.id.star1), getView().findViewById(R.id.star2), getView().findViewById(R.id.star3), getView().findViewById(R.id.star4), getView().findViewById(R.id.star5)};
         // The current star rating will determine the number of filled or yellow stars
         // depending on whether we are in editing mode or not
         for (i = 0; i < starRating; i++) {
-            if (i == 0)
-                star.findViewById(R.id.star1);
-            else if (i == 1)
-                star.findViewById(R.id.star2);
-            else if (i == 2)
-                star.findViewById(R.id.star3);
-            else if (i == 3)
-                star.findViewById(R.id.star4);
-            else if (i == 4)
-                star.findViewById(R.id.star5);
-
-            if (editRatingOn)
-                star.setImageResource(R.drawable.filled_star);
-            else
-                star.setImageResource(R.drawable.sss);
-
+            starRatings[i].setImageResource(R.drawable.filled_star);
+            star.setAdjustViewBounds(true);
+            star.setMaxHeight(50);
+            star.setMaxWidth(50);
+        }
+        for (i = starRating; i < starRatings.length; i++) {
+            if (editRatingOn) {
+                starRatings[i].setImageResource(R.drawable.blank_star);
+            } else {
+                starRatings[i].setImageResource(R.drawable.gray_star);
+            }
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
             star.setMaxWidth(50);
         }
 
-        // The rest of the stars will be gray or blank, depending on whether
-        // we are in editing mode or not
-        while (i < 5) {
-            if (i == 0)
-                star.findViewById(R.id.star1);
-            else if (i == 1)
-                star.findViewById(R.id.star2);
-            else if (i == 2)
-                star.findViewById(R.id.star3);
-            else if (i == 3)
-                star.findViewById(R.id.star4);
-            else if (i == 4)
-                star.findViewById(R.id.star5);
+        i++;
 
-            if (editRatingOn)
-                star.setImageResource(R.drawable.blank_star);
-            else
-                star.setImageResource(R.drawable.gray_star);
 
-            star.setAdjustViewBounds(true);
-            star.setMaxHeight(50);
-            star.setMaxWidth(50);
-        }
+
+
+
     }
 
     public void setRating(int numStars) {
