@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,6 +61,12 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
         // Implement the rating and back navigation buttons
         getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
+        getView().findViewById(R.id.star1).setOnClickListener(this);
+        getView().findViewById(R.id.star2).setOnClickListener(this);
+        getView().findViewById(R.id.star3).setOnClickListener(this);
+        getView().findViewById(R.id.star4).setOnClickListener(this);
+        getView().findViewById(R.id.star5).setOnClickListener(this);
+
         getView().findViewById(R.id.backToMenu).setOnClickListener(this);
 
         //allow info text to scroll
@@ -68,6 +75,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void onClick(View v) {
         if (v == getView().findViewById(R.id.rating)) {
+            // The rating button toggles between edit and view modes
             Button editRating = getView().findViewById(R.id.rating);
 
             if (!editRatingOn) {
@@ -79,9 +87,21 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
                 editRatingOn = false;
             }
         }
-        /*else if ((v == getView().findViewById(R.id.star1) || v == getView().findViewById(R.id.star2) || v == getView().findViewById(R.id.star3) || v == getView().findViewById(R.id.star4) || v == getView().findViewById(R.id.star5)) && editRatingOn) {
-
-        }*/
+        else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
+            setRating(1);
+        }
+        else if (v == getView().findViewById(R.id.star2) && editRatingOn) {
+            setRating(2);
+        }
+        else if (v == getView().findViewById(R.id.star3) && editRatingOn) {
+            setRating(3);
+        }
+        else if (v == getView().findViewById(R.id.star4) && editRatingOn) {
+            setRating(4);
+        }
+        else if (v == getView().findViewById(R.id.star5) && editRatingOn) {
+            setRating(5);
+        }
         else if (v == getView().findViewById(R.id.backToMenu)) {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -93,6 +113,49 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             // Commit the transaction
 
             transaction.commit();
+        }
+    }
+
+    public void setRating(int numStars) {
+        int i;
+        ImageButton star = new ImageButton(getContext());
+
+        // Display the given number of yellow stars
+        for (i = 0; i < numStars; i++) {
+            if (i == 0)
+                star.findViewById(R.id.star1);
+            else if (i == 1)
+                star.findViewById(R.id.star2);
+            else if (i == 2)
+                star.findViewById(R.id.star3);
+            else if (i == 3)
+                star.findViewById(R.id.star4);
+            else if (i == 4)
+                star.findViewById(R.id.star5);
+
+            star.setImageResource(R.drawable.sss);
+            star.setAdjustViewBounds(true);
+            star.setMaxHeight(50);
+            star.setMaxWidth(50);
+        }
+
+        // The rest of the stars will be gray
+        while (i < 5) {
+            if (i == 0)
+                star.findViewById(R.id.star1);
+            else if (i == 1)
+                star.findViewById(R.id.star2);
+            else if (i == 2)
+                star.findViewById(R.id.star3);
+            else if (i == 3)
+                star.findViewById(R.id.star4);
+            else if (i == 4)
+                star.findViewById(R.id.star5);
+
+            star.setImageResource(R.drawable.gray_star);
+            star.setAdjustViewBounds(true);
+            star.setMaxHeight(50);
+            star.setMaxWidth(50);
         }
     }
 }

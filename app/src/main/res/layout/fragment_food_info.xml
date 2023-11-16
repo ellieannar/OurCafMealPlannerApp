@@ -107,6 +107,7 @@
         android:layout_marginTop="248dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
+        android:onClick="onClick"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_star"
         app:layout_constraintStart_toEndOf="@+id/star2"
