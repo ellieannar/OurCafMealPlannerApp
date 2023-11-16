@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ import java.util.Vector;
 public class FoodInfo extends Fragment implements View.OnClickListener {
 
 
+    boolean editRatingOn = false;
+    int starRating = 0; // Should be obtained from a database
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -57,9 +60,16 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             }
         }
 
-        // Implement the "rate this" button
-        Button addRating = getView().findViewById(R.id.rating);
-        addRating.setOnClickListener((View.OnClickListener) this);
+
+
+        // Implement the rating and back navigation buttons
+        getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
+        getView().findViewById(R.id.star1).setOnClickListener(this);
+        getView().findViewById(R.id.star2).setOnClickListener(this);
+        getView().findViewById(R.id.star3).setOnClickListener(this);
+        getView().findViewById(R.id.star4).setOnClickListener(this);
+        getView().findViewById(R.id.star5).setOnClickListener(this);
+
         getView().findViewById(R.id.backToMenu).setOnClickListener(this);
 
         //allow info text to scroll
@@ -68,60 +78,35 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void onClick(View v) {
         if (v == getView().findViewById(R.id.rating)) {
-            // Get the rating the user entered
-            EditText rating = getView().findViewById(R.id.rateThis);
-            Integer numStars = Integer.valueOf(rating.getText().toString());
+            // The rating button toggles between edit and view modes
+            Button editRating = getView().findViewById(R.id.rating);
 
-            int i;
-            ImageView star;
-
-            // Change the number of stars the user entered to yellow
-
-            for (i = 0; i < numStars; i++) {
-
-                if (i == 0)
-                    star = getView().findViewById(R.id.star1);
-                else if (i == 1)
-                    star = getView().findViewById(R.id.star2);
-                else if (i == 2)
-                    star = getView().findViewById(R.id.star3);
-                else if (i == 3)
-                    star = getView().findViewById(R.id.star4);
-                else
-                    star = getView().findViewById(R.id.star5);
-
-                star.setImageResource(R.drawable.sss);
-                star.setAdjustViewBounds(true);
-
-
-                star.setMaxHeight(50);
-                star.setMaxWidth(50);
+            if (!editRatingOn) {
+                editRating.setText("Submit");
+                editRatingOn = true;
+                setStarAppearance(); // Change the appearance of the stars to indicate editing mode
             }
-
-            // Change the remaining amount of stars to gray
-
-            while (i < 5) {
-                if (i == 0)
-                    star = getView().findViewById(R.id.star1);
-                else if (i == 1)
-                    star = getView().findViewById(R.id.star2);
-                else if (i == 2)
-                    star = getView().findViewById(R.id.star3);
-                else if (i == 3)
-                    star = getView().findViewById(R.id.star4);
-                else
-                    star = getView().findViewById(R.id.star5);
-
-                star.setImageResource(R.drawable.gray_star);
-
-                star.setAdjustViewBounds(true);
-                star.setMaxHeight(50);
-                star.setMaxWidth(50);
-
-                i++;
+            else {
+                editRating.setText("Edit");
+                editRatingOn = false;
+                setStarAppearance(); // Change the appearance of the stars to indicate non-editing mode
             }
         }
-
+        else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
+            setRating(1);
+        }
+        else if (v == getView().findViewById(R.id.star2) && editRatingOn) {
+            setRating(2);
+        }
+        else if (v == getView().findViewById(R.id.star3) && editRatingOn) {
+            setRating(3);
+        }
+        else if (v == getView().findViewById(R.id.star4) && editRatingOn) {
+            setRating(4);
+        }
+        else if (v == getView().findViewById(R.id.star5) && editRatingOn) {
+            setRating(5);
+        }
         else if (v == getView().findViewById(R.id.backToMenu)) {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -134,5 +119,63 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             transaction.commit();
         }
+    }
+
+    public void setStarAppearance() {
+        int i;
+        ImageButton star = new ImageButton(getContext());
+
+        // The current star rating will determine the number of filled or yellow stars
+        // depending on whether we are in editing mode or not
+        for (i = 0; i < starRating; i++) {
+            if (i == 0)
+                star.findViewById(R.id.star1);
+            else if (i == 1)
+                star.findViewById(R.id.star2);
+            else if (i == 2)
+                star.findViewById(R.id.star3);
+            else if (i == 3)
+                star.findViewById(R.id.star4);
+            else if (i == 4)
+                star.findViewById(R.id.star5);
+
+            if (editRatingOn)
+                star.setImageResource(R.drawable.filled_star);
+            else
+                star.setImageResource(R.drawable.sss);
+
+            star.setAdjustViewBounds(true);
+            star.setMaxHeight(50);
+            star.setMaxWidth(50);
+        }
+
+        // The rest of the stars will be gray or blank, depending on whether
+        // we are in editing mode or not
+        while (i < 5) {
+            if (i == 0)
+                star.findViewById(R.id.star1);
+            else if (i == 1)
+                star.findViewById(R.id.star2);
+            else if (i == 2)
+                star.findViewById(R.id.star3);
+            else if (i == 3)
+                star.findViewById(R.id.star4);
+            else if (i == 4)
+                star.findViewById(R.id.star5);
+
+            if (editRatingOn)
+                star.setImageResource(R.drawable.blank_star);
+            else
+                star.setImageResource(R.drawable.gray_star);
+
+            star.setAdjustViewBounds(true);
+            star.setMaxHeight(50);
+            star.setMaxWidth(50);
+        }
+    }
+
+    public void setRating(int numStars) {
+        starRating = numStars; // Adjust the official star rating
+        setStarAppearance(); // Change the appearance of the stars to reflect this
     }
 }
