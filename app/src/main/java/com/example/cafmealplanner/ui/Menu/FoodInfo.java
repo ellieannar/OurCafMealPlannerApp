@@ -28,6 +28,7 @@ import java.util.Vector;
 public class FoodInfo extends Fragment implements View.OnClickListener {
 
 
+    boolean editRatingOn = false;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -57,9 +58,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             }
         }
 
-        // Implement the "rate this" button
-        Button addRating = getView().findViewById(R.id.rating);
-        addRating.setOnClickListener((View.OnClickListener) this);
+        // Implement the rating and back navigation buttons
+        getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
         getView().findViewById(R.id.backToMenu).setOnClickListener(this);
 
         //allow info text to scroll
@@ -68,60 +68,20 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void onClick(View v) {
         if (v == getView().findViewById(R.id.rating)) {
-            // Get the rating the user entered
-            EditText rating = getView().findViewById(R.id.rateThis);
-            Integer numStars = Integer.valueOf(rating.getText().toString());
+            Button editRating = getView().findViewById(R.id.rating);
 
-            int i;
-            ImageView star;
-
-            // Change the number of stars the user entered to yellow
-
-            for (i = 0; i < numStars; i++) {
-
-                if (i == 0)
-                    star = getView().findViewById(R.id.star1);
-                else if (i == 1)
-                    star = getView().findViewById(R.id.star2);
-                else if (i == 2)
-                    star = getView().findViewById(R.id.star3);
-                else if (i == 3)
-                    star = getView().findViewById(R.id.star4);
-                else
-                    star = getView().findViewById(R.id.star5);
-
-                star.setImageResource(R.drawable.sss);
-                star.setAdjustViewBounds(true);
-
-
-                star.setMaxHeight(50);
-                star.setMaxWidth(50);
+            if (!editRatingOn) {
+                editRating.setText("Submit");
+                editRatingOn = true;
             }
-
-            // Change the remaining amount of stars to gray
-
-            while (i < 5) {
-                if (i == 0)
-                    star = getView().findViewById(R.id.star1);
-                else if (i == 1)
-                    star = getView().findViewById(R.id.star2);
-                else if (i == 2)
-                    star = getView().findViewById(R.id.star3);
-                else if (i == 3)
-                    star = getView().findViewById(R.id.star4);
-                else
-                    star = getView().findViewById(R.id.star5);
-
-                star.setImageResource(R.drawable.gray_star);
-
-                star.setAdjustViewBounds(true);
-                star.setMaxHeight(50);
-                star.setMaxWidth(50);
-
-                i++;
+            else {
+                editRating.setText("Edit");
+                editRatingOn = false;
             }
         }
+        /*else if ((v == getView().findViewById(R.id.star1) || v == getView().findViewById(R.id.star2) || v == getView().findViewById(R.id.star3) || v == getView().findViewById(R.id.star4) || v == getView().findViewById(R.id.star5)) && editRatingOn) {
 
+        }*/
         else if (v == getView().findViewById(R.id.backToMenu)) {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
