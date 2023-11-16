@@ -211,47 +211,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     }
 
     public void setRating(int numStars) {
-        int i;
-        ImageButton star = new ImageButton(getContext());
-
-        // Display the given number of yellow stars
-        for (i = 0; i < numStars; i++) {
-            if (i == 0)
-                star.findViewById(R.id.star1);
-            else if (i == 1)
-                star.findViewById(R.id.star2);
-            else if (i == 2)
-                star.findViewById(R.id.star3);
-            else if (i == 3)
-                star.findViewById(R.id.star4);
-            else if (i == 4)
-                star.findViewById(R.id.star5);
-
-            star.setImageResource(R.drawable.filled_star);
-            star.setAdjustViewBounds(true);
-            star.setMaxHeight(50);
-            star.setMaxWidth(50);
-        }
-
-        // The rest of the stars will be blank
-        while (i < 5) {
-            if (i == 0)
-                star.findViewById(R.id.star1);
-            else if (i == 1)
-                star.findViewById(R.id.star2);
-            else if (i == 2)
-                star.findViewById(R.id.star3);
-            else if (i == 3)
-                star.findViewById(R.id.star4);
-            else if (i == 4)
-                star.findViewById(R.id.star5);
-
-            star.setImageResource(R.drawable.blank_star);
-            star.setAdjustViewBounds(true);
-            star.setMaxHeight(50);
-            star.setMaxWidth(50);
-        }
-
         starRating = numStars; // Adjust the official star rating
+        setEditingMode();
     }
 }
