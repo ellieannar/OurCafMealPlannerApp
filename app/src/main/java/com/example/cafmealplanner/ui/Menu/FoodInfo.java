@@ -1,10 +1,8 @@
 package com.example.cafmealplanner.ui.Menu;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
 
@@ -18,12 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
 import java.util.Vector;
 
@@ -61,8 +58,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             }
         }
 
-
-
         // Implement the rating and back navigation buttons
         getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
         getView().findViewById(R.id.star1).setOnClickListener(this);
@@ -71,7 +66,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         getView().findViewById(R.id.star4).setOnClickListener(this);
         getView().findViewById(R.id.star5).setOnClickListener(this);
 
-        getView().findViewById(R.id.backToMenu).setOnClickListener(this);
+        getView().findViewById(R.id.back).setOnClickListener(this);
 
         //allow info text to scroll
         ingredientsList.setMovementMethod(new ScrollingMovementMethod());
@@ -109,17 +104,23 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         else if (v == getView().findViewById(R.id.star5) && editRatingOn) {
             setRating(5);
         }
-        else if (v == getView().findViewById(R.id.backToMenu)) {
-            // Create new fragment and transaction
+        else if (v == getView().findViewById(R.id.back)) {
+            // Get the fragment manager and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
 
-            // Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
-            // Commit the transaction
+            // Replace the current fragment with whatever came before
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                int count = fragmentManager.getBackStackEntryCount();
 
-            transaction.commit();
+                if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MENU")
+                    transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
+                else if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MEAL_INFO")
+                    transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
+
+                transaction.commit();
+            }
         }
 
     }
