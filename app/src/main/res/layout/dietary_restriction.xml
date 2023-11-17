@@ -5,9 +5,10 @@
     android:id="@+id/dietaryRestrictionLinearLayout">
 
     <!-- Checkbox allowing enable/disable -->
-    <CheckBox android:id="@+id/restrictionCheckBox"
+    <androidx.appcompat.widget.AppCompatCheckBox android:id="@+id/restrictionCheckBox"
         android:layout_width="wrap_content"
         android:layout_height="25dp"
+        android:buttonTint="@color/biolaRed"
         />
 
     <!-- Textview displaying restriction type -->

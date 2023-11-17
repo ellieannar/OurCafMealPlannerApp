@@ -214,6 +214,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
             // Replace whatever is in the fragment_container view with this fragment
+            // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
             // Commit the transaction
             transaction.commit();
