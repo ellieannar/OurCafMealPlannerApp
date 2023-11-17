@@ -83,10 +83,14 @@ public class MealInfo extends Fragment implements View.OnClickListener {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
+
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, ScheduleFragment.class, null);
-            // Commit the transaction
 
+            // Add the transaction to the back stack to support back navigation
+            transaction.addToBackStack(null);
+
+            // Commit the transaction
             transaction.commit();
         }
     }

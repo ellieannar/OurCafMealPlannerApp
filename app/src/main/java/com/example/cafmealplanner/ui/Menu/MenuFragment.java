@@ -267,8 +267,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true);
+
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+
+        // Add this transaction to the stack to support back navigation
+        transaction.addToBackStack(null);
+
         // Commit the transaction
         transaction.commit();
     }

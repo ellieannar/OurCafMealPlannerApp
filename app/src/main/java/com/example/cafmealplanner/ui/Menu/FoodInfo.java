@@ -1,10 +1,8 @@
 package com.example.cafmealplanner.ui.Menu;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.graphics.drawable.Drawable;
 
 import android.os.Bundle;
 
@@ -17,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
@@ -60,8 +56,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             }
         }
 
-
-
         // Implement the rating and back navigation buttons
         getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
         getView().findViewById(R.id.star1).setOnClickListener(this);
@@ -70,7 +64,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         getView().findViewById(R.id.star4).setOnClickListener(this);
         getView().findViewById(R.id.star5).setOnClickListener(this);
 
-        getView().findViewById(R.id.backToMenu).setOnClickListener(this);
+        getView().findViewById(R.id.back).setOnClickListener(this);
 
         //allow info text to scroll
         ingredientsList.setMovementMethod(new ScrollingMovementMethod());
@@ -107,17 +101,13 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         else if (v == getView().findViewById(R.id.star5) && editRatingOn) {
             setRating(5);
         }
-        else if (v == getView().findViewById(R.id.backToMenu)) {
-            // Create new fragment and transaction
+        else if (v == getView().findViewById(R.id.back)) {
+            // Get the fragment manager
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.setReorderingAllowed(true);
 
-            // Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
-            // Commit the transaction
-
-            transaction.commit();
+            // Remove the current fragment
+            if (fragmentManager.getBackStackEntryCount() > 0)
+                fragmentManager.popBackStack();
         }
     }
 
