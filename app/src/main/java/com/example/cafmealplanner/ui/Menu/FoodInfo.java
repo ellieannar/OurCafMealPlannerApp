@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
 import java.util.Vector;
 
@@ -102,12 +103,22 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             setRating(5);
         }
         else if (v == getView().findViewById(R.id.back)) {
-            // Get the fragment manager
+            // Get the fragment manager and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
 
-            // Remove the current fragment
-            if (fragmentManager.getBackStackEntryCount() > 0)
-                fragmentManager.popBackStack();
+            // Replace the current fragment with whatever came before
+            if (fragmentManager.getBackStackEntryCount() > 0) {
+                int count = fragmentManager.getBackStackEntryCount();
+
+                if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MENU")
+                    transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
+                else if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MEAL_INFO")
+                    transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
+
+                transaction.commit();
+            }
         }
     }
 

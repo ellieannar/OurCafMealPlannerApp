@@ -88,7 +88,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
             transaction.replace(R.id.nav_host_fragment_activity_main, ScheduleFragment.class, null);
 
             // Add the transaction to the back stack to support back navigation
-            transaction.addToBackStack(null);
+            transaction.addToBackStack("MEAL_INFO");
 
             // Commit the transaction
             transaction.commit();
