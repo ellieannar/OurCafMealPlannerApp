@@ -147,13 +147,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             star.setMaxHeight(50);
             star.setMaxWidth(50);
         }
-
-        i++;
-
-
-
-
-
     }
 
     public void setRating(int numStars) {

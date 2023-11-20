@@ -58,7 +58,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         // Add some meal views
 
-        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
+        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.mealLinearLayout);
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
