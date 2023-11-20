@@ -1,5 +1,7 @@
 package com.example.cafmealplanner.ui.Schedule;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMealInfoBinding;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.ui.Menu.FoodInfo;
 import com.example.cafmealplanner.ui.Menu.mealView;
 
 import android.widget.ImageButton;
@@ -58,7 +61,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         // Add some meal views
 
-        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.mealLinearLayout);
+        LinearLayout dinnerLinearLayout = (LinearLayout) getView().findViewById(R.id.mealLinearLayout);
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
@@ -86,9 +89,6 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, ScheduleFragment.class, null);
-
-            // Add the transaction to the back stack to support back navigation
-            transaction.addToBackStack("MEAL_INFO");
 
             // Commit the transaction
             transaction.commit();

@@ -272,7 +272,17 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
 
         // Add this transaction to the stack to support back navigation
-        transaction.addToBackStack("MENU");
+        int count = fragmentManager.getBackStackEntryCount();
+
+        // Log the last place food info was called from
+        if (count > 0) {
+            if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "SCHEDULE") {
+                transaction.addToBackStack("MEAL_INFO");
+            } else {
+                transaction.addToBackStack("MENU");
+            }
+        }
+
 
         // Commit the transaction
         transaction.commit();

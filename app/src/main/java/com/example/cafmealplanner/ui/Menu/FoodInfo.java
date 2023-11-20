@@ -111,9 +111,10 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             transaction.setReorderingAllowed(true);
 
             // Replace the current fragment with whatever came before
-            if (fragmentManager.getBackStackEntryCount() > 0) {
-                int count = fragmentManager.getBackStackEntryCount();
+            //transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
+            int count = fragmentManager.getBackStackEntryCount();
 
+            if (count > 0) {
                 if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MENU")
                     transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
                 else if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MEAL_INFO")
