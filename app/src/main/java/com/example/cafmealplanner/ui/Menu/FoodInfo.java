@@ -4,11 +4,15 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -33,7 +37,11 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         container.removeAllViews();
+
+
+
         return inflater.inflate(R.layout.fragment_food_info, container, false);
     }
 

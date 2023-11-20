@@ -50,6 +50,9 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         View root = binding.getRoot();
         container.removeAllViews();
 
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.registerReceiver(receiver, new IntentFilter("filter_string"));
+
         return root;
     }
 
@@ -95,11 +98,27 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         }
     }
 
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (intent != null && intent.getExtras().getString("audience").equals("forMealInfo")) {
+                displayFoodInfo();
+            }
+        }
+    };
 
+    private void displayFoodInfo() {
+        // Create new fragment and transaction
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        transaction.setReorderingAllowed(true);
 
+        // Replace whatever is in the fragment_container view with this fragment
+        transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
 
+        transaction.addToBackStack("MEAL_INFO");
 
-
-
-
+        // Commit the transaction
+        transaction.commit();
+    }
 }

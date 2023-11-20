@@ -228,9 +228,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
 
-        // Add this transaction to the back stack to support back navigation for the food info page
-        transaction.addToBackStack("SCHEDULE");
-
         // Commit the transaction
         transaction.commit();
     }
