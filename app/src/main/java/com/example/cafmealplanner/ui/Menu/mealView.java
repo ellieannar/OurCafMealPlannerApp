@@ -85,6 +85,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
 
     //allows caller to set the meal name
     public void setMealName(String name) {
+        nameOfMealTextView.setTextSize(20);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         nameOfMealTextView.setText(name);
     }

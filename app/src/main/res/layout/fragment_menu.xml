@@ -87,19 +87,19 @@
         >
 
     <!-- Breakfast textview -->
-    <TextView
-        android:id="@+id/breakfastTextView"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:text="@string/breakfast_text"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalLine"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="5dp"
-        android:textSize="30sp"
-        android:textColor="@color/biolaBlack"
+        <TextView
+            android:id="@+id/breakfastTextView"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/breakfast_text"
+            android:textColor="@color/biolaBlack"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
 
-    />
+            app:layout_constraintTop_toBottomOf="@+id/horizontalLine" />
     <!-- Food options -->
     <LinearLayout
         android:id = "@+id/breakfastLinearLayout"
@@ -116,15 +116,15 @@
             android:id="@+id/lunchTextView"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:text="@string/lunch_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/breakfastLinearLayout"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
-            android:textSize="30sp"
+            android:layout_marginTop="10dp"
+            android:text="@string/lunch_text"
             android:textColor="@color/biolaBlack"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
 
-            />
+            app:layout_constraintTop_toBottomOf="@+id/breakfastLinearLayout" />
     <LinearLayout
         android:id = "@+id/lunchLinearLayout"
         android:layout_width="match_parent"
@@ -141,15 +141,15 @@
             android:id="@+id/dinnerTextView"
             android:layout_width="150dp"
             android:layout_height="40dp"
-            android:text="@string/dinner_text"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/lunchLinearLayout"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
-            android:textSize="30sp"
+            android:layout_marginTop="10dp"
+            android:text="@string/dinner_text"
             android:textColor="@color/biolaBlack"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
 
-            />
+            app:layout_constraintTop_toBottomOf="@+id/lunchLinearLayout" />
         <LinearLayout
             android:id = "@+id/dinnerLinearLayout"
             android:layout_width="match_parent"
