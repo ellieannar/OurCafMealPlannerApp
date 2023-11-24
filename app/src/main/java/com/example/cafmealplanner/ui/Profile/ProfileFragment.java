@@ -55,7 +55,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         int count = manager.getBackStackEntryCount();
         if (count > 0) {
-            Log.d("PROFILE", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+            Log.d("PROFILE", "Attempting to add the profile page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
         }
 
         return root;

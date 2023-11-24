@@ -57,7 +57,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         int count = manager.getBackStackEntryCount();
         if (count > 0) {
-            Log.d("MEAL_INFO", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+            Log.d("MEAL_INFO", "Attempting to add the meal info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
         }
 
         return root;
