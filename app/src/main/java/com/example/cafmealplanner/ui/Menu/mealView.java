@@ -1,5 +1,6 @@
 package com.example.cafmealplanner.ui.Menu;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
@@ -13,29 +14,28 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
+import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
 
 
 public class mealView extends FrameLayout implements View.OnClickListener {
-
-
     public enum TAG_TYPE {
         VEGAN, GLUTEN_FREE, HUMANE, FARM_FRESH,
         LOCALLY_CRAFTED, VEGETARIAN, SEAFOOD
     }
 
-
     private TextView nameOfMealTextView;
     private LinearLayout tagsLinearLayout;
     private Button infoButton;
 
+    // String to be populated by either MenuFragment or MealInfo
+    public String parentActivity = "back_nav_support";
 
     public mealView(@NonNull Context context) {
         super(context);
         initMealView(context);
-
     }
 
     public mealView(@NonNull Context context, AttributeSet attributeSet){
@@ -78,8 +78,8 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         Intent intent = new Intent("filter_string");
         intent.putExtra("mealName", nameOfMealTextView.getText().toString());
 
-        intent.putExtra("audience", "forMenu"); // has to be conditional
         // put your all data using put extra
+        intent.putExtra("audience", "forMenu");
 
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }

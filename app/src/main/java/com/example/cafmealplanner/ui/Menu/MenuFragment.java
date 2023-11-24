@@ -55,6 +55,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         View root = binding.getRoot();
         container.removeAllViews();
 
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("MENU");
+        transaction.commit();
+
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("MENU", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
 
         //button clicks manager
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
@@ -84,8 +93,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         // Display initial date
         TextView label = getView().findViewById(R.id.dateTextView);
         label.setText(monthOfYear[month] + " " + day + ", " + year);
-
-
 
         // views to add meal subview meals to
         LinearLayout breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
@@ -261,7 +268,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-
     private void displayFoodInfo() {
         // Create new fragment and transaction
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -270,8 +276,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // Replace whatever is in the fragment_container view with this fragment
         transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
-
-        transaction.addToBackStack("MENU");
 
         // Commit the transaction
         transaction.commit();

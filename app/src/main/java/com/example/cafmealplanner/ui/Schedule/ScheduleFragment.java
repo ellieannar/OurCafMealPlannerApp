@@ -44,6 +44,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
         container.removeAllViews();
 
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("SCHEDULE");
+        transaction.commit();
+
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("SCHEDULE", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
 
         //button clicks manager
         LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
@@ -67,7 +76,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         setupLinearLayouts();
         Button editButton = view.findViewById(R.id.edit_schedule);
         editButton.setOnClickListener(this);
-
     }
 
     void setupLinearLayouts() {

@@ -38,7 +38,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     private MealInfoViewModel mViewModel;
     private FragmentMealInfoBinding binding;
 
-    Vector<mealView> dinnerMeals;
+    Vector<mealView> meals;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -50,8 +50,15 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         View root = binding.getRoot();
         container.removeAllViews();
 
-        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
-        lbm.registerReceiver(receiver, new IntentFilter("filter_string"));
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("MEAL_INFO");
+        transaction.commit();
+
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("MEAL_INFO", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
 
         return root;
     }
@@ -68,16 +75,17 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
-        dinnerMeals = new Vector<mealView>(5);
+        meals = new Vector<mealView>(5);
         for (int i = 0; i < 5; i++) {
             mealView temp = new mealView(getContext());
             temp.setMealName("PASTA");
             temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-            dinnerMeals.add(temp);
+            meals.add(temp);
         }
 
-        for (int i = 0; i < dinnerMeals.size(); i++) {
-            dinnerItems.addView(dinnerMeals.get(i));
+
+        for (int i = 0; i < meals.size(); i++) {
+            dinnerItems.addView(meals.get(i));
         }
 
         dinnerLinearLayout.addView(dinnerItems);
@@ -96,29 +104,5 @@ public class MealInfo extends Fragment implements View.OnClickListener {
             // Commit the transaction
             transaction.commit();
         }
-    }
-
-    public BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent != null && intent.getExtras().getString("audience").equals("forMealInfo")) {
-                displayFoodInfo();
-            }
-        }
-    };
-
-    private void displayFoodInfo() {
-        // Create new fragment and transaction
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setReorderingAllowed(true);
-
-        // Replace whatever is in the fragment_container view with this fragment
-        transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
-
-        transaction.addToBackStack("MEAL_INFO");
-
-        // Commit the transaction
-        transaction.commit();
     }
 }

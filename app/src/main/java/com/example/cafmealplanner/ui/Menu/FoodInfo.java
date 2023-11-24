@@ -4,6 +4,7 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -40,12 +41,21 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
         container.removeAllViews();
 
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("FOOD_INFO");
+        transaction.commit();
 
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("FOOD_INFO", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
 
         return inflater.inflate(R.layout.fragment_food_info, container, false);
     }
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
         // Create a vector of strings to keep all the ingredients
         Vector<String> ingredientNames = new Vector<String>(3);
         ingredientNames.add(new String("White jasmine rice"));
@@ -118,18 +128,16 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
 
-            // Replace the current fragment with whatever came before
-            //transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
             int count = fragmentManager.getBackStackEntryCount();
-
-            if (count > 0) {
-                if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MENU")
+            if (count > 1) {
+                if (fragmentManager.getBackStackEntryAt(count - 2).getName().equals("FOOD_INFO")) {
                     transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
-                else if (fragmentManager.getBackStackEntryAt(count - 1).getName() == "MEAL_INFO")
+                } else if (fragmentManager.getBackStackEntryAt(count - 2).getName().equals("MEAL_INFO")) {
                     transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
-
-                transaction.commit();
+                }
             }
+
+            transaction.commit();
         }
 
     }
