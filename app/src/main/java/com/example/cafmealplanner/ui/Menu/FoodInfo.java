@@ -41,6 +41,16 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
         container.removeAllViews();
 
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("FOOD_INFO");
+        transaction.commit();
+
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("FOOD_INFO", "Attempting to add the food info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
+
         return inflater.inflate(R.layout.fragment_food_info, container, false);
     }
 
@@ -120,10 +130,10 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             int count = fragmentManager.getBackStackEntryCount();
             if (count > 0) {
-                Log.d("BACK_NAV", "Attempting to go back from FoodInfo. The top of the stack is now"+fragmentManager.getBackStackEntryAt(count-1).getName());
-                if (fragmentManager.getBackStackEntryAt(count - 1).getName().equals("FOOD_INFO")) {
+                Log.d("BACK_NAV", "Attempting to go back from FoodInfo. The top of the stack is now "+fragmentManager.getBackStackEntryAt(count-1).getName());
+                if (fragmentManager.getBackStackEntryAt(count - 2).getName().equals("MENU")) {
                     transaction.replace(R.id.nav_host_fragment_activity_main, MenuFragment.class, null);
-                } else if (fragmentManager.getBackStackEntryAt(count - 1).getName().equals("MEAL_INFO")) {
+                } else if (fragmentManager.getBackStackEntryAt(count - 2).getName().equals("MEAL_INFO")) {
                     transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
                 }
             }
