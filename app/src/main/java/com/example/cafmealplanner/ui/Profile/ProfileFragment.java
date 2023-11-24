@@ -18,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cafmealplanner.R;
@@ -46,13 +48,22 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         View root = binding.getRoot();
         container.removeAllViews();
 
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("PROFILE");
+        transaction.commit();
+
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("PROFILE", "Attempting to add the profile page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
+
         return root;
     }
 
 
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-
         Button editButton = getView().findViewById(R.id.profileEditButton);
         //spinner hidden to start
         hideSpinner();
