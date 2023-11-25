@@ -1,5 +1,7 @@
 package com.example.cafmealplanner.ui.Schedule;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMealInfoBinding;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.ui.Menu.FoodInfo;
 import com.example.cafmealplanner.ui.Menu.mealView;
 
 import android.widget.ImageButton;
@@ -35,7 +38,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     private MealInfoViewModel mViewModel;
     private FragmentMealInfoBinding binding;
 
-    Vector<mealView> dinnerMeals;
+    Vector<mealView> meals;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,6 +49,16 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         binding = FragmentMealInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         container.removeAllViews();
+
+        FragmentManager manager = getActivity().getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.addToBackStack("MEAL_INFO");
+        transaction.commit();
+
+        int count = manager.getBackStackEntryCount();
+        if (count > 0) {
+            Log.d("MEAL_INFO", "Attempting to add the meal info page to the back stack. The top of the stack is now " + manager.getBackStackEntryAt(count - 1).getName());
+        }
 
         return root;
     }
@@ -58,20 +71,21 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         // Add some meal views
 
-        LinearLayout dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
+        LinearLayout dinnerLinearLayout = (LinearLayout) getView().findViewById(R.id.mealLinearLayout);
         LinearLayout dinnerItems = new LinearLayout(getContext());
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
-        dinnerMeals = new Vector<mealView>(5);
+        meals = new Vector<mealView>(5);
         for (int i = 0; i < 5; i++) {
             mealView temp = new mealView(getContext());
             temp.setMealName("PASTA");
             temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-            dinnerMeals.add(temp);
+            meals.add(temp);
         }
 
-        for (int i = 0; i < dinnerMeals.size(); i++) {
-            dinnerItems.addView(dinnerMeals.get(i));
+
+        for (int i = 0; i < meals.size(); i++) {
+            dinnerItems.addView(meals.get(i));
         }
 
         dinnerLinearLayout.addView(dinnerItems);
@@ -87,19 +101,8 @@ public class MealInfo extends Fragment implements View.OnClickListener {
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, ScheduleFragment.class, null);
 
-            // Add the transaction to the back stack to support back navigation
-            transaction.addToBackStack("MEAL_INFO");
-
             // Commit the transaction
             transaction.commit();
         }
     }
-
-
-
-
-
-
-
-
 }
