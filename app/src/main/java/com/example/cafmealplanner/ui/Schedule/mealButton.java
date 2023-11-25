@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
@@ -19,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
@@ -80,13 +82,21 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
     public void setFill(buttonSelection b) {
         selected = b;
-        if (b == buttonSelection.FILLED) {
-            button.setImageResource(R.drawable.baseline_circle_24);
-            button.setColorFilter(Color.argb(255, 194, 216, 188));
-
+        if (isEditing) {
+            if (b == buttonSelection.FILLED) {
+                button.setColorFilter(getResources().getColor(R.color.green, null));
+            } else {
+                button.setColorFilter(getResources().getColor(R.color.biolaBlack, null));
+            }
         } else {
-            button.setImageResource(R.drawable.baseline_circle_24);
-            button.setColorFilter(Color.argb(20, 34, 31, 31));
+            if (b == buttonSelection.FILLED) {
+                button.setImageResource(R.drawable.baseline_circle_24);
+                button.setColorFilter(getResources().getColor(R.color.green, null));
+            } else {
+                button.setImageResource(R.drawable.baseline_circle_24);
+                button.setColorFilter(getResources().getColor(R.color.biolaBlack, null));
+
+            }
         }
     }
 
@@ -137,6 +147,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
 
     public void editIcon(View view) {
+
         if (selected == buttonSelection.FILLED) {
             selected = buttonSelection.EMPTY;
         } else {
