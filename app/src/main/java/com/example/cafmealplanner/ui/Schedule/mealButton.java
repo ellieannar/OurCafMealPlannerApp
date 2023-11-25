@@ -1,7 +1,9 @@
 package com.example.cafmealplanner.ui.Schedule;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.AttributeSet;
@@ -42,7 +44,6 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
     private LinearLayout linearLayout;
     private ImageButton button;
-    private Button editButton;
     private buttonSelection selected;
     private dayOfWeek day = dayOfWeek.SUNDAY;
     private mealTime meal = mealTime.BREAKFAST;
@@ -70,8 +71,10 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
         LayoutInflater.from(context).inflate(R.layout.meal_button, this, true);
         linearLayout = findViewById(R.id.mealButtonLinearLayout);
         button = findViewById(R.id.imgButton);
-        editButton = findViewById(R.id.edit_schedule);
         button.setOnClickListener(this);
+        //button clicks manager
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.registerReceiver(receiver, new IntentFilter("filter_string"));
     }
 
 
@@ -115,41 +118,48 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        //enter editing mode
-        if (view == getRootView().findViewById(R.id.edit_schedule)) {
-            Log.d("EDIT BUTTON CLICKED", "onClick: EDIT");
-            isEditing = !isEditing;
-            if (isEditing) {
-                editButton.setText("Done");
-            } else {
-                editButton.setText("Edit");
-            }
+        if (!isEditing) {
+            //Alert app that more info about specific meal should now be displayed.
+            Intent intent = new Intent("filter_string");
+            intent.putExtra("day", getDay());
+            intent.putExtra("time", getMeal());
+            intent.putExtra("audience", "forSchedule");
+            // put your all data using put extra
 
-        } else {
-            if (!isEditing) {
-                //Alert app that more info about specific meal should now be displayed.
-                Intent intent = new Intent("filter_string");
-                intent.putExtra("day", getDay());
-                intent.putExtra("time", getMeal());
-                intent.putExtra("audience", "forSchedule");
-                // put your all data using put extra
-
-                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-            }  else {
-                //they're editing now
-                editIcon(view);
-            }
-
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        }  else {
+            //they're editing now
+            editIcon(view);
         }
+
 
     }
 
 
     public void editIcon(View view) {
-        if (getFill()) {
-            Log.d("EDIT ICON TESTING", "editIcon: FILLED");
+        if (selected == buttonSelection.FILLED) {
+            selected = buttonSelection.EMPTY;
+        } else {
+            selected = buttonSelection.FILLED;
         }
+        setFill(selected);
     }
+
+
+    //button clicks
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent != null && intent.getExtras().getString("audience").equals("edit_schedule")) {
+                isEditing = !isEditing;
+
+            }
+        }
+
+
+    };
+
 
 
 

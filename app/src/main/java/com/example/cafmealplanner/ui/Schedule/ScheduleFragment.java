@@ -32,6 +32,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     private FragmentScheduleBinding binding;
     private mealButton sundayButtons[] = new mealButton[3];
+    private Button editButton;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -74,7 +75,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         setupLinearLayouts();
-        Button editButton = view.findViewById(R.id.edit_schedule);
+        editButton = view.findViewById(R.id.edit_schedule);
+        editButton.setText("EDIT");
         editButton.setOnClickListener(this);
     }
 
@@ -211,6 +213,27 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     //click handler
     public void onClick(View v) {
+        if (v == editButton) {
+            //Alert app that editing mode selected for schedule
+            Intent intent = new Intent("filter_string");
+            //Log.d("EDIT SCHEDULE", "onClick: ");
+            //intent.putExtra("mealName", nameOfMealTextView.getText().toString());
+
+            // put your all data using put extra
+            intent.putExtra("audience", "edit_schedule");
+
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            Log.d("BROADCAST INTENT", "success ");
+
+            //update text
+            if (editButton.getText() == "EDIT") {
+                editButton.setText("DONE");
+            } else {
+                editButton.setText("EDIT");
+            }
+
+        }
+
         /*
         Button b = getView().findViewById(R.id.edit_schedule);
         if (v == b) {
