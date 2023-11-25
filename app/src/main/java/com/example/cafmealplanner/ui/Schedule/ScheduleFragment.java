@@ -25,6 +25,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.resource;
 import com.example.cafmealplanner.ui.Menu.FoodInfo;
 import com.example.cafmealplanner.ui.Menu.FoodInfoViewModel;
 
@@ -32,7 +33,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     private FragmentScheduleBinding binding;
     private mealButton sundayButtons[] = new mealButton[3];
-
+    private Button editButton;
+    private resource resources = new resource();
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -74,143 +76,60 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         setupLinearLayouts();
-        Button editButton = view.findViewById(R.id.edit_schedule);
+        editButton = view.findViewById(R.id.edit_schedule);
+        editButton.setText("EDIT");
         editButton.setOnClickListener(this);
     }
 
     void setupLinearLayouts() {
         //Sunday
-        LinearLayout day = getView().findViewById(R.id.sundayLinearLayout);
-        mealButton m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.SUNDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        sundayButtons[0] = m;
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.SUNDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.SUNDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
 
-        //Monday
-        day = getView().findViewById(R.id.mondayLinearLayout);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.MONDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.MONDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.MONDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
+        mealButton.dayOfWeek days[] = {mealButton.dayOfWeek.SUNDAY, mealButton.dayOfWeek.MONDAY, mealButton.dayOfWeek.TUESDAY, mealButton.dayOfWeek.WEDNESDAY, mealButton.dayOfWeek.THURSDAY, mealButton.dayOfWeek.FRIDAY, mealButton.dayOfWeek.SATURDAY};
+        mealButton.mealTime times[] = {mealButton.mealTime.BREAKFAST, mealButton.mealTime.LUNCH, mealButton.mealTime.DINNER};
+        LinearLayout dayLayouts[] = {getView().findViewById(R.id.sundayLinearLayout), getView().findViewById(R.id.mondayLinearLayout),getView().findViewById(R.id.tuesdayLinearLayout),getView().findViewById(R.id.wednesdayLinearLayout),getView().findViewById(R.id.thursdayLinearLayout),getView().findViewById(R.id.fridayLinearLayout),getView().findViewById(R.id.saturdayLinearLayout)};
+        LinearLayout day;
+        for (int i = 0; i < 7; i++) {
+            day = dayLayouts[i];
+            for (int j = 0; j < 3; j++) {
+                mealButton m = new mealButton(getContext());
+                m.setDay(days[i]);
+                m.setMeal(times[j]);
+                if (resources.getMealStatus(i, j)) {
+                    m.setFill(mealButton.buttonSelection.FILLED);
+                } else {
+                    m.setFill(mealButton.buttonSelection.EMPTY);
+                }
+                day.addView(m);
+            }
+        }
 
-        //Tuesday
-        day = getView().findViewById(R.id.tuesdayLinearLayout);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.TUESDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.TUESDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.TUESDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-
-        //Wednesday
-        day = getView().findViewById(R.id.wednesdayLinearLayout);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.WEDNESDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.WEDNESDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.WEDNESDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-
-        //Thursday
-        day = getView().findViewById(R.id.thursdayLinearLayout);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.THURSDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.THURSDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.THURSDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-
-        //Friday
-        day = getView().findViewById(R.id.fridayLinearLayout);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.FRIDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.FRIDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.FRIDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-
-        //Saturday
-        day = getView().findViewById(R.id.saturdayLinearLayout);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.SATURDAY);
-        m.setMeal(mealButton.mealTime.BREAKFAST);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.SATURDAY);
-        m.setMeal(mealButton.mealTime.LUNCH);
-        m.setFill(mealButton.buttonSelection.EMPTY);
-        day.addView(m);
-        m = new mealButton(getContext());
-        m.setDay(mealButton.dayOfWeek.SATURDAY);
-        m.setMeal(mealButton.mealTime.DINNER);
-        m.setFill(mealButton.buttonSelection.FILLED);
-        day.addView(m);
 
     }
 
 
     //click handler
     public void onClick(View v) {
+        if (v == editButton) {
+            //Alert app that editing mode selected for schedule
+            Intent intent = new Intent("filter_string");
+            //Log.d("EDIT SCHEDULE", "onClick: ");
+            //intent.putExtra("mealName", nameOfMealTextView.getText().toString());
+
+            // put your all data using put extra
+            intent.putExtra("audience", "edit_schedule");
+
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            Log.d("BROADCAST INTENT", "success ");
+
+            //update text
+            if (editButton.getText() == "EDIT") {
+                editButton.setText("DONE");
+            } else {
+                editButton.setText("EDIT");
+            }
+
+        }
+
         /*
         Button b = getView().findViewById(R.id.edit_schedule);
         if (v == b) {

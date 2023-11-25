@@ -1,10 +1,14 @@
 package com.example.cafmealplanner.ui.Schedule;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
@@ -44,6 +49,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
     private buttonSelection selected;
     private dayOfWeek day = dayOfWeek.SUNDAY;
     private mealTime meal = mealTime.BREAKFAST;
+    private boolean isEditing = false;
 
     public mealButton(@NonNull Context context) {
         super(context);
@@ -67,17 +73,30 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
         LayoutInflater.from(context).inflate(R.layout.meal_button, this, true);
         linearLayout = findViewById(R.id.mealButtonLinearLayout);
         button = findViewById(R.id.imgButton);
-
         button.setOnClickListener(this);
+        //button clicks manager
+        LocalBroadcastManager lbm = LocalBroadcastManager.getInstance(getContext());
+        lbm.registerReceiver(receiver, new IntentFilter("filter_string"));
     }
 
 
     public void setFill(buttonSelection b) {
         selected = b;
-        if (b == buttonSelection.FILLED) {
-            button.setImageResource(R.drawable.baseline_circle_24);
-            button.setColorFilter(Color.argb(255, 194, 216, 188));
+        if (isEditing) {
+            if (b == buttonSelection.FILLED) {
+                button.setColorFilter(getResources().getColor(R.color.green, null));
+            } else {
+                button.setColorFilter(getResources().getColor(R.color.biolaBlack, null));
+            }
+        } else {
+            if (b == buttonSelection.FILLED) {
+                button.setImageResource(R.drawable.baseline_circle_24);
+                button.setColorFilter(getResources().getColor(R.color.green, null));
+            } else {
+                button.setImageResource(R.drawable.baseline_circle_24);
+                button.setColorFilter(getResources().getColor(R.color.biolaBlack, null));
 
+            }
         }
     }
 
@@ -105,18 +124,53 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
     }
 
 
+
+
     @Override
     public void onClick(View view){
+        if (!isEditing) {
+            //Alert app that more info about specific meal should now be displayed.
+            Intent intent = new Intent("filter_string");
+            intent.putExtra("day", getDay());
+            intent.putExtra("time", getMeal());
+            intent.putExtra("audience", "forSchedule");
+            // put your all data using put extra
 
-        //Alert app that more info about specific meal should now be displayed.
-        Intent intent = new Intent("filter_string");
-        intent.putExtra("day", getDay());
-        intent.putExtra("time", getMeal());
-        intent.putExtra("audience", "forSchedule");
-        // put your all data using put extra
+            LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+        }  else {
+            //they're editing now
+            editIcon(view);
+        }
 
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+
     }
+
+
+    public void editIcon(View view) {
+
+        if (selected == buttonSelection.FILLED) {
+            selected = buttonSelection.EMPTY;
+        } else {
+            selected = buttonSelection.FILLED;
+        }
+        setFill(selected);
+    }
+
+
+    //button clicks
+    public BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            if (intent != null && intent.getExtras().getString("audience").equals("edit_schedule")) {
+                isEditing = !isEditing;
+
+            }
+        }
+
+
+    };
+
 
 
 

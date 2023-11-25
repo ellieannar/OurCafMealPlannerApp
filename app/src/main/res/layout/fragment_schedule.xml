@@ -9,16 +9,6 @@
 <!-- Daily/Weekly Spinner-->
 
     <!--Breakfast -->
-    <Spinner
-        android:id="@+id/dailyWeeklySpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="4dp"
-        android:entries="@array/dropdown_schedule"
-        android:spinnerMode="dropdown"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/breakfastScheduleTextView"
