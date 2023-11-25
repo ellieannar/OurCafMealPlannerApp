@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,9 +42,11 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
     private LinearLayout linearLayout;
     private ImageButton button;
+    private Button editButton;
     private buttonSelection selected;
     private dayOfWeek day = dayOfWeek.SUNDAY;
     private mealTime meal = mealTime.BREAKFAST;
+    private boolean isEditing = false;
 
     public mealButton(@NonNull Context context) {
         super(context);
@@ -67,7 +70,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
         LayoutInflater.from(context).inflate(R.layout.meal_button, this, true);
         linearLayout = findViewById(R.id.mealButtonLinearLayout);
         button = findViewById(R.id.imgButton);
-
+        editButton = findViewById(R.id.edit_schedule);
         button.setOnClickListener(this);
     }
 
@@ -78,6 +81,9 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
             button.setImageResource(R.drawable.baseline_circle_24);
             button.setColorFilter(Color.argb(255, 194, 216, 188));
 
+        } else {
+            button.setImageResource(R.drawable.baseline_circle_24);
+            button.setColorFilter(Color.argb(20, 34, 31, 31));
         }
     }
 
@@ -105,17 +111,44 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
     }
 
 
+
+
     @Override
     public void onClick(View view){
+        //enter editing mode
+        if (view == getRootView().findViewById(R.id.edit_schedule)) {
+            Log.d("EDIT BUTTON CLICKED", "onClick: EDIT");
+            isEditing = !isEditing;
+            if (isEditing) {
+                editButton.setText("Done");
+            } else {
+                editButton.setText("Edit");
+            }
 
-        //Alert app that more info about specific meal should now be displayed.
-        Intent intent = new Intent("filter_string");
-        intent.putExtra("day", getDay());
-        intent.putExtra("time", getMeal());
-        intent.putExtra("audience", "forSchedule");
-        // put your all data using put extra
+        } else {
+            if (!isEditing) {
+                //Alert app that more info about specific meal should now be displayed.
+                Intent intent = new Intent("filter_string");
+                intent.putExtra("day", getDay());
+                intent.putExtra("time", getMeal());
+                intent.putExtra("audience", "forSchedule");
+                // put your all data using put extra
 
-        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+            }  else {
+                //they're editing now
+                editIcon(view);
+            }
+
+        }
+
+    }
+
+
+    public void editIcon(View view) {
+        if (getFill()) {
+            Log.d("EDIT ICON TESTING", "editIcon: FILLED");
+        }
     }
 
 
