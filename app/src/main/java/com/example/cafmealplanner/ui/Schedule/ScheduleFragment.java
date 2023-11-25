@@ -228,16 +228,22 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     }
 
     private void displayMealInfo() {
-        // Create new fragment and transaction
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setReorderingAllowed(true);
+        // Ensure activity is properly initialized
+        if (getActivity() != null) {
+            // Create new fragment and transaction
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.setReorderingAllowed(true);
 
-        // Replace whatever is in the fragment_container view with this fragment
-        transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
+            // Replace whatever is in the fragment_container view with this fragment
+            transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
 
-        // Commit the transaction
-        transaction.commit();
+            // Commit the transaction
+            transaction.commit();
+        } else {
+            Log.d("NAVIGATION", "for some reason getactivity is null");
+        }
+
     }
 
     @Override
