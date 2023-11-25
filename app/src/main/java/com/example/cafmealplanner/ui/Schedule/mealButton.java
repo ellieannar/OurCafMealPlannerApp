@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.resource;
 
 import org.w3c.dom.Text;
 
@@ -44,6 +45,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
         BREAKFAST, LUNCH, DINNER
     }
 
+    private resource r = new resource();
     private LinearLayout linearLayout;
     private ImageButton button;
     private buttonSelection selected;
@@ -147,7 +149,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
 
     public void editIcon(View view) {
-
+        r.changeMeal(day.ordinal(), meal.ordinal());
         if (selected == buttonSelection.FILLED) {
             selected = buttonSelection.EMPTY;
         } else {

@@ -5,7 +5,7 @@ import android.util.Log;
 
 public class resource {
 
-    public static boolean[][] plannedMeals = new boolean[7][3];
+    private static boolean[][] plannedMeals = new boolean[7][3];
 
     public resource() {
 
@@ -20,7 +20,8 @@ public class resource {
     }
 
     //func for changing the status of a meal
-    public void changeMeal(int day, int meal) {
+    public static void changeMeal(int day, int meal) {
+        Log.d("EDITING", "editing: " + day + " " + meal);
         if (plannedMeals[day][meal]) {
             plannedMeals[day][meal] = false;
         } else {
