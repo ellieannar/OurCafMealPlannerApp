@@ -8,13 +8,15 @@ public class resource {
     private static boolean[][] plannedMeals = new boolean[7][3];
 
     public resource() {
-
+        /*
         //set up planned meals - initialize all to true
         for (int i = 0; i < 7; i++) {
             for (int j = 0; j < 3; j++) {
                 plannedMeals[i][j] = true;
             }
         }
+
+         */
 
 
     }
