@@ -12,7 +12,7 @@ public class FoodItem {
     // Each food item stores the title, desc, restrictions, and location
     String location;
     ArrayList<restrictionType> restrictions = new ArrayList<restrictionType>();
-    String title;
+    public String title;
     String description;
 
     FoodItem () {

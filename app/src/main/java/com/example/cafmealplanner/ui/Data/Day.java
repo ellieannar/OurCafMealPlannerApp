@@ -1,9 +1,13 @@
 package com.example.cafmealplanner.ui.Data;
 
+import android.util.Log;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.util.concurrent.CompletableFuture;
 
 public class Day {
 
@@ -13,8 +17,12 @@ public class Day {
     Meal dinner = new Meal();
 
     //Constructor
-    Day() {
+    public Day() {
         super();
+    }
+
+    public CompletableFuture<Day> connectAsync(String date) {
+        return CompletableFuture.supplyAsync(() -> connect(date));
     }
 
 
@@ -33,7 +41,6 @@ public class Day {
 
             //All the food items for the given day
             Elements foodItems = biolaSite.getElementsByClass("h4 site-panel__daypart-item-title");
-
 
 
             for (Element item : foodItems) {
