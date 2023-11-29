@@ -1,22 +1,16 @@
 package com.example.cafmealplanner.ui.Menu;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,13 +21,54 @@ import android.widget.TextView;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class FoodInfo extends Fragment implements View.OnClickListener {
 
 
     boolean editRatingOn = false;
-    int starRating = 0; // Should be obtained from a database
+    private static final String ns = null;
+    int starRating = 0;
+
+    public List parse(InputStream in) throws XmlPullParserException, IOException {
+        try {
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in, null);
+            parser.nextTag();
+            return readFeed(parser);
+        } finally {
+            in.close();
+        }
+    }
+
+    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+        List ratings = new ArrayList();
+
+        parser.require(XmlPullParser.START_TAG, ns, "feed");
+        while(parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+
+            String name = parser.getName();
+
+            if (name.equals("rating")) {
+                //ratings.add(readEntry(parser));
+            }
+        }
+        return ratings;
+    }
+
+    /*private Object readEntry(XmlPullParser parser) {
+    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -107,7 +142,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
                 setStarAppearance(); // Change the appearance of the stars to indicate non-editing mode
             }
         }
-        else if (v == getView().findViewById(R.id.star1)) { // Only edit the star rating in editing mode
+        else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
             setRating(1);
         }
         else if (v == getView().findViewById(R.id.star2) && editRatingOn) {
