@@ -1,4 +1,4 @@
-package com.example.cafmealplanner;
+package com.example.cafmealplanner.ui.Data;
 
 
 import android.util.Log;
@@ -6,7 +6,7 @@ import android.util.Log;
 public class resource {
 
     private static boolean[][] plannedMeals = new boolean[7][3];
-
+    private static int selectedMeals = 0;
     public resource() {
         /*
         //set up planned meals - initialize all to true
@@ -25,8 +25,10 @@ public class resource {
     public static void changeMeal(int day, int meal) {
         Log.d("EDITING", "editing: " + day + " " + meal);
         if (plannedMeals[day][meal]) {
+            selectedMeals--;
             plannedMeals[day][meal] = false;
         } else {
+            selectedMeals++;
             plannedMeals[day][meal] = true;
         }
     }

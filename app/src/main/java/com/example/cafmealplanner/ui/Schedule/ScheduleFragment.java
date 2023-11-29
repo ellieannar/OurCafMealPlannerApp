@@ -8,10 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.autofill.AutofillValue;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.content.Intent;
 
 
@@ -25,9 +23,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
-import com.example.cafmealplanner.resource;
-import com.example.cafmealplanner.ui.Menu.FoodInfo;
-import com.example.cafmealplanner.ui.Menu.FoodInfoViewModel;
+import com.example.cafmealplanner.ui.Data.resource;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
