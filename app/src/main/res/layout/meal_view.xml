@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:gravity="center_vertical"
         android:text="@string/dinner_option"
         android:textColor="@color/biolaBlack"
@@ -24,7 +24,7 @@
     android:layout_width="fill_parent"
     android:layout_height="50dp"
     android:orientation="horizontal"
-    android:gravity="right"
+    android:gravity="end"
     >
     <!-- Tags Linear Layout -->
     <LinearLayout
@@ -39,6 +39,7 @@
         android:id="@+id/moreInfoButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:contentDescription="@string/info_button"
 
         android:background="@drawable/more_info_button"
          />
@@ -49,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
 
         />
 
