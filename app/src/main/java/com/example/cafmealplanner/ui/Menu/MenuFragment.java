@@ -18,17 +18,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.Calendar;
 import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
 import com.example.cafmealplanner.ui.Data.Day;
+import com.example.cafmealplanner.ui.Data.Meal;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -120,81 +120,66 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         breakfastMeals = new Vector<>(5);
         lunchMeals = new Vector<>(5);
         dinnerMeals = new Vector<>(5);
+        // creating new day
+        Day d = new Day();
+        // Call the asynchronous method and handle the result
+        CompletableFuture<Day> futureDay = d.connectAsync("2023-11-29");
 
-        // Using meals offered by caf on 11/10/2023
+        Meal breakfast = new Meal();
+        Meal lunch = new Meal();
+        Meal dinner = new Meal();
 
-        //breakfast items
-        mealView temp = new mealView(getContext());
-        temp.setMealName("quick oats");
-        temp.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
-        temp.addTag(mealView.TAG_TYPE.VEGAN);
-        breakfastMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("hot breakfast bar");
-        temp.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
-        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-        breakfastMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("Biola's broken egg bar");
-        temp.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
-        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-        breakfastMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("biscuit and gravy");
-        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
-        temp.addTag(mealView.TAG_TYPE.HUMANE);
-        breakfastMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("breakfast pastries");
-        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
-        temp.addTag(mealView.TAG_TYPE.LOCALLY_CRAFTED);
-        breakfastMeals.add(temp);
+        futureDay.thenAccept(today -> {
+            // perform all operations with today that are needed
+            final Meal tempMeal = today.getMeal("Breakfast");
+            for (int i = 0; i < tempMeal.size(); i++) {
+                breakfast.add(tempMeal.get(i));
+            }
+
+            final Meal tempMealTwo = today.getMeal("Lunch");
+            for (int i = 0; i < tempMealTwo.size(); i++) {
+                lunch.add(tempMealTwo.get(i));
+            }
+            final Meal tempMealThree = today.getMeal("Dinner");
+            for (int i = 0; i < tempMealThree.size(); i++) {
+                dinner.add(tempMealThree.get(i));
+            }
 
 
-        //lunch items
-        temp = new mealView(getContext());
-        temp.setMealName("clam chowder");
-        temp.addTag(mealView.TAG_TYPE.SEAFOOD);
-        lunchMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("baked teriyaki chicken leg");
-        temp.addTag(mealView.TAG_TYPE.HUMANE);
-        lunchMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("Biola's classic daily house-made pizza");
-        lunchMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("spinach and artichoke pizza");
-        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-        lunchMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("sugar rush");
-        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
-        lunchMeals.add(temp);
+        });
 
-        //dinner items
-        temp = new mealView(getContext());
-        temp.setMealName("clam chowder");
-        temp.addTag(mealView.TAG_TYPE.SEAFOOD);
-        dinnerMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("italian beef stew");
-        temp.addTag(mealView.TAG_TYPE.HUMANE);
-        dinnerMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("classic cheese burger");
-        temp.addTag(mealView.TAG_TYPE.HUMANE);
-        dinnerMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("Biola's classic daily house-made pizza");
-        dinnerMeals.add(temp);
-        temp = new mealView(getContext());
-        temp.setMealName("sugar rush");
-        temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
-        temp.addTag(mealView.TAG_TYPE.FARM_FRESH);
-        dinnerMeals.add(temp);
+
+        // Wait for the asynchronous operation to complete (this is just for the sake of the example)
+        try {
+            futureDay.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < breakfast.size(); i++) {
+            mealView tempMealView = new mealView(getContext());
+            tempMealView.setMealName(breakfast.get(i).getTitle());
+            //tempMealView.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
+            //tempMealView.addTag(mealView.TAG_TYPE.VEGAN);
+            breakfastMeals.add(tempMealView);
+        }
+
+        for (int i = 0; i < lunch.size(); i++) {
+            mealView tempMealView = new mealView(getContext());
+            tempMealView.setMealName(lunch.get(i).getTitle());
+            //tempMealView.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
+            //tempMealView.addTag(mealView.TAG_TYPE.VEGAN);
+            lunchMeals.add(tempMealView);
+        }
+
+        for (int i = 0; i < dinner.size(); i++) {
+            mealView tempMealView = new mealView(getContext());
+            tempMealView.setMealName(dinner.get(i).getTitle());
+            //tempMealView.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
+            //tempMealView.addTag(mealView.TAG_TYPE.VEGAN);
+            dinnerMeals.add(tempMealView);
+        }
+
 
         // add meals to view
         for (int i = 0; i < breakfastMeals.size(); i++) {
@@ -207,30 +192,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < dinnerMeals.size(); i++) {
             dinnerItems.addView(dinnerMeals.get(i));
         }
+
         breakfastLinearLayout.addView(breakfastItems);
         lunchLinearLayout.addView(lunchItems);
         dinnerLinearLayout.addView(dinnerItems);
 
 
-        // Attempting to create new day.
-        Day d = new Day();
-        // Call the asynchronous method and handle the result
-        // Call the asynchronous method and handle the result
-        CompletableFuture<Day> futureDay = d.connectAsync("2023-11-29");
 
-        futureDay.thenAccept(result -> {
-            // Process the result, for example, print the details
-            result.print();
-        });
 
-        // Wait for the asynchronous operation to complete (this is just for the sake of the example)
-        try {
-            futureDay.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        //Log.d("TESTING", "onViewCreated: " + d.breakfast.mealElements.get(0).title);
     }
 
 

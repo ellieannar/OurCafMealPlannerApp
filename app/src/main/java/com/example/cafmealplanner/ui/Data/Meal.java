@@ -3,5 +3,17 @@ package com.example.cafmealplanner.ui.Data;
 import java.util.ArrayList;
 
 public class Meal{
-    public ArrayList<FoodItem> mealElements = new ArrayList<FoodItem>();
+    ArrayList<FoodItem> mealElements = new ArrayList<FoodItem>();
+
+    public int size() {
+        return mealElements.size();
+    }
+
+    public void add(FoodItem f) {
+        mealElements.add(f);
+    }
+
+    public FoodItem get(int i) {
+        return mealElements.get(i);
+    }
 }
