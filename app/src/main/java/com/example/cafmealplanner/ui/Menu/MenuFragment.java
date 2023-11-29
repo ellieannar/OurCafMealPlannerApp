@@ -23,9 +23,12 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.Calendar;
 import java.util.Vector;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
+import com.example.cafmealplanner.ui.Data.Day;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -207,6 +210,27 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         breakfastLinearLayout.addView(breakfastItems);
         lunchLinearLayout.addView(lunchItems);
         dinnerLinearLayout.addView(dinnerItems);
+
+
+        // Attempting to create new day.
+        Day d = new Day();
+        // Call the asynchronous method and handle the result
+        // Call the asynchronous method and handle the result
+        CompletableFuture<Day> futureDay = d.connectAsync("2023-11-29");
+
+        futureDay.thenAccept(result -> {
+            // Process the result, for example, print the details
+            result.print();
+        });
+
+        // Wait for the asynchronous operation to complete (this is just for the sake of the example)
+        try {
+            futureDay.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Log.d("TESTING", "onViewCreated: " + d.breakfast.mealElements.get(0).title);
     }
 
 
@@ -234,9 +258,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
             //display
             label.setText(monthOfYear[month] + " " + day + ", " + year);
-        } else {
-            Log.d("TAG", "onClick: WE'VE DONE IT BOIZ");
-
         }
 
 
