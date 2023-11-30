@@ -7,6 +7,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
 
 public class Day {
@@ -19,6 +20,13 @@ public class Day {
     //Constructor
     public Day() {
         super();
+    }
+
+    public Day(Meal b, Meal l, Meal d) {
+        breakfast = b;
+        lunch = l;
+        dinner = d;
+
     }
 
     public CompletableFuture<Day> connectAsync(String date) {
@@ -129,6 +137,23 @@ public class Day {
         }
         return today;
     }
+
+
+
+
+    public Meal getMeal(String m) {
+        if (m == "Breakfast") {
+            return breakfast;
+        } else if (m == "Lunch") {
+            return lunch;
+        } else {
+            return dinner;
+        }
+    }
+
+
+
+    /*
     //Print function to display in log what's in the Meals
     public void print() {
         System.out.println("Breakfast: ");
@@ -165,5 +190,6 @@ public class Day {
             }
         }
     }
+     */
 
 }
