@@ -14,9 +14,10 @@
         android:layout_width="130dp"
         android:layout_height="150dp"
         android:scaleType="fitXY"
-        android:contentDescription="@string/app_name"
+        android:contentDescription="@string/profile_image_desc"
         android:src="@drawable/profile_default_foreground"
-        android:paddingLeft="-20dp"
+        android:paddingStart="-20dp"
+        android:paddingEnd="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
@@ -27,24 +28,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/user_firstName"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintStart_toEndOf="@id/profileImage"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingTop="30dp"
-         />
+        android:inputType="textPersonName"
+        android:hint="@string/user_firstName"
+        android:autofillHints="AUTOFILL_HINT_PERSON_NAME_GIVEN"
+        />
 
     <!-- Text area for user last name -->
     <EditText
         android:id="@+id/lastNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/user_lastName"
-        android:textSize="20dp"
         android:layout_marginTop="-20dp"
-        app:layout_constraintTop_toBottomOf="@+id/firstNameTextView"
+        android:text="@string/user_lastName"
+        android:textSize="20sp"
+        android:inputType="textPersonName"
+        android:hint="@string/user_lastName"
+        android:autofillHints="AUTOFILL_HINT_PERSON_NAME_FAMILY"
         app:layout_constraintStart_toEndOf="@id/profileImage"
 
-        />
+        app:layout_constraintTop_toBottomOf="@+id/firstNameTextView" />
 
     <!-- Line to separate meal plan section-->
     <View
@@ -63,8 +69,9 @@
         android:layout_height="wrap_content"
         android:text="@string/section_mealPlan"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingLeft="20dp"
-        android:textSize="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/profileImage" />
 
     <!-- Meal plan display label -->
@@ -74,8 +81,9 @@
         android:layout_height="wrap_content"
         android:text="@string/meal_plan_default"
         app:layout_constraintStart_toStartOf="parent"
-        android:paddingLeft="30dp"
-        android:textSize="20dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="0dp"
+        android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/mealPlanTextView" />
     <!-- Meal Plan selection dropdown -->
     <Spinner
@@ -84,50 +92,55 @@
         android:layout_height="wrap_content"
         android:background="@android:drawable/btn_dropdown"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
         android:spinnerMode="dropdown"
         app:layout_constraintTop_toBottomOf="@id/mealPlanTextView"
         />
     <!-- Dietary restrictions section label -->
     <TextView
         android:id="@+id/dietaryRestrictionsTextView"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:text="@string/dietary_restrictions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mealPlanSpinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
         />
 
     <!-- Display any selected dietary restrictions -->
     <LinearLayout
+        android:id="@+id/dietaryRestrictionsLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dietaryRestrictionsTextView"
-        android:paddingLeft="20dp"
         android:orientation="vertical"
-        android:id="@+id/dietaryRestrictionsLinearLayout"/>
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dietaryRestrictionsTextView" />
 
 
     <!-- Favorite meals section label -->
     <TextView
         android:id="@+id/favMealsTextView"
         android:text="@string/fav_meals"
-        android:textSize="20dp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dietaryRestrictionsLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
         />
 
     <!-- Favorite meals linear layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:paddingLeft="20dp"
+        android:paddingStart="20dp"
+        android:paddingEnd="0dp"
+        android:contentDescription="@string/fav_meals_scroll"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/favMealsTextView"
         android:id="@+id/favoriteMealsScrollView"
@@ -146,7 +159,7 @@
         android:text="@string/edit"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="75dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         />
 
