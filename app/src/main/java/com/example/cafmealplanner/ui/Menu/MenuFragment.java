@@ -47,19 +47,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     static int whichDay = 0;
 
+    static boolean completed = false;
+
     //Track all the more info buttons we will have
     Vector<mealView> breakfastMeals;
     Vector<mealView> lunchMeals;
     Vector<mealView> dinnerMeals;
 
     //Linear layouts
-    LinearLayout breakfastLinearLayout;
-    LinearLayout lunchLinearLayout;
-    LinearLayout dinnerLinearLayout;
+    static LinearLayout breakfastLinearLayout;
+    static LinearLayout lunchLinearLayout;
+    static LinearLayout dinnerLinearLayout;
 
 
     //Track all days in one arraylist
-    ArrayList<Day> weekDays = new ArrayList<>();
+    static ArrayList<Day> weekDays = new ArrayList<>();
 
 
     //Default on create view
@@ -148,68 +150,73 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
 
         // Call the asynchronous method and handle the result
+        if (!completed) {
+            for (int j = 0; j < 8; j++) {
 
-        for (int j = 0; j < 8; j++) {
+                //creating new meals
+                Meal breakfast = new Meal();
+                Meal lunch = new Meal();
+                Meal dinner = new Meal();
 
-            //creating new meals
-            Meal breakfast = new Meal();
-            Meal lunch = new Meal();
-            Meal dinner = new Meal();
+                String tempDate;
+                if (month < 10) {
+                    tempDate = year + "-0" + (month+1);
+                } else {
+                    tempDate = year + "-" + (month+1);
+                }
+                if (day < 10) {
+                    tempDate+= "-0" + day;
+                } else {
+                    tempDate += "-" + day;
+                }
 
-            String tempDate;
-            if (month < 10) {
-                tempDate = year + "-0" + (month+1);
-            } else {
-                tempDate = year + "-" + (month+1);
-            }
-            if (day < 10) {
-                tempDate+= "-0" + day;
-            } else {
-                tempDate += "-" + day;
-            }
+                CompletableFuture<Day> futureDay = d.connectAsync(tempDate);
+                futureDay.thenAccept(today -> {
+                    // store the meals in breakfast, lunch, and dinner
+                    final Meal tempMeal = today.getMeal("Breakfast");
+                    for (int i = 0; i < tempMeal.size(); i++) {
+                        breakfast.add(tempMeal.get(i));
+                    }
 
-            CompletableFuture<Day> futureDay = d.connectAsync(tempDate);
-            futureDay.thenAccept(today -> {
-                // store the meals in breakfast, lunch, and dinner
-                final Meal tempMeal = today.getMeal("Breakfast");
-                for (int i = 0; i < tempMeal.size(); i++) {
-                    breakfast.add(tempMeal.get(i));
+
+                    final Meal tempMealTwo = today.getMeal("Lunch");
+                    for (int i = 0; i < tempMealTwo.size(); i++) {
+                        lunch.add(tempMealTwo.get(i));
+                    }
+
+                    final Meal tempMealThree = today.getMeal("Dinner");
+                    for (int i = 0; i < tempMealThree.size(); i++) {
+                        dinner.add(tempMealThree.get(i));
+                    }
+
+                });
+
+                Day tempDay = new Day(breakfast, lunch, dinner);
+                weekDays.add(tempDay);
+
+                // Wait for the asynchronous operation to complete
+                try {
+                    futureDay.get();
+                } catch (Exception e) {
+                    Log.d("Exception thrown", "Error encountered MenuFragment line 174");
+                    e.printStackTrace();
                 }
 
 
-                final Meal tempMealTwo = today.getMeal("Lunch");
-                for (int i = 0; i < tempMealTwo.size(); i++) {
-                    lunch.add(tempMealTwo.get(i));
-                }
 
-                final Meal tempMealThree = today.getMeal("Dinner");
-                for (int i = 0; i < tempMealThree.size(); i++) {
-                    dinner.add(tempMealThree.get(i));
-                }
+                cal.add(Calendar.DAY_OF_YEAR, 1);
+                month = cal.get(Calendar.MONTH);
+                day = cal.get(Calendar.DAY_OF_MONTH);
+                year = cal.get(Calendar.YEAR);
 
-            });
-
-            Day tempDay = new Day(breakfast, lunch, dinner);
-            weekDays.add(tempDay);
-
-            // Wait for the asynchronous operation to complete
-            try {
-                futureDay.get();
-            } catch (Exception e) {
-                Log.d("Exception thrown", "Error encountered MenuFragment line 174");
-                e.printStackTrace();
             }
 
-
-
-            cal.add(Calendar.DAY_OF_YEAR, 1);
-            month = cal.get(Calendar.MONTH);
-            day = cal.get(Calendar.DAY_OF_MONTH);
-            year = cal.get(Calendar.YEAR);
-
+            increaseDays(1);
+            completed = true;
         }
-
-        increaseDays(1);
+        else {
+            increaseDays(1);
+        }
     }
 
     public void increaseDays(int inc) {
