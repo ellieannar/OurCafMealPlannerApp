@@ -149,14 +149,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
         // Call the asynchronous method and handle the result
 
-        for (int j = 0; j < 6; j++) {
+        for (int j = 0; j < 8; j++) {
 
             //creating new meals
             Meal breakfast = new Meal();
             Meal lunch = new Meal();
             Meal dinner = new Meal();
 
-            CompletableFuture<Day> futureDay = d.connectAsync(year + "-" + (month+1) + "-" + day);
+            String tempDate;
+            if (month < 10) {
+                tempDate = year + "-0" + (month+1);
+            } else {
+                tempDate = year + "-" + (month+1);
+            }
+            if (day < 10) {
+                tempDate+= "-0" + day;
+            } else {
+                tempDate += "-" + day;
+            }
+
+            CompletableFuture<Day> futureDay = d.connectAsync(tempDate);
             futureDay.thenAccept(today -> {
                 // store the meals in breakfast, lunch, and dinner
                 final Meal tempMeal = today.getMeal("Breakfast");
@@ -196,55 +208,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
 
         }
-        /*
-
-        //get & add breakfast items to view
-        for (int i = 0; i < weekDays.get(1).getMeal("Breakfast").size(); i++) {
-            mealView tempMealView = new mealView(getContext());
-            //Log.d("TAG", "onViewCreated: Made it here");
-            tempMealView.setMealName(weekDays.get(1).getMeal("Breakfast").get(i).getTitle());
-            breakfastMeals.add(tempMealView);
-        }
-
-        //get & add lunch items to view
-        for (int i = 0; i < weekDays.get(1).getMeal("Lunch").size(); i++) {
-            mealView tempMealView = new mealView(getContext());
-            tempMealView.setMealName(weekDays.get(1).getMeal("Lunch").get(i).getTitle());
-            lunchMeals.add(tempMealView);
-        }
-
-        //get & add dinner items to view
-        for (int i = 0; i < weekDays.get(1).getMeal("Dinner").size(); i++) {
-            mealView tempMealView = new mealView(getContext());
-            tempMealView.setMealName(weekDays.get(1).getMeal("Dinner").get(i).getTitle());
-            dinnerMeals.add(tempMealView);
-        }
-
-
-
-        // add meals to view
-        for (int i = 0; i < breakfastMeals.size(); i++) {
-            breakfastItems.addView(breakfastMeals.get(i));
-            breakfastMeals.get(i).setOnClickListener(this);
-        }
-        for (int i = 0; i < lunchMeals.size(); i++) {
-            lunchItems.addView(lunchMeals.get(i));
-        }
-        for (int i = 0; i < dinnerMeals.size(); i++) {
-            dinnerItems.addView(dinnerMeals.get(i));
-        }
-
-        breakfastLinearLayout.addView(breakfastItems);
-        lunchLinearLayout.addView(lunchItems);
-        dinnerLinearLayout.addView(dinnerItems);
-
-*/
 
         increaseDays(1);
     }
 
     public void increaseDays(int inc) {
         whichDay += inc;
+        Log.d("Day", "increaseDays: " + whichDay);
 
         breakfastLinearLayout.removeAllViews();
         lunchLinearLayout.removeAllViews();
