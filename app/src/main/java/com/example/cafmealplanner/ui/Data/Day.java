@@ -22,6 +22,13 @@ public class Day {
         super();
     }
 
+    public Day(Meal b, Meal l, Meal d) {
+        breakfast = b;
+        lunch = l;
+        dinner = d;
+
+    }
+
     public CompletableFuture<Day> connectAsync(String date) {
         return CompletableFuture.supplyAsync(() -> connect(date));
     }

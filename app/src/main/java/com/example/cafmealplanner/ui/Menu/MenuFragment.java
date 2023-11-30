@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
@@ -47,6 +48,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     Vector<mealView> breakfastMeals;
     Vector<mealView> lunchMeals;
     Vector<mealView> dinnerMeals;
+
+    //Track all days in one arraylist
+    ArrayList<Day> weekDays = new ArrayList<>();
 
 
     //Default on create view
@@ -120,65 +124,95 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         breakfastMeals = new Vector<>(5);
         lunchMeals = new Vector<>(5);
         dinnerMeals = new Vector<>(5);
+
         // creating new day
         Day d = new Day();
+
+
+
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        year = cal.get(Calendar.YEAR);
+
+
         // Call the asynchronous method and handle the result
-        CompletableFuture<Day> futureDay = d.connectAsync("2023-11-29");
 
-        Meal breakfast = new Meal();
-        Meal lunch = new Meal();
-        Meal dinner = new Meal();
+        for (int j = 0; j < 6; j++) {
 
-        futureDay.thenAccept(today -> {
-            // perform all operations with today that are needed
-            final Meal tempMeal = today.getMeal("Breakfast");
-            for (int i = 0; i < tempMeal.size(); i++) {
-                breakfast.add(tempMeal.get(i));
+            //creating new meals
+            Meal breakfast = new Meal();
+            Meal lunch = new Meal();
+            Meal dinner = new Meal();
+
+            CompletableFuture<Day> futureDay = d.connectAsync(year + "-" + (month+1) + "-" + day);
+            Log.d("Date", "onViewCreated: " + year + "-" + (month+1) + "-" + day);
+            futureDay.thenAccept(today -> {
+                // store the meals in breakfast, lunch, and dinner
+                final Meal tempMeal = today.getMeal("Breakfast");
+                for (int i = 0; i < tempMeal.size(); i++) {
+                    breakfast.add(tempMeal.get(i));
+                    Log.d("Breakfast", "Adding breakfast " + tempMeal.get(i).getTitle());
+                }
+
+
+                final Meal tempMealTwo = today.getMeal("Lunch");
+                for (int i = 0; i < tempMealTwo.size(); i++) {
+                    lunch.add(tempMealTwo.get(i));
+                }
+
+                final Meal tempMealThree = today.getMeal("Dinner");
+                for (int i = 0; i < tempMealThree.size(); i++) {
+                    dinner.add(tempMealThree.get(i));
+                }
+
+            });
+
+            Day tempDay = new Day(breakfast, lunch, dinner);
+            weekDays.add(tempDay);
+
+            // Wait for the asynchronous operation to complete
+            try {
+                futureDay.get();
+            } catch (Exception e) {
+                Log.d("Exception thrown", "Error encountered MenuFragment line 174");
+                e.printStackTrace();
             }
 
-            final Meal tempMealTwo = today.getMeal("Lunch");
-            for (int i = 0; i < tempMealTwo.size(); i++) {
-                lunch.add(tempMealTwo.get(i));
-            }
-            final Meal tempMealThree = today.getMeal("Dinner");
-            for (int i = 0; i < tempMealThree.size(); i++) {
-                dinner.add(tempMealThree.get(i));
-            }
 
 
-        });
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+            month = cal.get(Calendar.MONTH);
+            day = cal.get(Calendar.DAY_OF_MONTH);
+            year = cal.get(Calendar.YEAR);
 
-
-        // Wait for the asynchronous operation to complete (this is just for the sake of the example)
-        try {
-            futureDay.get();
-        } catch (Exception e) {
-            e.printStackTrace();
+            Log.d("Count", "" + j);
         }
 
-        for (int i = 0; i < breakfast.size(); i++) {
+
+        Log.d("Size", "onViewCreated: " + weekDays.get(1).getMeal("Breakfast").size());
+        //get & add breakfast items to view
+        for (int i = 0; i < weekDays.get(0).getMeal("Breakfast").size(); i++) {
             mealView tempMealView = new mealView(getContext());
-            tempMealView.setMealName(breakfast.get(i).getTitle());
-            //tempMealView.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
-            //tempMealView.addTag(mealView.TAG_TYPE.VEGAN);
+            //Log.d("TAG", "onViewCreated: Made it here");
+            tempMealView.setMealName(weekDays.get(0).getMeal("Breakfast").get(i).getTitle());
             breakfastMeals.add(tempMealView);
         }
 
-        for (int i = 0; i < lunch.size(); i++) {
+        //get & add lunch items to view
+        for (int i = 0; i < weekDays.get(0).getMeal("Lunch").size(); i++) {
             mealView tempMealView = new mealView(getContext());
-            tempMealView.setMealName(lunch.get(i).getTitle());
-            //tempMealView.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
-            //tempMealView.addTag(mealView.TAG_TYPE.VEGAN);
+            tempMealView.setMealName(weekDays.get(0).getMeal("Lunch").get(i).getTitle());
             lunchMeals.add(tempMealView);
         }
 
-        for (int i = 0; i < dinner.size(); i++) {
+        //get & add dinner items to view
+        for (int i = 0; i < weekDays.get(0).getMeal("Dinner").size(); i++) {
             mealView tempMealView = new mealView(getContext());
-            tempMealView.setMealName(dinner.get(i).getTitle());
-            //tempMealView.addTag(mealView.TAG_TYPE.GLUTEN_FREE);
-            //tempMealView.addTag(mealView.TAG_TYPE.VEGAN);
+            tempMealView.setMealName(weekDays.get(0).getMeal("Dinner").get(i).getTitle());
             dinnerMeals.add(tempMealView);
         }
+
 
 
         // add meals to view
@@ -198,9 +232,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         dinnerLinearLayout.addView(dinnerItems);
 
 
-
-
     }
+
 
 
     //click handler

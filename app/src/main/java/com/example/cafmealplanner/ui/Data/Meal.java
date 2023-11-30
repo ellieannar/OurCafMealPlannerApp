@@ -16,4 +16,8 @@ public class Meal{
     public FoodItem get(int i) {
         return mealElements.get(i);
     }
+
+    public void clear() {
+        mealElements.clear();
+    }
 }
