@@ -44,6 +44,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     //Months indexed
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
+
+    static int whichDay = 0;
+
     //Track all the more info buttons we will have
     Vector<mealView> breakfastMeals;
     Vector<mealView> lunchMeals;
@@ -193,7 +196,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
 
         }
-
+        /*
 
         //get & add breakfast items to view
         for (int i = 0; i < weekDays.get(1).getMeal("Breakfast").size(); i++) {
@@ -235,10 +238,74 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         lunchLinearLayout.addView(lunchItems);
         dinnerLinearLayout.addView(dinnerItems);
 
+*/
 
+        increaseDays(1);
     }
 
+    public void increaseDays(int inc) {
+        whichDay += inc;
 
+        breakfastLinearLayout.removeAllViews();
+        lunchLinearLayout.removeAllViews();
+        dinnerLinearLayout.removeAllViews();
+
+        //vector of meal items
+        breakfastMeals = new Vector<>(5);
+        lunchMeals = new Vector<>(5);
+        dinnerMeals = new Vector<>(5);
+
+        //subviews to add each meal to
+        LinearLayout breakfastItems = new LinearLayout(getContext());
+        breakfastItems.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout lunchItems = new LinearLayout(getContext());
+        lunchItems.setOrientation(LinearLayout.VERTICAL);
+
+        LinearLayout dinnerItems = new LinearLayout(getContext());
+        dinnerItems.setOrientation(LinearLayout.VERTICAL);
+
+
+        //get & add breakfast items to view
+        for (int i = 0; i < weekDays.get(whichDay).getMeal("Breakfast").size(); i++) {
+            mealView tempMealView = new mealView(getContext());
+            //Log.d("TAG", "onViewCreated: Made it here");
+            tempMealView.setMealName(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle());
+            breakfastMeals.add(tempMealView);
+        }
+
+        //get & add lunch items to view
+        for (int i = 0; i < weekDays.get(whichDay).getMeal("Lunch").size(); i++) {
+            mealView tempMealView = new mealView(getContext());
+            tempMealView.setMealName(weekDays.get(whichDay).getMeal("Lunch").get(i).getTitle());
+            lunchMeals.add(tempMealView);
+        }
+
+        //get & add dinner items to view
+        for (int i = 0; i < weekDays.get(whichDay).getMeal("Dinner").size(); i++) {
+            mealView tempMealView = new mealView(getContext());
+            tempMealView.setMealName(weekDays.get(whichDay).getMeal("Dinner").get(i).getTitle());
+            dinnerMeals.add(tempMealView);
+        }
+
+        // add meals to view
+        for (int i = 0; i < breakfastMeals.size(); i++) {
+            breakfastItems.addView(breakfastMeals.get(i));
+            breakfastMeals.get(i).setOnClickListener(this);
+        }
+        for (int i = 0; i < lunchMeals.size(); i++) {
+            lunchItems.addView(lunchMeals.get(i));
+        }
+        for (int i = 0; i < dinnerMeals.size(); i++) {
+            dinnerItems.addView(dinnerMeals.get(i));
+        }
+
+        breakfastLinearLayout.addView(breakfastItems);
+        lunchLinearLayout.addView(lunchItems);
+        dinnerLinearLayout.addView(dinnerItems);
+
+
+    }
 
     //click handler
     public void onClick(View v) {
@@ -255,6 +322,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
             label.setText(monthOfYear[month] + " " + day + ", " + year);
+            increaseDays(1);
         } else if (v == getView().findViewById(R.id.backDayButton)) {
             //move back one day
             cal.add(Calendar.DAY_OF_YEAR, -1);
@@ -264,6 +332,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
             //display
             label.setText(monthOfYear[month] + " " + day + ", " + year);
+            increaseDays(-1);
         }
 
 
