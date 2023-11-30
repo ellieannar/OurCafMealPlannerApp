@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <rating>
+    <item name="rating" type="array">
         <meal_name>Sesame Pork Stir Fry Rice</meal_name>
         <num_stars>3</num_stars>
-    </rating>
+    </item>
 </resources>
