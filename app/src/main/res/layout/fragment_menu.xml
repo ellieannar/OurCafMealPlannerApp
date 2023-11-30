@@ -15,6 +15,7 @@
         android:layout_height="56dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
+        android:contentDescription="@string/date_back_desc"
         app:backgroundTint="@color/gray"
         app:cornerRadius="28dp"
         app:icon="?attr/actionModeCloseDrawable"
@@ -32,6 +33,7 @@
         android:layout_height="56dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="4dp"
+        android:contentDescription="@string/date_forward_desc"
         app:backgroundTint="@color/gray"
         app:cornerRadius="28dp"
         app:icon="?attr/actionModeCloseDrawable"
@@ -45,20 +47,21 @@
     <!-- Date textview -->
     <TextView
         android:id="@+id/dateTextView"
-        android:layout_width="209dp"
-        android:layout_height="56dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/gray"
         android:gravity="center"
+        android:minWidth="209dp"
+        android:minHeight="56dp"
         android:text="@string/current_date"
         android:textAlignment="center"
         android:textColor="@color/biolaBlack"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-    />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <!-- Horizontal dividing line -->
@@ -89,8 +92,8 @@
     <!-- Breakfast textview -->
         <TextView
             android:id="@+id/breakfastTextView"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="@string/breakfast_text"
@@ -114,8 +117,8 @@
     <!-- Lunch textview -->
         <TextView
             android:id="@+id/lunchTextView"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="@string/lunch_text"
@@ -139,8 +142,8 @@
     <!-- Dinner textview -->
         <TextView
             android:id="@+id/dinnerTextView"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="10dp"
             android:text="@string/dinner_text"

@@ -46,4 +46,20 @@ public class FoodItem {
                 break;
         }
     }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public ArrayList<restrictionType> getRestrictions() {
+        return restrictions;
+    }
 }

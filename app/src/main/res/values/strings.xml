@@ -5,8 +5,8 @@
     <string name="title_profile">Profile</string>
     <string name = "current_date">November 5, 2023</string>
     <string name="content_description_default">default image</string>
-    <string name="user_firstName"></string>
-    <string name="user_lastName"></string>
+    <string name="user_firstName">First Name</string>
+    <string name="user_lastName">Last Name</string>
     <string name="section_mealPlan">Meal Plan</string>
     <string name = "breakfast_text">Breakfast</string>
     <string name = "lunch_text">Lunch</string>
@@ -20,6 +20,17 @@
     <string name="dietary_restrictions">Dietary Restrictions</string>
     <string name="fav_meals">My Favorite Meals</string>
     <string name="edit">Edit</string>
+    <string name="profile_image_desc">Profile Image</string>
+    <string name="fav_meals_scroll">Scroll to choose your favorite meal</string>
+    <string name="info_button">Get more info on this meal</string>
+    <string name="back_info_desc">Go back</string>
+    <string name="one_star">One Star</string>
+    <string name="two_star">Two Stars</string>
+    <string name="three_star">Three Stars</string>
+    <string name="four_star">Four Stars</string>
+    <string name="five_star">Five Stars</string>
+    <string name="date_back_desc">Previous date</string>
+    <string name="date_forward_desc">Next date</string>
     <string-array
         name="meal_plan">
         <item
