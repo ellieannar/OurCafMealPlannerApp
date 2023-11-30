@@ -1,7 +1,10 @@
 package com.example.cafmealplanner.ui.Menu;
 
+import androidx.core.util.AtomicFileKt;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.content.res.AssetManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,54 +24,35 @@ import android.widget.TextView;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 public class FoodInfo extends Fragment implements View.OnClickListener {
-
-
     boolean editRatingOn = false;
-    private static final String ns = null;
     int starRating = 0;
 
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
-        try {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            return readFeed(parser);
-        } finally {
-            in.close();
-        }
-    }
-
-    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List ratings = new ArrayList();
-
-        parser.require(XmlPullParser.START_TAG, ns, "feed");
-        while(parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-
-            String name = parser.getName();
-
-            if (name.equals("rating")) {
-                //ratings.add(readEntry(parser));
-            }
-        }
-        return ratings;
-    }
-
-    /*private Object readEntry(XmlPullParser parser) {
-    }*/
+    // ratingList will store all the entries inside ratings.xml
+    List<Rating> ratingList = new ArrayList<>();
+    Rating rating;
+    String text;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -108,6 +92,27 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             if (i < ingredientNames.size() - 1) {
                 ingredientsList.append(", ");
+            }
+        }
+
+        // Populate ratingList with the data from ratings.xml
+        // to get a list of meal names and corresponding star ratings
+        InputStream in = null;
+        try {
+            in = new FileInputStream("ratings.xml");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        ratingList = parse(in);
+
+        TextView nameView = (TextView) getView().findViewById(R.id.mealName);
+        String mealName = nameView.getText().toString();
+
+        // Set this meal rating to its corresponding star rating
+        // in the file. Otherwise, starRating = 0
+        for (Rating r : ratingList) {
+            if (mealName == r.mealName) {
+                starRating = r.numStars;
             }
         }
 
@@ -205,5 +210,52 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void setRating(int numStars) {
         starRating = numStars; // Adjust the official star rating
         setStarAppearance(); // Change the appearance of the stars to reflect this
+    }
+
+    public List<Rating> getRatings() {
+        return ratingList;
+    }
+
+    public List<Rating> parse(InputStream in) {
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            factory.setNamespaceAware(true);
+            XmlPullParser parser = factory.newPullParser();
+
+            parser.setInput(in, null);
+
+            int eventType = parser.getEventType();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                String tagname = parser.getName();
+                switch(eventType) {
+                    case XmlPullParser.START_TAG:
+                        if (tagname.equalsIgnoreCase("rating")) {
+                            rating = new Rating();
+                        }
+                        break;
+                    case XmlPullParser.TEXT:
+                        text = parser.getText();
+                        break;
+                    case XmlPullParser.END_TAG:
+                        if (tagname.equalsIgnoreCase("rating")) {
+                            ratingList.add(rating);
+                        } else if (tagname.equalsIgnoreCase("meal_name")) {
+                            rating.setMealName(text);
+                        } else if (tagname.equalsIgnoreCase("num_stars")) {
+                            rating.setNumStars(Integer.parseInt(text));
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                eventType = parser.next();
+            }
+        } catch (XmlPullParserException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ratingList;
     }
 }

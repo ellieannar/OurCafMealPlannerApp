@@ -2,7 +2,7 @@
 <resources>
     <item name="rating" type="array">
         <string name="meal_name">Sesame Pork Stir Fry Rice</string>
-        <integer name="numStars">3</integer>
+        <integer name="num_stars">3</integer>
     </item>
 
 </resources>
