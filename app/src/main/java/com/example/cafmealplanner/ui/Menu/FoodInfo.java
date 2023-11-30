@@ -44,6 +44,13 @@ import java.util.Vector;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 public class FoodInfo extends Fragment implements View.OnClickListener {
     boolean editRatingOn = false;
@@ -53,6 +60,9 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     List<Rating> ratingList = new ArrayList<>();
     Rating rating;
     String text;
+
+    TextView nameView = (TextView) getView().findViewById(R.id.mealName);
+    String mealName = nameView.getText().toString();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -105,16 +115,18 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
         ratingList = parse(in);
 
-        TextView nameView = (TextView) getView().findViewById(R.id.mealName);
-        String mealName = nameView.getText().toString();
-
         // Set this meal rating to its corresponding star rating
         // in the file. Otherwise, starRating = 0
-        for (Rating r : ratingList) {
-            if (mealName == r.mealName) {
-                starRating = r.numStars;
+        int i;
+        for (i = 0; i < ratingList.size(); i++) {
+            if (mealName == ratingList.get(i).mealName) {
+                starRating = ratingList.get(i).numStars;
+                break;
             }
         }
+
+        if (i == ratingList.size())
+            starRating = 0;
 
         // Implement the rating and back navigation buttons
         getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
@@ -187,14 +199,22 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         int i;
         ImageButton star = new ImageButton(getContext());
         ImageButton starRatings[] = {getView().findViewById(R.id.star1), getView().findViewById(R.id.star2), getView().findViewById(R.id.star3), getView().findViewById(R.id.star4), getView().findViewById(R.id.star5)};
+
         // The current star rating will determine the number of filled or yellow stars
         // depending on whether we are in editing mode or not
+
         for (i = 0; i < starRating; i++) {
-            starRatings[i].setImageResource(R.drawable.filled_star);
+            if (editRatingOn) {
+                starRatings[i].setImageResource(R.drawable.filled_star);
+            } else {
+                starRatings[i].setImageResource(R.drawable.sss);
+            }
+
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
             star.setMaxWidth(50);
         }
+
         for (i = starRating; i < starRatings.length; i++) {
             if (editRatingOn) {
                 starRatings[i].setImageResource(R.drawable.blank_star);
@@ -209,7 +229,27 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void setRating(int numStars) {
         starRating = numStars; // Adjust the official star rating
-        setStarAppearance(); // Change the appearance of the stars to reflect this
+
+        Rating newRating = new Rating();
+        newRating.setMealName(mealName);
+        newRating.setNumStars(starRating);
+
+        // Change the star rating of this food in the rating list
+
+        int i;
+        for (i = 0; i < ratingList.size(); i++) {
+            if (ratingList.get(i).mealName == newRating.mealName) {
+                ratingList.get(i).numStars = newRating.numStars;
+                break;
+            }
+        }
+
+        // If the food is not already in the rating list, add it
+        if (i == ratingList.size()) {
+            ratingList.add(newRating);
+        }
+
+        setStarAppearance(); // Change the appearance of the stars to reflect the new star rating
     }
 
     public List<Rating> getRatings() {
@@ -226,10 +266,10 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             int eventType = parser.getEventType();
             while (eventType != XmlPullParser.END_DOCUMENT) {
-                String tagname = parser.getName();
+                String tagName = parser.getName();
                 switch(eventType) {
                     case XmlPullParser.START_TAG:
-                        if (tagname.equalsIgnoreCase("rating")) {
+                        if (tagName.equalsIgnoreCase("rating")) {
                             rating = new Rating();
                         }
                         break;
@@ -237,11 +277,11 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
                         text = parser.getText();
                         break;
                     case XmlPullParser.END_TAG:
-                        if (tagname.equalsIgnoreCase("rating")) {
+                        if (tagName.equalsIgnoreCase("rating")) {
                             ratingList.add(rating);
-                        } else if (tagname.equalsIgnoreCase("meal_name")) {
+                        } else if (tagName.equalsIgnoreCase("meal_name")) {
                             rating.setMealName(text);
-                        } else if (tagname.equalsIgnoreCase("num_stars")) {
+                        } else if (tagName.equalsIgnoreCase("num_stars")) {
                             rating.setNumStars(Integer.parseInt(text));
                         }
                         break;
@@ -257,5 +297,46 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
 
         return ratingList;
+    }
+
+    public void saveRating() {
+        try {
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+            Document dom = builder.newDocument();
+
+            // Convert the objects to xml
+            Element root, name, stars;
+            for (Rating r : ratingList) {
+                root = dom.createElement("rating");
+                dom.appendChild(root);
+
+                name = dom.createElement("meal_name");
+                name.setTextContent(r.mealName);
+
+                stars = dom.createElement("num_stars");
+                stars.setTextContent(""+starRating);
+
+                root.appendChild(name);
+                root.appendChild(stars);
+            }
+
+            // Overwrite the existing data in ratings.xml
+            Transformer tr = TransformerFactory.newInstance().newTransformer();
+            tr.setOutputProperty(OutputKeys.INDENT, "yes");
+            tr.transform(new DOMSource(dom), new StreamResult(new File("ratings.xml")));
+
+        } catch (ParserConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerConfigurationException e) {
+            throw new RuntimeException(e);
+        } catch (TransformerException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        saveRating(); // Write the updated rating list to xml
+        super.onDestroyView();
     }
 }
