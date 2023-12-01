@@ -29,6 +29,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
 import com.example.cafmealplanner.ui.Data.Day;
+import com.example.cafmealplanner.ui.Data.FoodItem;
 import com.example.cafmealplanner.ui.Data.Meal;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
@@ -248,6 +249,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             mealView tempMealView = new mealView(getContext());
             //Log.d("TAG", "onViewCreated: Made it here");
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle());
+            tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Breakfast").get(i).getDescription(), weekDays.get(whichDay).getMeal("Breakfast").get(i).getLocation());
             breakfastMeals.add(tempMealView);
         }
 
@@ -255,6 +257,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Lunch").size(); i++) {
             mealView tempMealView = new mealView(getContext());
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Lunch").get(i).getTitle());
+            tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Lunch").get(i).getDescription(), weekDays.get(whichDay).getMeal("Lunch").get(i).getLocation());
             lunchMeals.add(tempMealView);
         }
 
@@ -262,6 +265,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Dinner").size(); i++) {
             mealView tempMealView = new mealView(getContext());
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Dinner").get(i).getTitle());
+            tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Dinner").get(i).getDescription(), weekDays.get(whichDay).getMeal("Dinner").get(i).getLocation());
             dinnerMeals.add(tempMealView);
         }
 
@@ -336,26 +340,27 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getExtras().getString("audience").equals("forMenu")) {
-                displayFoodInfo();
+                FoodItem f = new FoodItem();
+                if (intent.getExtras().getString("title") != null) {
+                    f.setTitle(intent.getExtras().getString("title").toString());
+                }
+                if (intent.getExtras().getString("desc") != null) {
+                    f.setDescription(intent.getExtras().getString("desc").toString());
+                }
+                if (intent.getExtras().getString("loc") != null) {
+                    f.setLocation(intent.getExtras().getString("loc").toString());
+                }
+
+                Log.d("PUT EVERYTHING", "onClick: ");
+                displayFoodInfo(f);
             }
         }
     };
 
-    private void displayFoodInfo() {
 
-        /*
-        // Create new fragment and transaction
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setReorderingAllowed(true);
 
-        // Replace whatever is in the fragment_container view with this fragment
-        transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+    private void displayFoodInfo(FoodItem f) {
 
-        // Commit the transaction
-        transaction.commit();
-
-         */
 
         // Ensure activity is properly initialized
         if (getActivity() != null) {
@@ -363,9 +368,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
+            Bundle b = new Bundle();
+            b.putString("loc" , f.getLocation());
+            b.putString("title" , f.getTitle());
+            b.putString("desc", f.getDescription());
 
             // Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+            transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, b);
 
             // Commit the transaction
             transaction.commit();

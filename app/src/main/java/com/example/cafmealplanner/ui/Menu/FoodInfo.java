@@ -19,8 +19,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.ui.Data.FoodItem;
 import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -36,6 +38,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     boolean editRatingOn = false;
     private static final String ns = null;
     int starRating = 0;
+
+
 
     public List parse(InputStream in) throws XmlPullParserException, IOException {
         try {
@@ -91,25 +95,20 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
-        // Create a vector of strings to keep all the ingredients
-        Vector<String> ingredientNames = new Vector<String>(3);
-        ingredientNames.add(new String("White jasmine rice"));
-        ingredientNames.add(new String("chopped pork"));
-        ingredientNames.add(new String("mushrooms"));
-        ingredientNames.add(new String("celery"));
-        ingredientNames.add(new String("cabbage"));
-        ingredientNames.add(new String("sesame"));
+        //String foodName = this.getArguments().getString("foodName");
+        //Log.d("Testing passing stuff", "onViewCreated: " + foodName);
+        TextView foodTitle = getView().findViewById(R.id.mealName);
+        foodTitle.setText(this.getArguments().getString("title"));
 
-        // Display the ingredients list in the text view
-        TextView ingredientsList = getView().findViewById(R.id.ingredients);
+        TextView location = getView().findViewById(R.id.location);
+        location.setText(this.getArguments().getString("loc"));
 
-        for (int i = 0; i < ingredientNames.size(); i++) {
-            ingredientsList.append(ingredientNames.get(i));
-
-            if (i < ingredientNames.size() - 1) {
-                ingredientsList.append(", ");
-            }
+        TextView description = getView().findViewById(R.id.ingredients);
+        if (this.getArguments().getString("desc") != null) {
+            description.setText(this.getArguments().getString("desc"));
         }
+
+
 
         // Implement the rating and back navigation buttons
         getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
@@ -122,7 +121,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         getView().findViewById(R.id.back).setOnClickListener(this);
 
         //allow info text to scroll
-        ingredientsList.setMovementMethod(new ScrollingMovementMethod());
+        description.setMovementMethod(new ScrollingMovementMethod());
     }
 
     public void onClick(View v) {

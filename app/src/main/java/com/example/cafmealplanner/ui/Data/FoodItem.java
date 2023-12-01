@@ -15,7 +15,7 @@ public class FoodItem {
     String title;
     String description;
 
-    FoodItem () {
+    public FoodItem () {
         super();
     }
 
@@ -46,6 +46,18 @@ public class FoodItem {
                 break;
         }
     }
+
+
+    public void setLocation(String l) {
+        location = l;
+    }
+    public void setTitle(String t) {
+        title = t;
+    }
+    public void setDescription(String d) {
+        description = d;
+    }
+
 
     public String getLocation() {
         return location;

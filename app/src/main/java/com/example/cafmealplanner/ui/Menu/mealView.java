@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.ui.Data.FoodItem;
 
 
 public class mealView extends FrameLayout implements View.OnClickListener {
@@ -29,6 +31,9 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     private TextView nameOfMealTextView;
     private LinearLayout tagsLinearLayout;
     private Button infoButton;
+
+    //my food item
+    FoodItem f = new FoodItem();
 
     // String to be populated by either MenuFragment or MealInfo
     public String parentActivity = "back_nav_support";
@@ -80,6 +85,11 @@ public class mealView extends FrameLayout implements View.OnClickListener {
 
         // put your all data using put extra
         intent.putExtra("audience", "forMenu");
+        intent.putExtra("title", f.getTitle());
+        intent.putExtra("desc", f.getDescription());
+        intent.putExtra("loc", f.getLocation());
+
+
 
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
@@ -89,6 +99,12 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         nameOfMealTextView.setTextSize(20);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         nameOfMealTextView.setText(name);
+        f.setTitle(name);
+    }
+
+    public void setOtherInfo(String desc, String loc) {
+        f.setDescription(desc);
+        f.setLocation(loc);
     }
 
 

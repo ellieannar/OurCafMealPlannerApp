@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMealInfoBinding;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.ui.Data.Meal;
 import com.example.cafmealplanner.ui.Menu.FoodInfo;
 import com.example.cafmealplanner.ui.Menu.mealView;
 
@@ -43,6 +44,10 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        //get the meal to display
+        //Meal mealToDisplay = this.getArguments().getMeal("message");
+
         ScheduleViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(ScheduleViewModel.class);
 

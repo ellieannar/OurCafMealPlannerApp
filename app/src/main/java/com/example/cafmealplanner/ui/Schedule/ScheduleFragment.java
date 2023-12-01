@@ -23,6 +23,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.ui.Data.Meal;
 import com.example.cafmealplanner.ui.Data.resource;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
