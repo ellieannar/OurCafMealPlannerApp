@@ -26,6 +26,7 @@ import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.example.cafmealplanner.MainActivity;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
 import com.example.cafmealplanner.ui.Data.Day;
@@ -46,9 +47,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
 
-    static int whichDay = 0;
+    static int whichDay;
 
-    static boolean completed = false;
 
     //Track all the more info buttons we will have
     Vector<mealView> breakfastMeals;
@@ -94,6 +94,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     //function for when view is created
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        MainActivity activity = (MainActivity) getActivity();
+
+         weekDays = activity.weekDays;
+
         //Back day and forward day buttons
         Button backDay = getView().findViewById(R.id.backDayButton);
         Button forwardDay = getView().findViewById(R.id.forwardDayButton);
@@ -139,9 +144,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         lunchMeals = new Vector<>(5);
         dinnerMeals = new Vector<>(5);
 
-        // creating new day
-        Day d = new Day();
-
 
 
         cal.add(Calendar.DAY_OF_YEAR, -1);
@@ -149,80 +151,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         day = cal.get(Calendar.DAY_OF_MONTH);
         year = cal.get(Calendar.YEAR);
 
+        displayDay(1);
 
-        // Call the asynchronous method and handle the result
-        if (!completed) {
-            for (int j = 0; j < 8; j++) {
-
-                //creating new meals
-                Meal breakfast = new Meal();
-                Meal lunch = new Meal();
-                Meal dinner = new Meal();
-
-                String tempDate;
-                if (month < 10) {
-                    tempDate = year + "-0" + (month+1);
-                } else {
-                    tempDate = year + "-" + (month+1);
-                }
-                if (day < 10) {
-                    tempDate+= "-0" + day;
-                } else {
-                    tempDate += "-" + day;
-                }
-
-                CompletableFuture<Day> futureDay = d.connectAsync(tempDate);
-                futureDay.thenAccept(today -> {
-                    // store the meals in breakfast, lunch, and dinner
-                    final Meal tempMeal = today.getMeal("Breakfast");
-                    for (int i = 0; i < tempMeal.size(); i++) {
-                        breakfast.add(tempMeal.get(i));
-                    }
-
-
-                    final Meal tempMealTwo = today.getMeal("Lunch");
-                    for (int i = 0; i < tempMealTwo.size(); i++) {
-                        lunch.add(tempMealTwo.get(i));
-                    }
-
-                    final Meal tempMealThree = today.getMeal("Dinner");
-                    for (int i = 0; i < tempMealThree.size(); i++) {
-                        dinner.add(tempMealThree.get(i));
-                    }
-
-                });
-
-                Day tempDay = new Day(breakfast, lunch, dinner);
-                weekDays.add(tempDay);
-
-                // Wait for the asynchronous operation to complete
-                try {
-                    futureDay.get();
-                } catch (Exception e) {
-                    Log.d("Exception thrown", "Error encountered MenuFragment line 174");
-                    e.printStackTrace();
-                }
-
-
-
-                cal.add(Calendar.DAY_OF_YEAR, 1);
-                month = cal.get(Calendar.MONTH);
-                day = cal.get(Calendar.DAY_OF_MONTH);
-                year = cal.get(Calendar.YEAR);
-
-            }
-
-            increaseDays(1);
-            completed = true;
-        }
-        else {
-            increaseDays(1);
-        }
     }
 
-    public void increaseDays(int inc) {
-        whichDay += inc;
-        Log.d("Day", "increaseDays: " + whichDay);
+    public void displayDay(int d) {
+        whichDay = d;
 
         breakfastLinearLayout.removeAllViews();
         lunchLinearLayout.removeAllViews();
@@ -247,7 +181,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add breakfast items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Breakfast").size(); i++) {
             mealView tempMealView = new mealView(getContext());
-            //Log.d("TAG", "onViewCreated: Made it here");
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Breakfast").get(i).getDescription(), weekDays.get(whichDay).getMeal("Breakfast").get(i).getLocation());
             breakfastMeals.add(tempMealView);
@@ -303,7 +236,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
             label.setText(monthOfYear[month] + " " + day + ", " + year);
-            increaseDays(1);
+            whichDay++;
+            displayDay(whichDay);
         } else if (v == getView().findViewById(R.id.backDayButton)) {
             //move back one day
             cal.add(Calendar.DAY_OF_YEAR, -1);
@@ -313,7 +247,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
             //display
             label.setText(monthOfYear[month] + " " + day + ", " + year);
-            increaseDays(-1);
+            whichDay--;
+            displayDay(whichDay);
         }
 
 
@@ -351,7 +286,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                     f.setLocation(intent.getExtras().getString("loc").toString());
                 }
 
-                Log.d("PUT EVERYTHING", "onClick: ");
                 displayFoodInfo(f);
             }
         }
