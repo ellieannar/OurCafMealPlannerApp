@@ -8,14 +8,19 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.concurrent.CompletableFuture;
 
 public class Day {
+
+
 
     //Meals to keep track of breakfast, lunch, and dinner
     Meal breakfast = new Meal();
     Meal lunch = new Meal();
     Meal dinner = new Meal();
+
+    int dayOfWeek;
 
     //Constructor
     public Day() {
@@ -80,6 +85,7 @@ public class Day {
 
                         //add food to breakfast items for today
                         today.breakfast.mealElements.add(food);
+                        today.breakfast.setMealTime("Breakfast");
                     }
 
                     //Lunches
@@ -102,6 +108,7 @@ public class Day {
 
                         // add food to lunch items for today
                         today.lunch.mealElements.add(food);
+                        today.lunch.setMealTime("Lunch");
                     }
 
 
@@ -124,6 +131,7 @@ public class Day {
 
                         // add food to lunch items for today
                         today.dinner.mealElements.add(food);
+                        today.dinner.setMealTime("Dinner");
                     }
 
                 }
@@ -151,7 +159,13 @@ public class Day {
         }
     }
 
+    public void setDayOfWeek(int d) {
+        dayOfWeek = d;
+    }
 
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
 
     /*
     //Print function to display in log what's in the Meals

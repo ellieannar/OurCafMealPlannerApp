@@ -26,7 +26,9 @@ import com.example.cafmealplanner.ui.Menu.mealView;
 import android.widget.ImageButton;
 import android.content.Intent;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Vector;
 
 
@@ -39,7 +41,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
     private MealInfoViewModel mViewModel;
     private FragmentMealInfoBinding binding;
 
-    Vector<mealView> meals;
+    ArrayList<mealView> meals = new ArrayList<>();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -74,26 +76,32 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         ImageButton backToSchedule = (ImageButton) getView().findViewById(R.id.backToSchedule);
         backToSchedule.setOnClickListener((View.OnClickListener) this);
 
-        // Add some meal views
+        // Add  meal views
+        LinearLayout ll = (LinearLayout) getView().findViewById(R.id.mealLinearLayout);
+        LinearLayout items = new LinearLayout(getContext());
+        items.setOrientation(LinearLayout.VERTICAL);
 
-        LinearLayout dinnerLinearLayout = (LinearLayout) getView().findViewById(R.id.mealLinearLayout);
-        LinearLayout dinnerItems = new LinearLayout(getContext());
-        dinnerItems.setOrientation(LinearLayout.VERTICAL);
+        Meal tempMeal = this.getArguments().getParcelable("meal");
 
-        meals = new Vector<mealView>(5);
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < tempMeal.size(); i++) {
             mealView temp = new mealView(getContext());
-            temp.setMealName("PASTA");
-            //temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+            temp.setMealName(tempMeal.get(i).getTitle());
+            for (int j = 0; j < tempMeal.get(i).getRestrictions().size(); j++) {
+                temp.addTag(tempMeal.get(i).getRestrictions().get(j));
+            }
             meals.add(temp);
         }
 
-
-        for (int i = 0; i < meals.size(); i++) {
-            dinnerItems.addView(meals.get(i));
+        for (int i = 0; i < tempMeal.size(); i++) {
+            items.addView(meals.get(i));
         }
 
-        dinnerLinearLayout.addView(dinnerItems);
+        ll.addView(items);
+
+        //change date display
+        TextView whichMeal = getView().findViewById(R.id.meal);
+        whichMeal.setText(tempMeal.getMealTime().toString());
+
     }
 
     public void onClick(View v) {

@@ -24,7 +24,20 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
     }
 
     enum dayOfWeek {
-        SUNDAY, MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY
+        MONDAY(1), TUESDAY(2), WEDNESDAY(3), THURSDAY(4), FRIDAY(5), SATURDAY(6), SUNDAY(7);
+
+        // Custom field to store the integer value
+        private final int intValue;
+
+        // Constructor to initialize the integer value
+        dayOfWeek(int intValue) {
+            this.intValue = intValue;
+        }
+
+        // Getter method to retrieve the integer value
+        public int toInt() {
+            return intValue;
+        }
     }
 
     enum mealTime {
@@ -107,8 +120,8 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
         return meal.toString();
     }
 
-    public String getDay() {
-        return day.toString();
+    public int getDay() {
+        return day.toInt();
     }
 
 

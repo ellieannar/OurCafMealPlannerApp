@@ -80,8 +80,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getExtras().getString("audience").equals("forSchedule")) {
                 Meal m = new Meal();
-                if (intent.getExtras().getString("title") != null) {
 
+                if (intent.getExtras().getString("time") != null) {
+                    Log.d("TAG", "onReceive: " + intent.getExtras().getString("time") + " " + intent.getExtras().getInt("day"));
+                    for (int i = 0; i < weekDays.size(); i++) {
+                        if (weekDays.get(i).getDayOfWeek() == intent.getExtras().getInt("day")) {
+                            m = weekDays.get(i+1).getMeal(intent.getExtras().getString("time"));
+                            break;
+                        }
+                    }
                 }
 
 
@@ -169,7 +176,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
             Bundle b = new Bundle();
-            //b.putInt();
+            b.putParcelable("meal", m);
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, b);
 
