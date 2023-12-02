@@ -1,9 +1,53 @@
 package com.example.cafmealplanner.ui.Data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class FoodItem {
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
+
+
+public class FoodItem implements Parcelable {
+
+    protected FoodItem(Parcel in) {
+        //restrictions = new ArrayList<>();
+        readEnumList(in, restrictions, restrictionType.class);
+    }
+
+    public static final Creator<FoodItem> CREATOR = new Creator<FoodItem>() {
+        @Override
+        public FoodItem createFromParcel(Parcel in) {
+            return new FoodItem(in);
+        }
+
+        @Override
+        public FoodItem[] newArray(int size) {
+            return new FoodItem[size];
+        }
+    };
+
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+
+        writeEnumList(parcel, restrictions);
+    }
 
     public enum restrictionType {
         VEGAN, GLUTEN_FREE, HUMANE, FARM_FRESH, LOCALLY_CRAFTED, VEGETARIAN, SEAFOOD
@@ -17,6 +61,22 @@ public class FoodItem {
 
     public FoodItem () {
         super();
+    }
+
+    private <E extends Enum<E>> void writeEnumList(Parcel dest, List<E> list) {
+        dest.writeInt(list.size());
+        for (E e : list) {
+            dest.writeString(e.name());
+        }
+    }
+
+    private <E extends Enum<E>> void readEnumList(Parcel in, List<E> list, Class<E> enumClass) {
+        int size = in.readInt();
+        EnumSet<E> enumSet = EnumSet.noneOf(enumClass);
+        for (int i = 0; i < size; i++) {
+            enumSet.add(Enum.valueOf(enumClass, in.readString()));
+        }
+        list.addAll(enumSet);
     }
 
     public void addRestriction(String r) {
@@ -47,7 +107,9 @@ public class FoodItem {
         }
     }
 
-
+    public void addRestriction(restrictionType r) {
+        restrictions.add(r);
+    }
     public void setLocation(String l) {
         location = l;
     }
@@ -56,6 +118,9 @@ public class FoodItem {
     }
     public void setDescription(String d) {
         description = d;
+    }
+    public void addRestrictions(ArrayList<restrictionType> r) {
+        restrictions = r;
     }
 
 
@@ -75,3 +140,4 @@ public class FoodItem {
         return restrictions;
     }
 }
+

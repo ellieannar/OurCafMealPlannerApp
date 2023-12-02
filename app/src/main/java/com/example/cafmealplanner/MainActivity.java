@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 tempDate += "-" + day;
             }
 
+
             CompletableFuture<Day> futureDay = d.connectAsync(tempDate);
             futureDay.thenAccept(today -> {
                 // store the meals in breakfast, lunch, and dinner
@@ -88,13 +89,15 @@ public class MainActivity extends AppCompatActivity {
             });
 
             Day tempDay = new Day(breakfast, lunch, dinner);
+            tempDay.setDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
+            Log.d("Day of week", "onCreate: " + cal.get(Calendar.DAY_OF_WEEK));
             weekDays.add(tempDay);
 
             // Wait for the asynchronous operation to complete
             try {
                 futureDay.get();
             } catch (Exception e) {
-                Log.d("Exception thrown", "Error encountered MenuFragment line 174");
+                Log.d("Exception thrown", "Error encountered MainActivity line 99");
                 e.printStackTrace();
             }
 

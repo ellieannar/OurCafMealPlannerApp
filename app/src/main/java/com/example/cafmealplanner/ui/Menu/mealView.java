@@ -86,6 +86,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         intent.putExtra("title", f.getTitle());
         intent.putExtra("desc", f.getDescription());
         intent.putExtra("loc", f.getLocation());
+        intent.putExtra("rest", f.getRestrictions());
 
 
 
@@ -115,7 +116,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         t.setGravity(Gravity.CENTER);
         t.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
         t.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners, null));
-
+        f.addRestriction(tagType);
         switch (tagType){
             case VEGAN:
                 t.setText("vg");
