@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -55,7 +56,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     private void initMealView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.meal_view, this, true);
-        FrameLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
+        ConstraintLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         tagsLinearLayout = findViewById(R.id.tagsLinearLayout);
 
