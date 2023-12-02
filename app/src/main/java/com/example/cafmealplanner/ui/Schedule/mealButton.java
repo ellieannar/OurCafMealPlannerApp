@@ -114,6 +114,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
 
 
+
     @Override
     public void onClick(View view){
         if (!isEditing) {
