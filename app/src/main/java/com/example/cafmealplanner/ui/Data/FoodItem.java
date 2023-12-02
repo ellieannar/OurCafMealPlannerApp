@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class FoodItem {
 
-    enum restrictionType {
+    public enum restrictionType {
         VEGAN, GLUTEN_FREE, HUMANE, FARM_FRESH, LOCALLY_CRAFTED, VEGETARIAN, SEAFOOD
     }
 

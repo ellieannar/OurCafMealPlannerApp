@@ -84,7 +84,7 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         for (int i = 0; i < 5; i++) {
             mealView temp = new mealView(getContext());
             temp.setMealName("PASTA");
-            temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
+            //temp.addTag(mealView.TAG_TYPE.VEGETARIAN);
             meals.add(temp);
         }
 

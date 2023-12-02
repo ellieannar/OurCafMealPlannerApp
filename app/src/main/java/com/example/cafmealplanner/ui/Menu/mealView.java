@@ -23,10 +23,7 @@ import com.example.cafmealplanner.ui.Data.FoodItem;
 
 
 public class mealView extends FrameLayout implements View.OnClickListener {
-    public enum TAG_TYPE {
-        VEGAN, GLUTEN_FREE, HUMANE, FARM_FRESH,
-        LOCALLY_CRAFTED, VEGETARIAN, SEAFOOD
-    }
+
 
     private TextView nameOfMealTextView;
     private LinearLayout tagsLinearLayout;
@@ -109,7 +106,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
 
 
     //allows caller to create a tag for meal item
-    public void addTag(TAG_TYPE tagType) {
+    public void addTag(FoodItem.restrictionType tagType) {
         TextView t = new TextView(getContext());
         t.setWidth(100);
         t.setHeight(100);

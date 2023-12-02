@@ -41,6 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("MainActivity Created", "onCreate: ");
 
+        //Go back to yesterday
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        month = cal.get(Calendar.MONTH);
+        day = cal.get(Calendar.DAY_OF_MONTH);
+        year = cal.get(Calendar.YEAR);
 
         for (int j = 0; j < 8; j++) {
 

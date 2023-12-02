@@ -46,7 +46,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     //Months indexed
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
-
+    //keeps track of which day is displayed
     static int whichDay;
 
 
@@ -61,19 +61,19 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     static LinearLayout dinnerLinearLayout;
 
 
-    //Track all days in one arraylist
+    //Track all days in one arraylist - get from MainActivity
     static ArrayList<Day> weekDays = new ArrayList<>();
 
 
     //Default on create view
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //MenuViewModel menuViewModel =
-                //new ViewModelProvider(this).get(MenuViewModel.class);
+
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         container.removeAllViews();
 
+        //Navigation
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.addToBackStack("MENU");
@@ -136,8 +136,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
         //allow detection of breakfast buttons
-        breakfastItems.setOnClickListener(this);
-        breakfastLinearLayout.setOnClickListener(this);
+        //breakfastItems.setOnClickListener(this);
+        //breakfastLinearLayout.setOnClickListener(this);
 
         //vector of meal items
         breakfastMeals = new Vector<>(5);
@@ -181,14 +181,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add breakfast items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Breakfast").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            for (int j = 0; j < weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictions().size(); j++) {
+                tempMealView.addTag(weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictions().get(j));
+            }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Breakfast").get(i).getDescription(), weekDays.get(whichDay).getMeal("Breakfast").get(i).getLocation());
             breakfastMeals.add(tempMealView);
+
         }
 
         //get & add lunch items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Lunch").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            for (int j = 0; j < weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictions().size(); j++) {
+                tempMealView.addTag(weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictions().get(j));
+            }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Lunch").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Lunch").get(i).getDescription(), weekDays.get(whichDay).getMeal("Lunch").get(i).getLocation());
             lunchMeals.add(tempMealView);
@@ -197,6 +204,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add dinner items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Dinner").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            for (int j = 0; j < weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictions().size(); j++) {
+                tempMealView.addTag(weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictions().get(j));
+            }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Dinner").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Dinner").get(i).getDescription(), weekDays.get(whichDay).getMeal("Dinner").get(i).getLocation());
             dinnerMeals.add(tempMealView);
