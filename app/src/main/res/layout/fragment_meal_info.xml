@@ -6,68 +6,57 @@
     android:layout_height="match_parent"
     tools:context=".ui.Schedule.MealInfo">
 
-    <ImageView
-        android:id="@+id/headerBar"
-        android:layout_width="410dp"
-        android:layout_height="164dp"
-        android:layout_marginBottom="545dp"
-        android:background="#B1ADAD"
-        android:src="@android:drawable/screen_background_light_transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
-
     <TextView
         android:id="@+id/day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/current_date"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.746"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.147" />
+        app:layout_constraintTop_toBottomOf="@id/meal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="16dp"
+
+         />
 
     <TextView
         android:id="@+id/meal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="125dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="200dp"
         android:text="@string/dinner_text"
         android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.003" />
+        android:layout_marginTop="16dp"
+        />
+
+
 
     <ImageButton
         android:id="@+id/backToSchedule"
-        android:layout_width="47dp"
-        android:layout_height="35dp"
-        android:src="@drawable/baseline_arrow_back_ios_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.118"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.097" />
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/meal"
+        app:layout_constraintBottom_toBottomOf="@id/meal"
+        android:layout_marginLeft="16dp"
+        android:accessibilityLiveRegion="none"
+        android:contentDescription="@string/back_info_desc"
+        android:rotationY="180"
+        android:src="@drawable/more_info_button"
+        app:tint="@color/biolaBlack"
+         />
 
     <LinearLayout
         android:id="@+id/mealLinearLayout"
-        android:layout_width="411dp"
+        android:layout_width="match_parent"
         android:layout_height="560dp"
-        android:layout_marginTop="164dp"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/headerBar" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/day"
+        android:layout_marginTop="16dp"
+
+         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
