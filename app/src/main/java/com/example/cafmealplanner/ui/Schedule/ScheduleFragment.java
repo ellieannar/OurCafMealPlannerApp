@@ -21,9 +21,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.example.cafmealplanner.MainActivity;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
+import com.example.cafmealplanner.ui.Data.Day;
+import com.example.cafmealplanner.ui.Data.FoodItem;
+import com.example.cafmealplanner.ui.Data.Meal;
 import com.example.cafmealplanner.ui.Data.resource;
+
+import java.util.ArrayList;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
@@ -32,8 +38,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     private Button editButton;
     private resource resources = new resource();
 
+    //Track all days in one arraylist - get from MainActivity
+    static ArrayList<Day> weekDays = new ArrayList<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        MainActivity activity = (MainActivity) getActivity();
+
+        weekDays = activity.weekDays;
+
         ScheduleViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(ScheduleViewModel.class);
 
@@ -61,15 +74,29 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
 
     //button clicks
+    //button clicks
     public BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getExtras().getString("audience").equals("forSchedule")) {
-                displayMealInfo();
+                Meal m = new Meal();
+
+                if (intent.getExtras().getString("time") != null) {
+                    Log.d("TAG", "onReceive: " + intent.getExtras().getString("time") + " " + intent.getExtras().getInt("day"));
+                    for (int i = 0; i < weekDays.size(); i++) {
+                        if (weekDays.get(i).getDayOfWeek() == intent.getExtras().getInt("day")) {
+                            m = weekDays.get(i+1).getMeal(intent.getExtras().getString("time"));
+                            m.setMealTime(intent.getExtras().getString("time"));
+                            break;
+                        }
+                    }
+                }
+
+
+                displayMealInfo(m);
             }
         }
     };
-
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         setupLinearLayouts();
         editButton = view.findViewById(R.id.edit_schedule);
@@ -142,16 +169,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
          */
     }
 
-    private void displayMealInfo() {
+    private void displayMealInfo(Meal m) {
         // Ensure activity is properly initialized
         if (getActivity() != null) {
             // Create new fragment and transaction
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
-
+            Bundle b = new Bundle();
+            b.putParcelable("meal", m);
             // Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, null);
+            transaction.replace(R.id.nav_host_fragment_activity_main, MealInfo.class, b);
 
             // Commit the transaction
             transaction.commit();

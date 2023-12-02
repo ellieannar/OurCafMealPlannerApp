@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,9 +27,11 @@ import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
 
+import com.example.cafmealplanner.MainActivity;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
 import com.example.cafmealplanner.ui.Data.Day;
+import com.example.cafmealplanner.ui.Data.FoodItem;
 import com.example.cafmealplanner.ui.Data.Meal;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
@@ -44,8 +47,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     //Months indexed
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
+    //keeps track of which day is displayed
+    static int whichDay;
 
-    static int whichDay = 0;
 
     //Track all the more info buttons we will have
     Vector<mealView> breakfastMeals;
@@ -53,24 +57,24 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     Vector<mealView> dinnerMeals;
 
     //Linear layouts
-    LinearLayout breakfastLinearLayout;
-    LinearLayout lunchLinearLayout;
-    LinearLayout dinnerLinearLayout;
+    static LinearLayout breakfastLinearLayout;
+    static LinearLayout lunchLinearLayout;
+    static LinearLayout dinnerLinearLayout;
 
 
-    //Track all days in one arraylist
-    ArrayList<Day> weekDays = new ArrayList<>();
+    //Track all days in one arraylist - get from MainActivity
+    static ArrayList<Day> weekDays = new ArrayList<>();
 
 
     //Default on create view
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        //MenuViewModel menuViewModel =
-                //new ViewModelProvider(this).get(MenuViewModel.class);
+
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         container.removeAllViews();
 
+        //Navigation
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
         transaction.addToBackStack("MENU");
@@ -91,6 +95,11 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
     //function for when view is created
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+
+        MainActivity activity = (MainActivity) getActivity();
+
+         weekDays = activity.weekDays;
+
         //Back day and forward day buttons
         Button backDay = getView().findViewById(R.id.backDayButton);
         Button forwardDay = getView().findViewById(R.id.forwardDayButton);
@@ -128,16 +137,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         dinnerItems.setOrientation(LinearLayout.VERTICAL);
 
         //allow detection of breakfast buttons
-        breakfastItems.setOnClickListener(this);
-        breakfastLinearLayout.setOnClickListener(this);
+        //breakfastItems.setOnClickListener(this);
+        //breakfastLinearLayout.setOnClickListener(this);
 
         //vector of meal items
         breakfastMeals = new Vector<>(5);
         lunchMeals = new Vector<>(5);
         dinnerMeals = new Vector<>(5);
-
-        // creating new day
-        Day d = new Day();
 
 
 
@@ -146,75 +152,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         day = cal.get(Calendar.DAY_OF_MONTH);
         year = cal.get(Calendar.YEAR);
 
+        displayDay(1);
 
-        // Call the asynchronous method and handle the result
-
-        for (int j = 0; j < 8; j++) {
-
-            //creating new meals
-            Meal breakfast = new Meal();
-            Meal lunch = new Meal();
-            Meal dinner = new Meal();
-
-            String tempDate;
-            if (month < 10) {
-                tempDate = year + "-0" + (month+1);
-            } else {
-                tempDate = year + "-" + (month+1);
-            }
-            if (day < 10) {
-                tempDate+= "-0" + day;
-            } else {
-                tempDate += "-" + day;
-            }
-
-            CompletableFuture<Day> futureDay = d.connectAsync(tempDate);
-            futureDay.thenAccept(today -> {
-                // store the meals in breakfast, lunch, and dinner
-                final Meal tempMeal = today.getMeal("Breakfast");
-                for (int i = 0; i < tempMeal.size(); i++) {
-                    breakfast.add(tempMeal.get(i));
-                }
-
-
-                final Meal tempMealTwo = today.getMeal("Lunch");
-                for (int i = 0; i < tempMealTwo.size(); i++) {
-                    lunch.add(tempMealTwo.get(i));
-                }
-
-                final Meal tempMealThree = today.getMeal("Dinner");
-                for (int i = 0; i < tempMealThree.size(); i++) {
-                    dinner.add(tempMealThree.get(i));
-                }
-
-            });
-
-            Day tempDay = new Day(breakfast, lunch, dinner);
-            weekDays.add(tempDay);
-
-            // Wait for the asynchronous operation to complete
-            try {
-                futureDay.get();
-            } catch (Exception e) {
-                Log.d("Exception thrown", "Error encountered MenuFragment line 174");
-                e.printStackTrace();
-            }
-
-
-
-            cal.add(Calendar.DAY_OF_YEAR, 1);
-            month = cal.get(Calendar.MONTH);
-            day = cal.get(Calendar.DAY_OF_MONTH);
-            year = cal.get(Calendar.YEAR);
-
-        }
-
-        increaseDays(1);
     }
 
-    public void increaseDays(int inc) {
-        whichDay += inc;
-        Log.d("Day", "increaseDays: " + whichDay);
+    public void displayDay(int d) {
+        whichDay = d;
 
         breakfastLinearLayout.removeAllViews();
         lunchLinearLayout.removeAllViews();
@@ -239,22 +182,34 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add breakfast items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Breakfast").size(); i++) {
             mealView tempMealView = new mealView(getContext());
-            //Log.d("TAG", "onViewCreated: Made it here");
+            for (int j = 0; j < weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictions().size(); j++) {
+                tempMealView.addTag(weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictions().get(j));
+            }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle());
+            tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Breakfast").get(i).getDescription(), weekDays.get(whichDay).getMeal("Breakfast").get(i).getLocation());
             breakfastMeals.add(tempMealView);
+
         }
 
         //get & add lunch items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Lunch").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            for (int j = 0; j < weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictions().size(); j++) {
+                tempMealView.addTag(weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictions().get(j));
+            }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Lunch").get(i).getTitle());
+            tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Lunch").get(i).getDescription(), weekDays.get(whichDay).getMeal("Lunch").get(i).getLocation());
             lunchMeals.add(tempMealView);
         }
 
         //get & add dinner items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Dinner").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            for (int j = 0; j < weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictions().size(); j++) {
+                tempMealView.addTag(weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictions().get(j));
+            }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Dinner").get(i).getTitle());
+            tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Dinner").get(i).getDescription(), weekDays.get(whichDay).getMeal("Dinner").get(i).getLocation());
             dinnerMeals.add(tempMealView);
         }
 
@@ -292,7 +247,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             day = cal.get(Calendar.DAY_OF_MONTH);
             year = cal.get(Calendar.YEAR);
             label.setText(monthOfYear[month] + " " + day + ", " + year);
-            increaseDays(1);
+            whichDay++;
+            displayDay(whichDay);
         } else if (v == getView().findViewById(R.id.backDayButton)) {
             //move back one day
             cal.add(Calendar.DAY_OF_YEAR, -1);
@@ -302,7 +258,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             year = cal.get(Calendar.YEAR);
             //display
             label.setText(monthOfYear[month] + " " + day + ", " + year);
-            increaseDays(-1);
+            whichDay--;
+            displayDay(whichDay);
         }
 
 
@@ -329,26 +286,29 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent != null && intent.getExtras().getString("audience").equals("forMenu")) {
-                displayFoodInfo();
+                FoodItem f = new FoodItem();
+                if (intent.getExtras().getString("title") != null) {
+                    f.setTitle(intent.getExtras().getString("title").toString());
+                }
+                if (intent.getExtras().getString("desc") != null) {
+                    f.setDescription(intent.getExtras().getString("desc").toString());
+                }
+                if (intent.getExtras().getString("loc") != null) {
+                    f.setLocation(intent.getExtras().getString("loc").toString());
+                }
+                if (intent.getExtras().getSerializable("rest") != null) {
+                    f.addRestrictions((ArrayList<FoodItem.restrictionType>) intent.getExtras().getSerializable("rest"));
+                }
+
+                displayFoodInfo(f);
             }
         }
     };
 
-    private void displayFoodInfo() {
 
-        /*
-        // Create new fragment and transaction
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.setReorderingAllowed(true);
 
-        // Replace whatever is in the fragment_container view with this fragment
-        transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+    private void displayFoodInfo(FoodItem f) {
 
-        // Commit the transaction
-        transaction.commit();
-
-         */
 
         // Ensure activity is properly initialized
         if (getActivity() != null) {
@@ -356,9 +316,14 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.setReorderingAllowed(true);
-
+            Bundle b = new Bundle();
+            b.putString("loc" , f.getLocation());
+            b.putString("title" , f.getTitle());
+            b.putString("desc", f.getDescription());
+            b.putParcelable("rest", f);
+            Log.d("Err here", "displayFoodInfo: ");
             // Replace whatever is in the fragment_container view with this fragment
-            transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, null);
+            transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, b);
 
             // Commit the transaction
             transaction.commit();
