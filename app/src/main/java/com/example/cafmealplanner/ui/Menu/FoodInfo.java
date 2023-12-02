@@ -1,5 +1,6 @@
 package com.example.cafmealplanner.ui.Menu;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
@@ -11,11 +12,13 @@ import androidx.fragment.app.Fragment;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.util.Xml;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.cafmealplanner.R;
@@ -38,6 +41,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     boolean editRatingOn = false;
     private static final String ns = null;
     int starRating = 0;
+
 
 
 
@@ -95,6 +99,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
+
+
         //String foodName = this.getArguments().getString("foodName");
         //Log.d("Testing passing stuff", "onViewCreated: " + foodName);
         TextView foodTitle = getView().findViewById(R.id.mealName);
@@ -107,6 +113,58 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         if (this.getArguments().getString("desc") != null) {
             description.setText(this.getArguments().getString("desc"));
         }
+
+        LinearLayout restrictionsView = getView().findViewById(R.id.restrictionsContainer);
+        ArrayList<FoodItem.restrictionType> rest = new ArrayList<>();
+        if (this.getArguments().getParcelable("rest") != null) {
+
+            FoodItem f = this.getArguments().getParcelable("rest");
+            rest = f.getRestrictions();
+        }
+
+        for (int i = 0; i < rest.size(); i++) {
+            TextView t = new TextView(getContext());
+            t.setWidth(100);
+            t.setHeight(100);
+            t.setTextSize(20);
+            t.setGravity(Gravity.CENTER);
+            t.setTextColor(ResourcesCompat.getColor(getResources(), R.color.white, null));
+            t.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_corners, null));
+
+            switch (rest.get(i)){
+                case VEGAN:
+                    t.setText("vg");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.green, null));
+                    break;
+                case HUMANE:
+                    t.setText("h");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.lightBlue, null));
+                    break;
+                case FARM_FRESH:
+                    t.setText("ff");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.pink, null));
+                    break;
+                case GLUTEN_FREE:
+                    t.setText("gf");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.yellow, null));
+                    break;
+                case LOCALLY_CRAFTED:
+                    t.setText("lc");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkBlue, null));
+                    break;
+                case VEGETARIAN:
+                    t.setText("v");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkGreen, null));
+                    break;
+                case SEAFOOD:
+                    t.setText("s");
+                    t.getBackground().setTint(ResourcesCompat.getColor(getResources(), R.color.darkPink, null));
+                    break;
+            }
+
+            restrictionsView.addView(t);
+        }
+
 
 
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -295,6 +296,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
                 if (intent.getExtras().getString("loc") != null) {
                     f.setLocation(intent.getExtras().getString("loc").toString());
                 }
+                if (intent.getExtras().getSerializable("rest") != null) {
+                    f.addRestrictions((ArrayList<FoodItem.restrictionType>) intent.getExtras().getSerializable("rest"));
+                }
 
                 displayFoodInfo(f);
             }
@@ -316,7 +320,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             b.putString("loc" , f.getLocation());
             b.putString("title" , f.getTitle());
             b.putString("desc", f.getDescription());
-
+            b.putParcelable("rest", f);
+            Log.d("Err here", "displayFoodInfo: ");
             // Replace whatever is in the fragment_container view with this fragment
             transaction.replace(R.id.nav_host_fragment_activity_main, FoodInfo.class, b);
 
