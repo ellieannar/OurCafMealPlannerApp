@@ -7,7 +7,9 @@ import java.util.ArrayList;
 
 public class Meal implements Parcelable {
     ArrayList<FoodItem> mealElements = new ArrayList<FoodItem>();
-    String mealTime;
+    String mealTime = "Breakfast";
+
+    String date = "";
 
     public Meal() {
         super();
@@ -60,5 +62,13 @@ public class Meal implements Parcelable {
 
     public void setMealTime(String m) {
         mealTime = m;
+    }
+
+    public void setDate(String d) {
+        date = d;
+    }
+
+    public String getDate(){
+        return date;
     }
 }

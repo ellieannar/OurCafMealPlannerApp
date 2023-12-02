@@ -27,6 +27,10 @@ public class MainActivity extends AppCompatActivity {
     public Day d = new Day();
     public ArrayList<Day> weekDays = new ArrayList<>();
 
+    //Months indexed
+    private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -90,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
 
             Day tempDay = new Day(breakfast, lunch, dinner);
             tempDay.setDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-            Log.d("Day of week", "onCreate: " + cal.get(Calendar.DAY_OF_WEEK));
+            tempDay.setDate(monthOfYear[month] + " " + day + ", " + year);
+            breakfast.setDate(monthOfYear[month] + " " + day + ", " + year);
+            lunch.setDate(monthOfYear[month] + " " + day + ", " + year);
+            dinner.setDate(monthOfYear[month] + " " + day + ", " + year);
             weekDays.add(tempDay);
 
             // Wait for the asynchronous operation to complete
