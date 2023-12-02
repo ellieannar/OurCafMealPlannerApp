@@ -4,6 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,22 +14,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
+import com.example.cafmealplanner.ui.Data.FoodItem;
 
 
 public class mealView extends FrameLayout implements View.OnClickListener {
-    public enum TAG_TYPE {
-        VEGAN, GLUTEN_FREE, HUMANE, FARM_FRESH,
-        LOCALLY_CRAFTED, VEGETARIAN, SEAFOOD
-    }
+
 
     private TextView nameOfMealTextView;
     private LinearLayout tagsLinearLayout;
     private Button infoButton;
+
+    //my food item
+    FoodItem f = new FoodItem();
 
     // String to be populated by either MenuFragment or MealInfo
     public String parentActivity = "back_nav_support";
@@ -53,7 +56,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     private void initMealView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.meal_view, this, true);
-        FrameLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
+        ConstraintLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         tagsLinearLayout = findViewById(R.id.tagsLinearLayout);
 
@@ -80,6 +83,11 @@ public class mealView extends FrameLayout implements View.OnClickListener {
 
         // put your all data using put extra
         intent.putExtra("audience", "forMenu");
+        intent.putExtra("title", f.getTitle());
+        intent.putExtra("desc", f.getDescription());
+        intent.putExtra("loc", f.getLocation());
+
+
 
         LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
@@ -89,11 +97,17 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         nameOfMealTextView.setTextSize(20);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         nameOfMealTextView.setText(name);
+        f.setTitle(name);
+    }
+
+    public void setOtherInfo(String desc, String loc) {
+        f.setDescription(desc);
+        f.setLocation(loc);
     }
 
 
     //allows caller to create a tag for meal item
-    public void addTag(TAG_TYPE tagType) {
+    public void addTag(FoodItem.restrictionType tagType) {
         TextView t = new TextView(getContext());
         t.setWidth(100);
         t.setHeight(100);
