@@ -82,10 +82,10 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 Meal m = new Meal();
 
                 if (intent.getExtras().getString("time") != null) {
-                    Log.d("TAG", "onReceive: " + intent.getExtras().getString("time") + " " + intent.getExtras().getInt("day"));
+
                     for (int i = 0; i < weekDays.size(); i++) {
                         if (weekDays.get(i).getDayOfWeek() == intent.getExtras().getInt("day")) {
-                            m = weekDays.get(i+1).getMeal(intent.getExtras().getString("time"));
+                            m = weekDays.get(i+1).getMeal(intent.getExtras().getString("time").toLowerCase());
                             m.setMealTime(intent.getExtras().getString("time"));
                             break;
                         }

@@ -21,6 +21,7 @@ public class Day {
     Meal dinner = new Meal();
 
     int dayOfWeek;
+    String date;
 
     //Constructor
     public Day() {
@@ -151,9 +152,9 @@ public class Day {
 
 
     public Meal getMeal(String m) {
-        if (m == "Breakfast") {
+        if (m.equals("Breakfast") || m.equals("breakfast")) {
             return breakfast;
-        } else if (m == "Lunch") {
+        } else if (m.equals("Lunch") || m.equals("lunch")) {
             return lunch;
         } else {
             return dinner;
@@ -166,6 +167,14 @@ public class Day {
 
     public int getDayOfWeek() {
         return dayOfWeek;
+    }
+
+    public void setDate(String d) {
+        date = d;
+    }
+
+    public String getDate() {
+        return date;
     }
 
     /*
