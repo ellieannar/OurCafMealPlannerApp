@@ -100,7 +100,9 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
         //change date display
         TextView whichMeal = getView().findViewById(R.id.meal);
-        whichMeal.setText(tempMeal.getMealTime().toString());
+        whichMeal.setText(tempMeal.getMealTime());
+        //Log.d("Mealtime", "onViewCreated: " + tempMeal.getMealTime());
+
 
     }
 

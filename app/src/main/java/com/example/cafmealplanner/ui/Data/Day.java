@@ -132,6 +132,7 @@ public class Day {
                         // add food to lunch items for today
                         today.dinner.mealElements.add(food);
                         today.dinner.setMealTime("Dinner");
+                        Log.d("Setting the meal time", "connect: " + today.dinner.getMealTime());
                     }
 
                 }

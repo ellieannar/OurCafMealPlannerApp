@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class Meal implements Parcelable {
     ArrayList<FoodItem> mealElements = new ArrayList<FoodItem>();
-    String mealTime = "";
+    String mealTime;
 
     public Meal() {
         super();
