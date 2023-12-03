@@ -5,6 +5,7 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_menu">
 
+
     <fragment
         android:id="@+id/navigation_menu"
         android:name="com.example.cafmealplanner.ui.Menu.MenuFragment"
