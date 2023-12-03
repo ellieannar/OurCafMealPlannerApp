@@ -4,7 +4,10 @@ import androidx.core.util.AtomicFileKt;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -54,12 +57,15 @@ import javax.xml.transform.stream.StreamResult;
 
 public class FoodInfo extends Fragment implements View.OnClickListener {
     boolean editRatingOn = false;
-    int starRating = 0;
+    static int starRating = 0;
 
     // ratingList will store all the entries inside ratings.xml
     List<Rating> ratingList = new ArrayList<>();
     Rating rating;
     String text, mealName;
+
+    /*String ratingsPathname = "../values/ratings.xml";
+    File ratingsFile = new File(ratingsPathname);*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -105,8 +111,9 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         // Populate ratingList with the data from ratings.xml
         // to get a list of meal names and corresponding star ratings
         InputStream in = null;
-        try {
-            in = new FileInputStream("main/res/values/ratings.xml");
+
+        /*try {
+            in = new FileInputStream(ratingsFile);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -126,7 +133,9 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
 
         if (i == ratingList.size())
-            starRating = 0;
+            starRating = 0;*/
+
+        setStarAppearance();
 
         // Implement the rating and back navigation buttons
         getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
@@ -195,6 +204,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     }
 
+    @SuppressLint("ResourceAsColor")
     public void setStarAppearance() {
         int i;
         ImageButton star = new ImageButton(getContext());
@@ -209,6 +219,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             } else {
                 starRatings[i].setImageResource(R.drawable.sss);
             }
+            starRatings[i].setImageTintList(ColorStateList.valueOf(R.color.biolaRed));
 
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
@@ -221,6 +232,8 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             } else {
                 starRatings[i].setImageResource(R.drawable.gray_star);
             }
+            starRatings[i].setImageTintList(ColorStateList.valueOf(R.color.biolaBlack));
+
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
             star.setMaxWidth(50);
@@ -230,7 +243,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void setRating(int numStars) {
         starRating = numStars; // Adjust the official star rating
 
-        Rating newRating = new Rating();
+        /*Rating newRating = new Rating();
         newRating.setMealName(mealName);
         newRating.setNumStars(starRating);
 
@@ -247,7 +260,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         // If the food is not already in the rating list, add it
         if (i == ratingList.size()) {
             ratingList.add(newRating);
-        }
+        }*/
 
         setStarAppearance(); // Change the appearance of the stars to reflect the new star rating
     }
@@ -336,7 +349,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     @Override
     public void onDestroyView() {
-        saveRating(); // Write the updated rating list to xml
+        //saveRating(); // Write the updated rating list to xml
         super.onDestroyView();
     }
 }
