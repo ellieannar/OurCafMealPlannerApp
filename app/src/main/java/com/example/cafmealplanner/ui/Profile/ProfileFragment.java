@@ -29,6 +29,9 @@ import com.example.cafmealplanner.databinding.FragmentProfileBinding;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
@@ -39,10 +42,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private Boolean editMode = false;
     //Keep track of all 5 dietary restrictions
     public dietaryRestriction[] allDietaryRestrictions = new dietaryRestriction[5];
-    public favoriteMeal[] allMeals = new favoriteMeal[10];
+    public ArrayList<favoriteMeal> allMeals = new ArrayList<>();
 
     EditText firstName;
     EditText lastName;
+
+    Set<String> favoriteMeals = new HashSet<>();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -116,6 +122,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         String l = sp.getString("LAST_NAME", "");
         firstName.setText(f);
         lastName.setText(l);
+
+        // Create a mutable copy of the set
+        favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.<String>emptySet()));
+        for (String meal : favoriteMeals) {
+            System.out.println(meal);
+        }
+        displayFavoriteMeals();
     }
 
     //Checks for a click
@@ -137,15 +150,19 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     }
 
-    private void saveLongData(String first, String last) {
+    private void saveLongData() {
 
         SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
         SharedPreferences.Editor spEdit = sp.edit();
 
         spEdit.putString("FIRST_NAME", firstName.getText().toString());
         spEdit.putString("LAST_NAME", lastName.getText().toString());
+        spEdit.putStringSet("FAVORITE_MEALS", favoriteMeals);
 
         spEdit.commit();
+
+
+
 
     }
 
@@ -163,6 +180,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
     //call corresponding functions when edit mode turned off
     private void editModeTurnedOff() {
+
         displaySelectedRestrictions();
         hideSpinner();
 
@@ -170,9 +188,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         hideEditText(firstName);
         hideEditText(lastName);
 
-        saveLongData(firstName.getText().toString(), lastName.getText().toString());
+
 
         closeFavoriteMeals();
+        saveLongData();
 
     }
 
@@ -270,7 +289,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         for (int i = 0; i < 10; i++) {
             favoriteMeal f = new favoriteMeal(getContext());
             f.setMealName(s[i]);
-            allMeals[i] = f;
+            allMeals.add(f);
         }
 
     }
@@ -279,24 +298,54 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
         favMeals.removeAllViews();
         for (int i = 0; i < 10; i++) {
-            allMeals[i].showCheckbox();
-            favMeals.addView(allMeals[i]);
+
+            allMeals.get(i).showCheckbox();
+            if(favoriteMeals.contains(allMeals.get(i).getMealName())){
+                allMeals.get(i).setChecked(true);
+            }
+            favMeals.addView(allMeals.get(i));
+
         }
     }
 
     void closeFavoriteMeals() {
         LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
         ScrollView favScroll = getView().findViewById(R.id.favoriteMealsScrollView);
+
+
         favMeals.removeAllViews();
+        favoriteMeals.clear();
         for (int i = 0; i < 10; i++) {
-            if (allMeals[i].isChecked()) {
-                allMeals[i].hideCheckbox();
-                favMeals.addView(allMeals[i]);
+            if (allMeals.get(i).isChecked()) {
+                allMeals.get(i).hideCheckbox();
+                favMeals.addView(allMeals.get(i));
+
+
+                favoriteMeals.add(allMeals.get(i).getMealName());
+
             }
         }
         favScroll.fullScroll(ScrollView.FOCUS_UP);
 
     }
+
+    void displayFavoriteMeals() {
+        setupFavoriteMeals();
+        LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
+
+        for (String x: favoriteMeals) {
+                favoriteMeal f = new favoriteMeal(getContext());
+                f.setMealName(x);
+                f.hideCheckbox();
+                //allMeals.get(i).hideCheckbox();
+                favMeals.addView(f);
+
+
+        }
+
+    }
+
+
 
 
     @Override
