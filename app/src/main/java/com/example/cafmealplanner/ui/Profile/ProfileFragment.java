@@ -1,5 +1,7 @@
 package com.example.cafmealplanner.ui.Profile;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +41,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     public dietaryRestriction[] allDietaryRestrictions = new dietaryRestriction[5];
     public favoriteMeal[] allMeals = new favoriteMeal[10];
 
+    EditText firstName;
+    EditText lastName;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ProfileViewModel profileViewModel =
@@ -68,6 +73,10 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         //spinner hidden to start
         hideSpinner();
 
+        firstName = getView().findViewById(R.id.firstNameTextView);
+        lastName = getView().findViewById(R.id.lastNameTextView);
+        readLongData();
+
         //edit button listener
         editButton.setOnClickListener(this);
 
@@ -91,8 +100,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         allDietaryRestrictions[4] = r;
 
 
-        EditText firstName = getView().findViewById(R.id.firstNameTextView);
-        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+        //EditText firstName = getView().findViewById(R.id.firstNameTextView);
+        //EditText lastName = getView().findViewById(R.id.lastNameTextView);
 
         hideEditText(firstName);
         hideEditText(lastName);
@@ -101,9 +110,18 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private void readLongData() {
+        SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
+        String f = sp.getString("FIRST_NAME", "");
+        String l = sp.getString("LAST_NAME", "");
+        firstName.setText(f);
+        lastName.setText(l);
+    }
+
     //Checks for a click
     public void onClick(View v) {
         Button editButton = getView().findViewById(R.id.profileEditButton);
+
         //if edit button clicked & we're not already editing
         if (v == editButton && !editMode) {
             editMode = true;
@@ -119,12 +137,23 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     }
 
+    private void saveLongData(String first, String last) {
+
+        SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor spEdit = sp.edit();
+
+        spEdit.putString("FIRST_NAME", firstName.getText().toString());
+        spEdit.putString("LAST_NAME", lastName.getText().toString());
+
+        spEdit.commit();
+
+    }
+
     //call corresponding fucntions when edit mode turned on
     private void editModeTurnedOn() {
         displayAllDietaryRestrictions();
         showSpinner();
-        EditText firstName = getView().findViewById(R.id.firstNameTextView);
-        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+
 
         showEditText(firstName);
         showEditText(lastName);
@@ -136,11 +165,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private void editModeTurnedOff() {
         displaySelectedRestrictions();
         hideSpinner();
-        EditText firstName = getView().findViewById(R.id.firstNameTextView);
-        EditText lastName = getView().findViewById(R.id.lastNameTextView);
+
 
         hideEditText(firstName);
         hideEditText(lastName);
+
+        saveLongData(firstName.getText().toString(), lastName.getText().toString());
+
         closeFavoriteMeals();
 
     }
