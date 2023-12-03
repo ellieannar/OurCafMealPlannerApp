@@ -7,12 +7,16 @@ import androidx.fragment.app.FragmentTransaction;
 import android.annotation.SuppressLint;
 import android.content.res.AssetManager;
 import android.content.res.ColorStateList;
+import android.graphics.BlendMode;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.transition.Visibility;
 
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
@@ -158,7 +162,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
             if (!editRatingOn) {
                 editRatingOn = true;
-                editRating.setText("Submit");
+                editRating.setText("Done");
                 Log.d("CLICKED", "onClick: ");
                 setStarAppearance(); // Change the appearance of the stars to indicate editing mode
             }
@@ -219,7 +223,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             } else {
                 starRatings[i].setImageResource(R.drawable.sss);
             }
-            starRatings[i].setImageTintList(ColorStateList.valueOf(R.color.biolaRed));
 
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
@@ -232,7 +235,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             } else {
                 starRatings[i].setImageResource(R.drawable.gray_star);
             }
-            starRatings[i].setImageTintList(ColorStateList.valueOf(R.color.biolaBlack));
 
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
