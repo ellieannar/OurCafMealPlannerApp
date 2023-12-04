@@ -41,7 +41,7 @@
     <string name="rate_this">Submit</string>
     <string name="personal_rating">Your Rating:</string>
     <string name="sampleMealName">Sample Meal</string>
-
+    <string name="warningText">You\'ve exceeded your weekly limit</string>
     <string-array name="dropdown_schedule">
         <item>Weekly</item>
         <item>Daily</item>

@@ -81,7 +81,13 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         LinearLayout items = new LinearLayout(getContext());
         items.setOrientation(LinearLayout.VERTICAL);
 
-        Meal tempMeal = this.getArguments().getParcelable("meal");
+        Meal tempMeal;
+        if (this.getArguments() != null) {
+            tempMeal = this.getArguments().getParcelable("meal");
+        } else {
+            tempMeal = new Meal();
+        }
+
 
         for (int i = 0; i < tempMeal.size(); i++) {
             mealView temp = new mealView(getContext());
