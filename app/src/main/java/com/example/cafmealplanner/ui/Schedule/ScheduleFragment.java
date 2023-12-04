@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.content.Intent;
 import android.widget.TextView;
@@ -48,6 +49,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     static ArrayList<Day> weekDays = new ArrayList<>();
 
     Set<String> selectedMeals = new HashSet<>();
+    int weeklyLimit;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +67,21 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         binding = FragmentScheduleBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+
+        /*TextView warningTV = getView().findViewById(R.id.warningTextView);
+        ImageView warningImgView = getView().findViewById(R.id.warningImgView);
+
+        warningImgView.setVisibility(View.INVISIBLE);
+        warningTV.setVisibility(View.INVISIBLE);
+
+         */
+
+
+
         container.removeAllViews();
+
+
+
 
         FragmentManager manager = getActivity().getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
@@ -90,6 +108,8 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         for (String x : selectedMeals) {
             System.out.println(x);
         }
+
+        weeklyLimit = sp.getInt("WEEKLY_LIMIT", 12);
 
     }
 
@@ -138,6 +158,17 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 }
 
                 saveLongData();
+                /*TextView warningTV = getView().findViewById(R.id.warningTextView);
+                ImageView warningImgView = getView().findViewById(R.id.warningImgView);
+                if (selectedMeals.size() >= weeklyLimit) {
+                    warningTV.setVisibility(View.VISIBLE);
+                    warningImgView.setVisibility(View.VISIBLE);
+                } else {
+                    warningTV.setVisibility(View.INVISIBLE);
+                    warningImgView.setVisibility(View.INVISIBLE);
+                }
+
+                 */
             }
         }
     };

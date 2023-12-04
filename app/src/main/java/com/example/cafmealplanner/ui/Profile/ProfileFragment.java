@@ -50,6 +50,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     Set<String> favoriteMeals = new HashSet<>();
     Set<String> dietaryRestrictions = new HashSet<>();
 
+    int weeklyLimit = 20;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -165,7 +167,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         TextView mealPlan = getView().findViewById(R.id.mealPlanDisplayView);
         spEdit.putString("MEAL_PLAN", mealPlan.getText().toString());
         spEdit.putStringSet("DIETARY_RESTRICTIONS", dietaryRestrictions);
-
+        spEdit.putInt("WEEKLY_LIMIT", weeklyLimit);
         spEdit.commit();
 
 
@@ -272,9 +274,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
         // set up the options and apply
         String[] items = new String[]{"20 Flex", "15 Flex", "12 Flex", "10 Flex", "175 Block", "5 Flex", "20 Block"};
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,items);
         mealPlanSpinner.setAdapter(adapter);
         mealPlanSpinner.setSelection(adapter.getPosition(mealPlan.getText().toString()));
+
     }
 
     //hide the spinner when no longer editing
@@ -283,10 +287,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         mealPlan.setVisibility(View.VISIBLE);
         Spinner mealPlanSpinner = getView().findViewById(R.id.mealPlanSpinner);
         mealPlanSpinner.setVisibility(View.INVISIBLE);
-
+        int[] limit = new int[]{20,15,12,10,175,5,20};
         //if something was selected (i.e. it's not the initial run), set the meal plan
         if (mealPlanSpinner.getSelectedItem() != null) {
             mealPlan.setText(mealPlanSpinner.getSelectedItem().toString());
+            weeklyLimit = limit[mealPlanSpinner.getSelectedItemPosition()];
         }
 
 

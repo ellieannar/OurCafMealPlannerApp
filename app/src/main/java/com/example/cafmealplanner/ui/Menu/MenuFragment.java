@@ -48,7 +48,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     //keeps track of which day is displayed
-    static int whichDay;
+    static Integer whichDay;
 
 
     //Track all the more info buttons we will have
@@ -153,6 +153,8 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         year = cal.get(Calendar.YEAR);
 
         displayDay(1);
+
+
 
     }
 
