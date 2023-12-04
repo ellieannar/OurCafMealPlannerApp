@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     EditText lastName;
 
     Set<String> favoriteMeals = new HashSet<>();
+    Set<String> dietaryRestrictions = new HashSet<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -122,13 +123,16 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         String l = sp.getString("LAST_NAME", "");
         firstName.setText(f);
         lastName.setText(l);
+        String mp = sp.getString("MEAL_PLAN", "12 Flex");
+        TextView mealPlan = getView().findViewById(R.id.mealPlanDisplayView);
+        mealPlan.setText(mp);
 
         // Create a mutable copy of the set
         favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.<String>emptySet()));
-        for (String meal : favoriteMeals) {
-            System.out.println(meal);
-        }
+        dietaryRestrictions = new HashSet<>(sp.getStringSet("DIETARY_RESTRICTIONS", Collections.<String>emptySet()));
+
         displayFavoriteMeals();
+        displayInitialRestrictions();
     }
 
     //Checks for a click
@@ -158,6 +162,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         spEdit.putString("FIRST_NAME", firstName.getText().toString());
         spEdit.putString("LAST_NAME", lastName.getText().toString());
         spEdit.putStringSet("FAVORITE_MEALS", favoriteMeals);
+        TextView mealPlan = getView().findViewById(R.id.mealPlanDisplayView);
+        spEdit.putString("MEAL_PLAN", mealPlan.getText().toString());
+        spEdit.putStringSet("DIETARY_RESTRICTIONS", dietaryRestrictions);
 
         spEdit.commit();
 
@@ -202,6 +209,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         dietaryLayout.removeAllViews();
         for (int i = 0; i < 5; i++) {
             allDietaryRestrictions[i].showCheckbox();
+            if(dietaryRestrictions.contains(allDietaryRestrictions[i].getRestriction())){
+                allDietaryRestrictions[i].setChecked(true);
+            }
             dietaryLayout.addView(allDietaryRestrictions[i]);
         }
 
@@ -210,12 +220,46 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private void displaySelectedRestrictions() {
         LinearLayout dietaryLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
         dietaryLayout.removeAllViews();
+        dietaryRestrictions.clear();
         for (int i = 0; i < 5; i++) {
             if (allDietaryRestrictions[i].restrictionIsEnabled()) {
                 allDietaryRestrictions[i].hideCheckbox();
                 dietaryLayout.addView(allDietaryRestrictions[i]);
+                dietaryRestrictions.add(allDietaryRestrictions[i].getRestriction());
             }
         }
+    }
+
+    private void displayInitialRestrictions() {
+        LinearLayout dietaryLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
+        dietaryLayout.removeAllViews();
+
+        for (String x: dietaryRestrictions) {
+            dietaryRestriction r = new dietaryRestriction(getContext());
+            r.hideCheckbox();
+            switch (x) {
+                case "Gluten Free":
+                    r.setRestriction(dietaryRestriction.restrictionType.GLUTEN_FREE);
+                    break;
+                case "Dairy Free":
+                    r.setRestriction(dietaryRestriction.restrictionType.DAIRY_FREE);
+                    break;
+                case "Vegetarian":
+                    r.setRestriction(dietaryRestriction.restrictionType.VEGETARIAN);
+                    break;
+                case "Vegan":
+                    r.setRestriction(dietaryRestriction.restrictionType.VEGAN);
+                    break;
+                case "No Seafood":
+                    r.setRestriction(dietaryRestriction.restrictionType.SEAFOOD);
+                    break;
+                default:
+                    break;
+            }
+            dietaryLayout.addView(r);
+
+        }
+
     }
 
     //show the spinner when in edit mode
