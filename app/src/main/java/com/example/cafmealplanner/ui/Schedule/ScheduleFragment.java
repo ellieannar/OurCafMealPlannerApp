@@ -68,16 +68,6 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         View root = binding.getRoot();
 
 
-        /*TextView warningTV = getView().findViewById(R.id.warningTextView);
-        ImageView warningImgView = getView().findViewById(R.id.warningImgView);
-
-        warningImgView.setVisibility(View.INVISIBLE);
-        warningTV.setVisibility(View.INVISIBLE);
-
-         */
-
-
-
         container.removeAllViews();
 
 
@@ -158,9 +148,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 }
 
                 saveLongData();
-                /*TextView warningTV = getView().findViewById(R.id.warningTextView);
+                TextView warningTV = getView().findViewById(R.id.warningTextView);
                 ImageView warningImgView = getView().findViewById(R.id.warningImgView);
-                if (selectedMeals.size() >= weeklyLimit) {
+                if (selectedMeals.size() > weeklyLimit) {
                     warningTV.setVisibility(View.VISIBLE);
                     warningImgView.setVisibility(View.VISIBLE);
                 } else {
@@ -168,7 +158,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                     warningImgView.setVisibility(View.INVISIBLE);
                 }
 
-                 */
+
             }
         }
     };
@@ -177,6 +167,16 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         editButton = view.findViewById(R.id.edit_schedule);
         editButton.setText("EDIT");
         editButton.setOnClickListener(this);
+
+        TextView warningTV = getView().findViewById(R.id.warningTextView);
+        ImageView warningImgView = getView().findViewById(R.id.warningImgView);
+
+        if (weeklyLimit >= selectedMeals.size()) {
+            warningImgView.setVisibility(View.INVISIBLE);
+            warningTV.setVisibility(View.INVISIBLE);
+        }
+
+
     }
 
     void setupLinearLayouts() {
@@ -246,7 +246,9 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
             // Commit the transaction
             transaction.commit();
         }
+
          */
+
     }
 
     private void displayMealInfo(Meal m) {
