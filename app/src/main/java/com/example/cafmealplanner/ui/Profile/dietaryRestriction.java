@@ -66,6 +66,7 @@ public class dietaryRestriction extends LinearLayout {
         */
     }
 
+
     // funtion that can be called to set the restriction type
     public void setRestriction(restrictionType r) {
         switch (r){
@@ -91,7 +92,13 @@ public class dietaryRestriction extends LinearLayout {
     public String getRestriction() {
         return (String) restrictionTextView.getText();
     }
-
+    public void setChecked(Boolean b) {
+        if (b) {
+            restrictionCheckBox.setChecked(true);
+        } else {
+            restrictionCheckBox.setChecked(false);
+        }
+    }
 
     // return if the checkbox is selected or not
     public Boolean restrictionIsEnabled() {

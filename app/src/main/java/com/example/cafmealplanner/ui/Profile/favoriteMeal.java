@@ -62,6 +62,15 @@ public class favoriteMeal extends LinearLayout {
         return favoriteCheckbox.isChecked();
     }
 
+    public void setChecked(Boolean e) {
+        if (e) {
+            favoriteCheckbox.setChecked(true);
+        }
+        else {
+            favoriteCheckbox.setChecked(false);
+        }
+    }
+
     public void hideCheckbox() {
         favoriteCheckbox.setVisibility(INVISIBLE);
     }
