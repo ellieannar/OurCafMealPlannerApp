@@ -165,23 +165,18 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
         else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
             setRating(1);
-            starRating = 1;
         }
         else if (v == getView().findViewById(R.id.star2) && editRatingOn) {
             setRating(2);
-            starRating = 2;
         }
         else if (v == getView().findViewById(R.id.star3) && editRatingOn) {
             setRating(3);
-            starRating = 3;
         }
         else if (v == getView().findViewById(R.id.star4) && editRatingOn) {
             setRating(4);
-            starRating = 4;
         }
         else if (v == getView().findViewById(R.id.star5) && editRatingOn) {
             setRating(5);
-            starRating = 5;
         }
         else if (v == getView().findViewById(R.id.back)) {
             // Get the fragment manager and transaction
@@ -211,7 +206,11 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         // The current star rating will determine the number of filled or yellow stars
         // depending on whether we are in editing mode or not
         for (i = 0; i < starRating; i++) {
-            starRatings[i].setImageResource(R.drawable.filled_star);
+            if (editRatingOn) {
+                starRatings[i].setImageResource(R.drawable.filled_star);
+            } else {
+                starRatings[i].setImageResource(R.drawable.sss);
+            }
             star.setAdjustViewBounds(true);
             star.setMaxHeight(50);
             star.setMaxWidth(50);
@@ -229,7 +228,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     }
 
     public void setRating(int numStars) {
-
         starRating = numStars; // Adjust the official star rating
         setStarAppearance(); // Change the appearance of the stars to reflect this
     }
