@@ -100,6 +100,7 @@ public class dietaryRestriction extends LinearLayout {
         }
     }
 
+
     // return if the checkbox is selected or not
     public Boolean restrictionIsEnabled() {
         return restrictionCheckBox.isChecked();
