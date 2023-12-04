@@ -87,18 +87,25 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     private void readLongData() {
         SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
         selectedMeals = new HashSet<>(sp.getStringSet("SELECTED_MEALS", Collections.<String>emptySet()));
+        for (String x : selectedMeals) {
+            System.out.println(x);
+        }
 
-        //displaySelectedMeals();
     }
 
 
     private void saveLongData() {
-        SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
-        SharedPreferences.Editor spEdit = sp.edit();
+        if (getActivity() != null) {
+            SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
+            SharedPreferences.Editor spEdit = sp.edit();
+            if (selectedMeals != null) {
+                spEdit.putStringSet("SELECTED_MEALS", selectedMeals);
+                spEdit.commit();
+            }
+        }
 
-        spEdit.putStringSet("SELECTED_MEALS", selectedMeals);
 
-        spEdit.commit();
+
     }
 
 
@@ -122,12 +129,15 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
 
                 displayMealInfo(m);
-            } else if (intent != null && intent.getExtras().getString("audience").equals("forSchedule")) {
+            } else if (intent != null && intent.getExtras().getString("audience").equals("forScheduleUpdates")) {
                 if (intent.getExtras().getBoolean("filled")) {
                     selectedMeals.add(Integer.toString(intent.getExtras().getInt("id")));
+                    Log.d("Adding", "onReceive: " + Integer.toString(intent.getExtras().getInt("id")) );
                 } else {
-                    //delete from sest
+                    selectedMeals.remove(Integer.toString(intent.getExtras().getInt("id")));
                 }
+
+                saveLongData();
             }
         }
     };
@@ -153,7 +163,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 mealButton m = new mealButton(getContext());
                 m.setDay(days[i]);
                 m.setMeal(times[j]);
-                m.setId(count);
+                m.setAssignedID(count);
                 if (selectedMeals.contains(Integer.toString(count))) {
                     m.setFill(mealButton.buttonSelection.FILLED);
                 } else {
