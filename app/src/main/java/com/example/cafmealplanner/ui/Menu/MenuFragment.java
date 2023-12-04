@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -23,6 +24,9 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
@@ -159,6 +163,25 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     }
 
     public void displayDay(int d) {
+
+        //keep track of preferences
+        SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
+        // Create a mutable copy of the set
+        Set<String> favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.<String>emptySet()));
+        Set<String> dietaryRestrictions = new HashSet<>(sp.getStringSet("DIETARY_RESTRICTIONS", Collections.<String>emptySet()));
+
+        for(String x : dietaryRestrictions) {
+            if (x.equals("Gluten Free")) {
+                dietaryRestrictions.remove(x);
+                dietaryRestrictions.add("GLUTEN_FREE");
+            }
+
+        }
+
+        for (String x : dietaryRestrictions) {
+            Log.d("Restriction", "displayDay: " + x);
+        }
+
         whichDay = d;
 
         breakfastLinearLayout.removeAllViews();
@@ -184,11 +207,26 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add breakfast items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Breakfast").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            mealView.indicatorVisibility(false);
+            if (favoriteMeals.contains(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle())) {
+                mealView.indicatorVisibility(true);
+                mealView.setIndicator(R.color.green, getContext());
+            }
             for (int j = 0; j < weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictions().size(); j++) {
                 tempMealView.addTag(weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictions().get(j));
+
+            }
+
+            for (String x : dietaryRestrictions) {
+                if (!weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictionStrings().contains(x)) {
+                    mealView.indicatorVisibility(true);
+                    mealView.setIndicator(R.color.biolaRed, getContext());
+                }
             }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Breakfast").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Breakfast").get(i).getDescription(), weekDays.get(whichDay).getMeal("Breakfast").get(i).getLocation());
+
+
             breakfastMeals.add(tempMealView);
 
         }
@@ -196,8 +234,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add lunch items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Lunch").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            mealView.indicatorVisibility(false);
+            if (favoriteMeals.contains(weekDays.get(whichDay).getMeal("Lunch").get(i).getTitle())) {
+                mealView.indicatorVisibility(true);
+                mealView.setIndicator(R.color.green, getContext());
+            }
+
             for (int j = 0; j < weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictions().size(); j++) {
                 tempMealView.addTag(weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictions().get(j));
+            }
+
+            for (String x : dietaryRestrictions) {
+                if (!weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictionStrings().contains(x)) {
+                    mealView.indicatorVisibility(true);
+                    mealView.setIndicator(R.color.biolaRed, getContext());
+                }
             }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Lunch").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Lunch").get(i).getDescription(), weekDays.get(whichDay).getMeal("Lunch").get(i).getLocation());
@@ -207,8 +258,21 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //get & add dinner items to view
         for (int i = 0; i < weekDays.get(whichDay).getMeal("Dinner").size(); i++) {
             mealView tempMealView = new mealView(getContext());
+            mealView.indicatorVisibility(false);
+            if (favoriteMeals.contains(weekDays.get(whichDay).getMeal("Dinner").get(i).getTitle())) {
+                mealView.indicatorVisibility(true);
+                mealView.setIndicator(R.color.green, getContext());
+            }
+
             for (int j = 0; j < weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictions().size(); j++) {
                 tempMealView.addTag(weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictions().get(j));
+            }
+
+            for (String x : dietaryRestrictions) {
+                if (!weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictionStrings().contains(x)) {
+                    mealView.indicatorVisibility(true);
+                    mealView.setIndicator(R.color.biolaRed, getContext());
+                }
             }
             tempMealView.setMealName(weekDays.get(whichDay).getMeal("Dinner").get(i).getTitle());
             tempMealView.setOtherInfo(weekDays.get(whichDay).getMeal("Dinner").get(i).getDescription(), weekDays.get(whichDay).getMeal("Dinner").get(i).getLocation());

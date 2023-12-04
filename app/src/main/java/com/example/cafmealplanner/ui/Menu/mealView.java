@@ -3,6 +3,9 @@ package com.example.cafmealplanner.ui.Menu;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -10,11 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -29,6 +34,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     private TextView nameOfMealTextView;
     private LinearLayout tagsLinearLayout;
     private Button infoButton;
+    private static TextView circleIndicator;
 
     //my food item
     FoodItem f = new FoodItem();
@@ -53,13 +59,15 @@ public class mealView extends FrameLayout implements View.OnClickListener {
 
     }
 
+
+
     private void initMealView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.meal_view, this, true);
         ConstraintLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         tagsLinearLayout = findViewById(R.id.tagsLinearLayout);
-
+        circleIndicator = findViewById(R.id.cirlceIndicator);
 
 
         LayoutParams layoutParams = new LayoutParams(
@@ -162,6 +170,22 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         return infoButton.getId();
     }
 
+
+    public static void setIndicator(int s, Context c) {
+        circleIndicator.setText("");
+        circleIndicator.setTextSize(10);
+        circleIndicator.setBackground(ContextCompat.getDrawable(c, R.drawable.rounded_corners));
+        circleIndicator.getBackground().setTint(ResourcesCompat.getColor(c.getResources(), s, null));;
+
+    }
+
+    public static void indicatorVisibility(Boolean b) {
+        if (b) {
+            circleIndicator.setVisibility(VISIBLE);
+        } else {
+            circleIndicator.setVisibility(INVISIBLE);
+        }
+    }
 
 
 }

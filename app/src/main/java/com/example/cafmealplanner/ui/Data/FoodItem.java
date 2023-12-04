@@ -126,7 +126,14 @@ public class FoodItem implements Parcelable {
     public void setRating(int r) {
         myRating = r;
     }
+    public ArrayList<String> getRestrictionStrings() {
+        ArrayList<String> temp = new ArrayList<>();
+        for (int i = 0; i < restrictions.size(); i++) {
+            temp.add(restrictions.get(i).name());
+        }
 
+        return temp;
+    }
     public int getRating(){
         return myRating;
     }
