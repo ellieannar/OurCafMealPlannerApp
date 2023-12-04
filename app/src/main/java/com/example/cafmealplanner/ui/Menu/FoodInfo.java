@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 package com.example.cafmealplanner.ui.Menu;
 
 import androidx.core.content.res.ResourcesCompat;
@@ -52,43 +40,9 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
     boolean editRatingOn = false;
     private static final String ns = null;
-    int starRating = 0;
+    static int starRating = 0;
 
 
-
-
-    public List parse(InputStream in) throws XmlPullParserException, IOException {
-        try {
-            XmlPullParser parser = Xml.newPullParser();
-            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
-            parser.setInput(in, null);
-            parser.nextTag();
-            return readFeed(parser);
-        } finally {
-            in.close();
-        }
-    }
-
-    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List ratings = new ArrayList();
-
-        parser.require(XmlPullParser.START_TAG, ns, "feed");
-        while(parser.next() != XmlPullParser.END_TAG) {
-            if (parser.getEventType() != XmlPullParser.START_TAG) {
-                continue;
-            }
-
-            String name = parser.getName();
-
-            if (name.equals("rating")) {
-                //ratings.add(readEntry(parser));
-            }
-        }
-        return ratings;
-    }
-
-    /*private Object readEntry(XmlPullParser parser) {
-    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -112,9 +66,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 
 
-
-        //String foodName = this.getArguments().getString("foodName");
-        //Log.d("Testing passing stuff", "onViewCreated: " + foodName);
         TextView foodTitle = getView().findViewById(R.id.mealName);
         foodTitle.setText(this.getArguments().getString("title"));
 
@@ -128,6 +79,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
         LinearLayout restrictionsView = getView().findViewById(R.id.restrictionsContainer);
         ArrayList<FoodItem.restrictionType> rest = new ArrayList<>();
+
         if (this.getArguments().getParcelable("rest") != null) {
 
             FoodItem f = this.getArguments().getParcelable("rest");
@@ -192,6 +144,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
         //allow info text to scroll
         description.setMovementMethod(new ScrollingMovementMethod());
+        setRating(starRating);
     }
 
     public void onClick(View v) {
@@ -202,7 +155,6 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
             if (!editRatingOn) {
                 editRatingOn = true;
                 editRating.setText("Submit");
-                Log.d("CLICKED", "onClick: ");
                 setStarAppearance(); // Change the appearance of the stars to indicate editing mode
             }
             else {
@@ -213,18 +165,23 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
         }
         else if (v == getView().findViewById(R.id.star1) && editRatingOn) { // Only edit the star rating in editing mode
             setRating(1);
+            starRating = 1;
         }
         else if (v == getView().findViewById(R.id.star2) && editRatingOn) {
             setRating(2);
+            starRating = 2;
         }
         else if (v == getView().findViewById(R.id.star3) && editRatingOn) {
             setRating(3);
+            starRating = 3;
         }
         else if (v == getView().findViewById(R.id.star4) && editRatingOn) {
             setRating(4);
+            starRating = 4;
         }
         else if (v == getView().findViewById(R.id.star5) && editRatingOn) {
             setRating(5);
+            starRating = 5;
         }
         else if (v == getView().findViewById(R.id.back)) {
             // Get the fragment manager and transaction
@@ -272,7 +229,43 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
     }
 
     public void setRating(int numStars) {
+
         starRating = numStars; // Adjust the official star rating
         setStarAppearance(); // Change the appearance of the stars to reflect this
     }
 }
+
+//Maddie's XML parsing work
+
+/*public List parse(InputStream in) throws XmlPullParserException, IOException {
+        try {
+            XmlPullParser parser = Xml.newPullParser();
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, false);
+            parser.setInput(in, null);
+            parser.nextTag();
+            return readFeed(parser);
+        } finally {
+            in.close();
+        }
+    }
+
+    private List readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
+        List ratings = new ArrayList();
+
+        parser.require(XmlPullParser.START_TAG, ns, "feed");
+        while(parser.next() != XmlPullParser.END_TAG) {
+            if (parser.getEventType() != XmlPullParser.START_TAG) {
+                continue;
+            }
+
+            String name = parser.getName();
+
+            if (name.equals("rating")) {
+                //ratings.add(readEntry(parser));
+            }
+        }
+        return ratings;
+    }
+
+    /*private Object readEntry(XmlPullParser parser) {
+    }*/

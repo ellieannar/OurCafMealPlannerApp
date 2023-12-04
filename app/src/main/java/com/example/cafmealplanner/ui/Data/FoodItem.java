@@ -58,6 +58,7 @@ public class FoodItem implements Parcelable {
     ArrayList<restrictionType> restrictions = new ArrayList<restrictionType>();
     String title;
     String description;
+    int myRating;
 
     public FoodItem () {
         super();
@@ -122,7 +123,13 @@ public class FoodItem implements Parcelable {
     public void addRestrictions(ArrayList<restrictionType> r) {
         restrictions = r;
     }
+    public void setRating(int r) {
+        myRating = r;
+    }
 
+    public int getRating(){
+        return myRating;
+    }
 
     public String getLocation() {
         return location;
