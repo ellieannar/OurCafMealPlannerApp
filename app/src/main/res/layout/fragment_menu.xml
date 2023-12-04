@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.Menu.MenuFragment">
 
+
     <!-- Back one day Button-->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/backDayButton"
@@ -103,12 +104,22 @@
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@+id/horizontalLine" />
-    <!-- Food options -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/breakfastTimes"
+            android:textColor="@color/biolaBlack"
+            android:id="@+id/breakfastTimes"
+            android:layout_marginStart="5dp"
+            />
+
+
+        <!-- Food options -->
     <LinearLayout
         android:id = "@+id/breakfastLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/breakfastTextView"
+        app:layout_constraintTop_toBottomOf="@id/breakfastTimes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical"/>
@@ -128,11 +139,19 @@
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@+id/breakfastLinearLayout" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/lunchTimes"
+            android:textColor="@color/biolaBlack"
+            android:id="@+id/lunchTimes"
+            android:layout_marginStart="5dp"
+            />
     <LinearLayout
         android:id = "@+id/lunchLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/lunchTextView"
+        app:layout_constraintTop_toBottomOf="@id/lunchTimes"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical"/>
@@ -153,14 +172,23 @@
             app:layout_constraintStart_toStartOf="parent"
 
             app:layout_constraintTop_toBottomOf="@+id/lunchLinearLayout" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/dinnerTimes"
+            android:textColor="@color/biolaBlack"
+            android:id="@+id/dinnerTimes"
+            android:layout_marginStart="5dp"
+            />
         <LinearLayout
             android:id = "@+id/dinnerLinearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/dinnerTextView"
+            app:layout_constraintTop_toBottomOf="@id/dinnerTimes"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            />
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"

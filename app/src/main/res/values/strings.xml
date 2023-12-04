@@ -46,6 +46,9 @@
         <item>Weekly</item>
         <item>Daily</item>
     </string-array>
+    <string name="breakfastTimes">7:00 AM - 11:00 AM</string>
+    <string name="lunchTimes">11:00 AM - 4:00 PM</string>
+    <string name="dinnerTimes">4:05 PM - 8:00 PM</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
     <string name="wednesday">Wednesday</string>
