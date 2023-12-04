@@ -3,20 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-
     <item
         android:id="@+id/navigation_menu"
-        android:icon="?attr/actionModePasteDrawable"
+        android:icon="@drawable/menucafbible"
         android:title="@string/title_menu" />
 
     <item
         android:id="@+id/navigation_schedule"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/schedulecafbible"
         android:title="@string/title_schedule" />
 
     <item
         android:id="@+id/navigation_profile"
-        android:icon="?android:attr/fingerprintAuthDrawable"
+        android:icon="@drawable/profilecafbible"
         android:title="@string/title_profile" />
 
 </menu>

@@ -93,20 +93,19 @@
         android:layout_height="wrap_content"
         android:textColor="@color/biolaBlack"
         tools:layout_editor_absoluteY="168dp" />
+
     <ImageButton
         android:id="@+id/star1"
-        app:layout_constraintLeft_toLeftOf="@id/yourRating"
-        app:layout_constraintTop_toBottomOf="@id/yourRating"
-        android:layout_marginTop="16dp"
         android:layout_width="57dp"
         android:layout_height="57dp"
+        android:layout_marginTop="16dp"
         android:adjustViewBounds="true"
         android:backgroundTint="#00FFFFFF"
         android:contentDescription="@string/one_star"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_star"
-        app:tint="@color/biolaBlack"
-         />
+        app:layout_constraintLeft_toLeftOf="@id/yourRating"
+        app:layout_constraintTop_toBottomOf="@id/yourRating" />
 
     <ImageButton
         android:id="@+id/star2"
@@ -117,9 +116,8 @@
         android:contentDescription="@string/two_star"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_star"
-        app:tint="@color/biolaBlack"
-        app:layout_constraintTop_toTopOf="@id/star1"
-        app:layout_constraintLeft_toRightOf="@id/star1" />
+        app:layout_constraintLeft_toRightOf="@id/star1"
+        app:layout_constraintTop_toTopOf="@id/star1" />
 
     <ImageButton
         android:id="@+id/star3"
@@ -131,10 +129,8 @@
         android:onClick="onClick"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_star"
-        app:tint="@color/biolaBlack"
-        app:layout_constraintTop_toTopOf="@id/star2"
-        app:layout_constraintLeft_toRightOf="@id/star2" />
-
+        app:layout_constraintLeft_toRightOf="@id/star2"
+        app:layout_constraintTop_toTopOf="@id/star2" />
 
 
     <ImageButton
@@ -146,11 +142,8 @@
         android:contentDescription="@string/four_star"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_star"
-        app:tint="@color/biolaBlack"
-        app:layout_constraintTop_toTopOf="@id/star3"
         app:layout_constraintLeft_toRightOf="@id/star3"
-        />
-
+        app:layout_constraintTop_toTopOf="@id/star3" />
 
 
     <ImageButton
@@ -162,9 +155,8 @@
         android:contentDescription="@string/five_star"
         android:scaleType="fitCenter"
         android:src="@drawable/gray_star"
-        app:tint="@color/biolaBlack"
-        app:layout_constraintTop_toTopOf="@id/star4"
-        app:layout_constraintLeft_toRightOf="@id/star4" />
+        app:layout_constraintLeft_toRightOf="@id/star4"
+        app:layout_constraintTop_toTopOf="@id/star4" />
 
     <Button
         android:id="@+id/rating"
