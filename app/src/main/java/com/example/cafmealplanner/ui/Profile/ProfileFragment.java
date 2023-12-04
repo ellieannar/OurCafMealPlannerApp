@@ -333,9 +333,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     void setupFavoriteMeals() {
         LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
 
-        String s[] = {"Pizza", "Pasta", "Soup", "Poke", "Salad", "Teriyaki", "Hamburger", "Italian Beef Stew", "Quick Oats", "Hot breakfast bar"};
+        String s[] = {"Cinnamon Rolls", "Beef Nachos", "Cali Btl Sandwich", "Miso Ramen Soup", "Chipotle Chicken Tostada", "Burrito Bar", "Coconut Chicken Curry", "South West Chicken Wrap", "Chicken Caprese Sandwich", "Biscuits", "Biola's Classic Daily House-made Pizza"};
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < s.length; i++) {
             favoriteMeal f = new favoriteMeal(getContext());
             f.setMealName(s[i]);
             allMeals.add(f);
