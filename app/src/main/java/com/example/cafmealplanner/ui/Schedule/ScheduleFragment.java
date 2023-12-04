@@ -3,6 +3,7 @@ package com.example.cafmealplanner.ui.Schedule;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.content.Intent;
+import android.widget.TextView;
 
 
 import androidx.annotation.NonNull;
@@ -30,20 +32,28 @@ import com.example.cafmealplanner.ui.Data.Meal;
 import com.example.cafmealplanner.ui.Data.resource;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     private FragmentScheduleBinding binding;
-    private mealButton sundayButtons[] = new mealButton[3];
     private Button editButton;
     private resource resources = new resource();
 
     //Track all days in one arraylist - get from MainActivity
     static ArrayList<Day> weekDays = new ArrayList<>();
 
+    Set<String> selectedMeals = new HashSet<>();
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         MainActivity activity = (MainActivity) getActivity();
+
+        readLongData();
 
         weekDays = activity.weekDays;
 
@@ -73,7 +83,25 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
     }
 
 
-    //button clicks
+
+    private void readLongData() {
+        SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
+        selectedMeals = new HashSet<>(sp.getStringSet("SELECTED_MEALS", Collections.<String>emptySet()));
+
+        //displaySelectedMeals();
+    }
+
+
+    private void saveLongData() {
+        SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
+        SharedPreferences.Editor spEdit = sp.edit();
+
+        spEdit.putStringSet("SELECTED_MEALS", selectedMeals);
+
+        spEdit.commit();
+    }
+
+
     //button clicks
     public BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -94,6 +122,12 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
 
                 displayMealInfo(m);
+            } else if (intent != null && intent.getExtras().getString("audience").equals("forSchedule")) {
+                if (intent.getExtras().getBoolean("filled")) {
+                    selectedMeals.add(Integer.toString(intent.getExtras().getInt("id")));
+                } else {
+                    //delete from sest
+                }
             }
         }
     };
@@ -111,19 +145,24 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
         mealButton.mealTime times[] = {mealButton.mealTime.BREAKFAST, mealButton.mealTime.LUNCH, mealButton.mealTime.DINNER};
         LinearLayout dayLayouts[] = {getView().findViewById(R.id.sundayLinearLayout), getView().findViewById(R.id.mondayLinearLayout),getView().findViewById(R.id.tuesdayLinearLayout),getView().findViewById(R.id.wednesdayLinearLayout),getView().findViewById(R.id.thursdayLinearLayout),getView().findViewById(R.id.fridayLinearLayout),getView().findViewById(R.id.saturdayLinearLayout)};
         LinearLayout day;
+
+        int count = 0;
         for (int i = 0; i < 7; i++) {
             day = dayLayouts[i];
             for (int j = 0; j < 3; j++) {
                 mealButton m = new mealButton(getContext());
                 m.setDay(days[i]);
                 m.setMeal(times[j]);
-                if (resources.getMealStatus(i, j)) {
+                m.setId(count);
+                if (selectedMeals.contains(Integer.toString(count))) {
                     m.setFill(mealButton.buttonSelection.FILLED);
                 } else {
                     m.setFill(mealButton.buttonSelection.EMPTY);
                 }
                 day.addView(m);
+                count++;
             }
+            count++;
         }
 
 

@@ -52,6 +52,8 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
     private mealTime meal = mealTime.BREAKFAST;
     private boolean isEditing = false;
 
+    private int assignedID;
+
     public mealButton(@NonNull Context context) {
         super(context);
         initmealButton(context);
@@ -150,12 +152,25 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
     public void editIcon(View view) {
         r.changeMeal(day.ordinal(), meal.ordinal());
+
+        Intent intent = new Intent("filter_string");
+        intent.putExtra("id", getAssignedID());
+        intent.putExtra("audience", "forScheduleUpdates");
+        // put your all data using put extra
+
+
+
         if (selected == buttonSelection.FILLED) {
             selected = buttonSelection.EMPTY;
+            intent.putExtra("filled", false);
+
         } else {
             selected = buttonSelection.FILLED;
+            intent.putExtra("filled", true);
+
         }
         setFill(selected);
+        LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
     }
 
 
@@ -172,6 +187,15 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
 
 
     };
+
+
+    public void setAssignedID(int i ){
+        assignedID = i;
+    }
+
+    public int getAssignedID() {
+        return assignedID;
+    }
 
 
 
