@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CafMealPlanner</string>
+    <string name="app_name">CafBible</string>
     <string name="title_menu">Menu</string>
     <string name="title_schedule">Schedule</string>
     <string name="title_profile">Profile</string>
