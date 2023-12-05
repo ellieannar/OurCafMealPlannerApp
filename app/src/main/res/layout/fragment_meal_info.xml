@@ -47,35 +47,37 @@
         android:src="@drawable/more_info_button"
         app:tint="@color/biolaBlack"
          />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="550dp"
-        app:layout_constraintTop_toBottomOf="@id/day"
+        android:contentDescription="@string/scrollViewSpeakable"
         app:layout_constraintLeft_toLeftOf="parent"
-        >
+        app:layout_constraintTop_toBottomOf="@id/day">
+
         <LinearLayout
             android:id="@+id/mealLinearLayoutTemp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:orientation="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/day"
-            android:layout_marginTop="16dp">
+            app:layout_constraintTop_toBottomOf="@id/day">
 
-        <LinearLayout
-            android:id="@+id/mealLinearLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginTop="16dp"/>
+            <LinearLayout
+                android:id="@+id/mealLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                app:layout_constraintLeft_toLeftOf="parent" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="150dp"
-                app:layout_constraintTop_toBottomOf="@+id/dinnerLinearLayout"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/dinnerLinearLayout" />
         </LinearLayout>
 
     </ScrollView>

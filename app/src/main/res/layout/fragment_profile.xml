@@ -82,7 +82,8 @@
         android:paddingStart="30dp"
         android:paddingEnd="0dp"
         android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@+id/mealPlanTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/mealPlanTextView"
+        tools:ignore="VisualLintOverlap" />
     <!-- Meal Plan selection dropdown -->
     <Spinner
         android:id="@+id/mealPlanSpinner"

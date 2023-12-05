@@ -12,7 +12,7 @@
     app:layout_constraintLeft_toLeftOf="parent"
     app:layout_constraintTop_toTopOf="@id/foodTitle"
     app:layout_constraintBottom_toBottomOf="@id/foodTitle"
-    android:layout_marginLeft="5dp"
+    android:layout_marginStart="5dp"
     />
 
 

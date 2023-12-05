@@ -14,14 +14,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@android:drawable/stat_sys_warning"
-        app:tint="@color/yellow"
+        app:tint="@color/biolaRed"
         app:layout_constraintRight_toLeftOf="@id/warningTextView"
         app:layout_constraintTop_toTopOf="@id/warningTextView"
         app:layout_constraintBottom_toBottomOf="@id/warningTextView"
-        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
 
 
-        />
+        android:contentDescription="@string/warningImageText" />
 
     <TextView
         android:id="@+id/warningTextView"
@@ -31,7 +31,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/dinnerScheduleTextView"
         android:layout_marginBottom="20dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
 
         />
     <!--Breakfast -->

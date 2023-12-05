@@ -10,7 +10,7 @@
         app:layout_constraintTop_toBottomOf="@id/mealName"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginTop="50dp"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
         android:id="@+id/location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ingredients"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         />
 
@@ -47,11 +47,12 @@
         android:layout_height="0dp"
         app:layout_constraintLeft_toRightOf="@id/location"
         app:layout_constraintTop_toTopOf="@id/location"
-        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@id/location"
         android:gravity="left"
         android:id="@+id/restrictionsContainer"
-        />
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded" />
 
 
     <ImageButton
@@ -61,7 +62,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/mealName"
         app:layout_constraintBottom_toBottomOf="@id/mealName"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:accessibilityLiveRegion="none"
         android:contentDescription="@string/back_info_desc"
         android:rotationY="180"
@@ -72,22 +73,21 @@
     <TextView
         android:id="@+id/mealName"
         android:layout_width="321dp"
-        app:layout_constraintLeft_toRightOf="@id/back"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="@string/dinner_option"
         android:textColor="@color/biolaBlack"
         android:textSize="30sp"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintLeft_toRightOf="@id/back"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextSizeCheck" />
 
     <TextView
         android:id="@+id/ingredients"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/location"
-        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="20dp"
         android:layout_width="329dp"
         android:layout_height="wrap_content"
