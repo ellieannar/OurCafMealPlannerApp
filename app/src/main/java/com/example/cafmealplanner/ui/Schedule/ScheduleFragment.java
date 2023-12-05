@@ -148,15 +148,18 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
                 }
 
                 saveLongData();
-                TextView warningTV = getView().findViewById(R.id.warningTextView);
-                ImageView warningImgView = getView().findViewById(R.id.warningImgView);
-                if (selectedMeals.size() > weeklyLimit) {
-                    warningTV.setVisibility(View.VISIBLE);
-                    warningImgView.setVisibility(View.VISIBLE);
-                } else {
-                    warningTV.setVisibility(View.INVISIBLE);
-                    warningImgView.setVisibility(View.INVISIBLE);
+                if (getView() != null) {
+                    TextView warningTV = getView().findViewById(R.id.warningTextView);
+                    ImageView warningImgView = getView().findViewById(R.id.warningImgView);
+                    if (selectedMeals.size() > weeklyLimit) {
+                        warningTV.setVisibility(View.VISIBLE);
+                        warningImgView.setVisibility(View.VISIBLE);
+                    } else {
+                        warningTV.setVisibility(View.INVISIBLE);
+                        warningImgView.setVisibility(View.INVISIBLE);
+                    }
                 }
+
 
 
             }

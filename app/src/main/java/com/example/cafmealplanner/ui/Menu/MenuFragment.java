@@ -1,10 +1,14 @@
 package com.example.cafmealplanner.ui.Menu;
 
+
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.Log;
@@ -14,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -52,7 +57,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
     private String monthOfYear[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
     //keeps track of which day is displayed
-    static Integer whichDay;
+    Integer whichDay = 1;
 
 
     //Track all the more info buttons we will have
@@ -103,6 +108,16 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         MainActivity activity = (MainActivity) getActivity();
 
          weekDays = activity.weekDays;
+
+        ConnectivityManager cm =
+                (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo == null || !netInfo.isConnectedOrConnecting()) {
+            Toast.makeText(getActivity(), "No internet connection",
+                    Toast.LENGTH_LONG).show();
+
+        }
+
 
         //Back day and forward day buttons
         Button backDay = getView().findViewById(R.id.backDayButton);
@@ -174,6 +189,18 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             if (x.equals("Gluten Free")) {
                 dietaryRestrictions.remove(x);
                 dietaryRestrictions.add("GLUTEN_FREE");
+            } else if (x.equals("Vegan")) {
+                dietaryRestrictions.remove(x);
+                dietaryRestrictions.add("VEGAN");
+            } else if (x.equals("Vegetarian")) {
+                dietaryRestrictions.remove(x);
+                dietaryRestrictions.add("VEGETARIAN");
+            } else if (x.equals("Diary Free")) {
+                dietaryRestrictions.remove(x);
+                dietaryRestrictions.add("DAIRY_FREE");
+            } else if (x.equals("No Seafood")) {
+                dietaryRestrictions.remove(x);
+                dietaryRestrictions.add("SEAFOOD");
             }
 
         }
@@ -218,7 +245,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             }
 
             for (String x : dietaryRestrictions) {
-                if (!weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictionStrings().contains(x)) {
+                if (!weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictionStrings().contains(x) && !x.equals("SEAFOOD")) {
+                    mealView.indicatorVisibility(true);
+                    mealView.setIndicator(R.color.biolaRed, getContext());
+                } else if (x.equals("SEAFOOD") && weekDays.get(whichDay).getMeal("Breakfast").get(i).getRestrictionStrings().contains(x)) {
                     mealView.indicatorVisibility(true);
                     mealView.setIndicator(R.color.biolaRed, getContext());
                 }
@@ -245,7 +275,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             }
 
             for (String x : dietaryRestrictions) {
-                if (!weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictionStrings().contains(x)) {
+                if (!weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictionStrings().contains(x) && !x.equals("SEAFOOD")) {
+                    mealView.indicatorVisibility(true);
+                    mealView.setIndicator(R.color.biolaRed, getContext());
+                } else if (x.equals("SEAFOOD") && weekDays.get(whichDay).getMeal("Lunch").get(i).getRestrictionStrings().contains(x)) {
                     mealView.indicatorVisibility(true);
                     mealView.setIndicator(R.color.biolaRed, getContext());
                 }
@@ -269,7 +302,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             }
 
             for (String x : dietaryRestrictions) {
-                if (!weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictionStrings().contains(x)) {
+                if (!weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictionStrings().contains(x) && !x.equals("SEAFOOD")) {
+                    mealView.indicatorVisibility(true);
+                    mealView.setIndicator(R.color.biolaRed, getContext());
+                } else if (x.equals("SEAFOOD") && weekDays.get(whichDay).getMeal("Dinner").get(i).getRestrictionStrings().contains(x)) {
                     mealView.indicatorVisibility(true);
                     mealView.setIndicator(R.color.biolaRed, getContext());
                 }
@@ -305,6 +341,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         int month;
         int day;
         int year;
+
 
         //depending on the element clicked (v), perform corresponding action
         if (v == getView().findViewById(R.id.forwardDayButton)) {
