@@ -33,6 +33,7 @@ import com.example.cafmealplanner.ui.Data.Meal;
 import com.example.cafmealplanner.ui.Data.resource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -94,7 +95,7 @@ public class ScheduleFragment extends Fragment implements View.OnClickListener{
 
     private void readLongData() {
         SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
-        selectedMeals = new HashSet<>(sp.getStringSet("SELECTED_MEALS", Collections.<String>emptySet()));
+        selectedMeals = new HashSet<>(sp.getStringSet("SELECTED_MEALS", new HashSet<>(Arrays.asList("1", "0", "1", "1", "1", "1", "0", "0","1","1","0", "0","1"))));
         for (String x : selectedMeals) {
             System.out.println(x);
         }
