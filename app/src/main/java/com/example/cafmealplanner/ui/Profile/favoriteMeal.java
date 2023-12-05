@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -12,9 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.example.cafmealplanner.R;
 
-import org.w3c.dom.Text;
 
-import java.util.Vector;
 
 public class favoriteMeal extends LinearLayout {
 
@@ -63,12 +60,7 @@ public class favoriteMeal extends LinearLayout {
     }
 
     public void setChecked(Boolean e) {
-        if (e) {
-            favoriteCheckbox.setChecked(true);
-        }
-        else {
-            favoriteCheckbox.setChecked(false);
-        }
+        favoriteCheckbox.setChecked(e);
     }
 
     public void hideCheckbox() {

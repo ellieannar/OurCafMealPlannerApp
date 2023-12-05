@@ -112,10 +112,7 @@ public class mealButton extends LinearLayout implements View.OnClickListener {
     }
 
     public Boolean getFill() {
-        if (selected == buttonSelection.FILLED) {
-            return true;
-        }
-        return false;
+        return selected == buttonSelection.FILLED;
     }
 
     public String getMeal() {

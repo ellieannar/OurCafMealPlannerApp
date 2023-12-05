@@ -22,17 +22,14 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentProfileBinding;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.Vector;
 
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
@@ -55,8 +52,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ProfileViewModel profileViewModel =
-                new ViewModelProvider(this).get(ProfileViewModel.class);
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -89,7 +84,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         //edit button listener
         editButton.setOnClickListener(this);
 
-        LinearLayout dietaryLinearLayout = getView().findViewById(R.id.dietaryRestrictionsLinearLayout);
 
         //set up dietary restriction array
         dietaryRestriction r = new dietaryRestriction(getContext());
@@ -130,8 +124,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         mealPlan.setText(mp);
 
         // Create a mutable copy of the set
-        favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.<String>emptySet()));
-        dietaryRestrictions = new HashSet<>(sp.getStringSet("DIETARY_RESTRICTIONS", Collections.<String>emptySet()));
+        favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.emptySet()));
+        dietaryRestrictions = new HashSet<>(sp.getStringSet("DIETARY_RESTRICTIONS", Collections.emptySet()));
 
         displayFavoriteMeals();
         displayInitialRestrictions();
@@ -331,13 +325,12 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     void setupFavoriteMeals() {
-        LinearLayout favMeals = getView().findViewById(R.id.favoriteMealsLinearLayout);
 
         String s[] = {"Cinnamon Rolls", "Beef Nachos", "Cali Btl Sandwich", "Miso Ramen Soup", "Chipotle Chicken Tostada", "Burrito Bar", "Coconut Chicken Curry", "South West Chicken Wrap", "Chicken Caprese Sandwich", "Biscuits", "Biola's Classic Daily House-made Pizza"};
 
-        for (int i = 0; i < s.length; i++) {
+        for (String value : s) {
             favoriteMeal f = new favoriteMeal(getContext());
-            f.setMealName(s[i]);
+            f.setMealName(value);
             allMeals.add(f);
         }
 

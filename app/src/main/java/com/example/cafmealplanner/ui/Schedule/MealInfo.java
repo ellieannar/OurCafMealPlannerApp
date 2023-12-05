@@ -1,8 +1,6 @@
 package com.example.cafmealplanner.ui.Schedule;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.IntentFilter;
+
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -10,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,18 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMealInfoBinding;
-import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
 import com.example.cafmealplanner.ui.Data.Meal;
-import com.example.cafmealplanner.ui.Menu.FoodInfo;
 import com.example.cafmealplanner.ui.Menu.mealView;
 
 import android.widget.ImageButton;
-import android.content.Intent;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Vector;
 
 
 public class MealInfo extends Fragment implements View.OnClickListener {
@@ -50,8 +43,6 @@ public class MealInfo extends Fragment implements View.OnClickListener {
         //get the meal to display
         //Meal mealToDisplay = this.getArguments().getMeal("message");
 
-        ScheduleViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(ScheduleViewModel.class);
 
         binding = FragmentMealInfoBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
@@ -73,8 +64,8 @@ public class MealInfo extends Fragment implements View.OnClickListener {
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         // Create the button to return to the schedule page and set the on click listener
-        ImageButton backToSchedule = (ImageButton) getView().findViewById(R.id.backToSchedule);
-        backToSchedule.setOnClickListener((View.OnClickListener) this);
+        ImageButton backToSchedule = getView().findViewById(R.id.backToSchedule);
+        backToSchedule.setOnClickListener(this);
 
         // Add  meal views
         LinearLayout ll = (LinearLayout) getView().findViewById(R.id.mealLinearLayout);

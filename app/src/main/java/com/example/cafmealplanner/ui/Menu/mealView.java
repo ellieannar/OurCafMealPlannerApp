@@ -1,19 +1,14 @@
 package com.example.cafmealplanner.ui.Menu;
 
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.os.Parcelable;
+
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.cafmealplanner.R;
@@ -64,7 +58,6 @@ public class mealView extends FrameLayout implements View.OnClickListener {
     private void initMealView(Context context) {
 
         LayoutInflater.from(context).inflate(R.layout.meal_view, this, true);
-        ConstraintLayout frameLayout = findViewById(R.id.mealViewFrameLayout);
         nameOfMealTextView = findViewById(R.id.foodTitle);
         tagsLinearLayout = findViewById(R.id.tagsLinearLayout);
         circleIndicator = findViewById(R.id.cirlceIndicator);
@@ -175,7 +168,7 @@ public class mealView extends FrameLayout implements View.OnClickListener {
         circleIndicator.setText("");
         circleIndicator.setTextSize(10);
         circleIndicator.setBackground(ContextCompat.getDrawable(c, R.drawable.rounded_corners));
-        circleIndicator.getBackground().setTint(ResourcesCompat.getColor(c.getResources(), s, null));;
+        circleIndicator.getBackground().setTint(ResourcesCompat.getColor(c.getResources(), s, null));
 
     }
 

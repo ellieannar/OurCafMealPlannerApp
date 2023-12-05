@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
-import android.util.Xml;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,21 +24,13 @@ import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.ui.Data.FoodItem;
 import com.example.cafmealplanner.ui.Schedule.MealInfo;
 
-import org.w3c.dom.Text;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
+
 
 public class FoodInfo extends Fragment implements View.OnClickListener {
 
 
     boolean editRatingOn = false;
-    private static final String ns = null;
     static int starRating = 0;
 
 
@@ -133,7 +124,7 @@ public class FoodInfo extends Fragment implements View.OnClickListener {
 
 
         // Implement the rating and back navigation buttons
-        getView().findViewById(R.id.rating).setOnClickListener((View.OnClickListener) this);
+        getView().findViewById(R.id.rating).setOnClickListener(this);
         getView().findViewById(R.id.star1).setOnClickListener(this);
         getView().findViewById(R.id.star2).setOnClickListener(this);
         getView().findViewById(R.id.star3).setOnClickListener(this);

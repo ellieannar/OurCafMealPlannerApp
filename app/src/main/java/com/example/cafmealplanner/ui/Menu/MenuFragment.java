@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,15 +32,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.atomic.AtomicReference;
 
 import com.example.cafmealplanner.MainActivity;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentMenuBinding;
 import com.example.cafmealplanner.ui.Data.Day;
 import com.example.cafmealplanner.ui.Data.FoodItem;
-import com.example.cafmealplanner.ui.Data.Meal;
 
 public class MenuFragment extends Fragment implements View.OnClickListener {
 
@@ -140,9 +136,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
 
 
 
-        breakfastLinearLayout = (LinearLayout)getView().findViewById(R.id.breakfastLinearLayout);
-        lunchLinearLayout = (LinearLayout)getView().findViewById(R.id.lunchLinearLayout);
-        dinnerLinearLayout = (LinearLayout)getView().findViewById(R.id.dinnerLinearLayout);
+        breakfastLinearLayout = getView().findViewById(R.id.breakfastLinearLayout);
+        lunchLinearLayout = getView().findViewById(R.id.lunchLinearLayout);
+        dinnerLinearLayout = getView().findViewById(R.id.dinnerLinearLayout);
 
 
         //subviews to add each meal to
@@ -182,25 +178,31 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
         //keep track of preferences
         SharedPreferences sp = getActivity().getSharedPreferences("profileSharedData", Context.MODE_PRIVATE);
         // Create a mutable copy of the set
-        Set<String> favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.<String>emptySet()));
-        Set<String> dietaryRestrictions = new HashSet<>(sp.getStringSet("DIETARY_RESTRICTIONS", Collections.<String>emptySet()));
+        Set<String> favoriteMeals = new HashSet<>(sp.getStringSet("FAVORITE_MEALS", Collections.emptySet()));
+        Set<String> dietaryRestrictions = new HashSet<>(sp.getStringSet("DIETARY_RESTRICTIONS", Collections.emptySet()));
 
         for(String x : dietaryRestrictions) {
-            if (x.equals("Gluten Free")) {
-                dietaryRestrictions.remove(x);
-                dietaryRestrictions.add("GLUTEN_FREE");
-            } else if (x.equals("Vegan")) {
-                dietaryRestrictions.remove(x);
-                dietaryRestrictions.add("VEGAN");
-            } else if (x.equals("Vegetarian")) {
-                dietaryRestrictions.remove(x);
-                dietaryRestrictions.add("VEGETARIAN");
-            } else if (x.equals("Diary Free")) {
-                dietaryRestrictions.remove(x);
-                dietaryRestrictions.add("DAIRY_FREE");
-            } else if (x.equals("No Seafood")) {
-                dietaryRestrictions.remove(x);
-                dietaryRestrictions.add("SEAFOOD");
+            switch (x) {
+                case "Gluten Free":
+                    dietaryRestrictions.remove(x);
+                    dietaryRestrictions.add("GLUTEN_FREE");
+                    break;
+                case "Vegan":
+                    dietaryRestrictions.remove(x);
+                    dietaryRestrictions.add("VEGAN");
+                    break;
+                case "Vegetarian":
+                    dietaryRestrictions.remove(x);
+                    dietaryRestrictions.add("VEGETARIAN");
+                    break;
+                case "Diary Free":
+                    dietaryRestrictions.remove(x);
+                    dietaryRestrictions.add("DAIRY_FREE");
+                    break;
+                case "No Seafood":
+                    dietaryRestrictions.remove(x);
+                    dietaryRestrictions.add("SEAFOOD");
+                    break;
             }
 
         }
@@ -391,13 +393,13 @@ public class MenuFragment extends Fragment implements View.OnClickListener {
             if (intent != null && intent.getExtras().getString("audience").equals("forMenu")) {
                 FoodItem f = new FoodItem();
                 if (intent.getExtras().getString("title") != null) {
-                    f.setTitle(intent.getExtras().getString("title").toString());
+                    f.setTitle(intent.getExtras().getString("title"));
                 }
                 if (intent.getExtras().getString("desc") != null) {
-                    f.setDescription(intent.getExtras().getString("desc").toString());
+                    f.setDescription(intent.getExtras().getString("desc"));
                 }
                 if (intent.getExtras().getString("loc") != null) {
-                    f.setLocation(intent.getExtras().getString("loc").toString());
+                    f.setLocation(intent.getExtras().getString("loc"));
                 }
                 if (intent.getExtras().getSerializable("rest") != null) {
                     f.addRestrictions((ArrayList<FoodItem.restrictionType>) intent.getExtras().getSerializable("rest"));

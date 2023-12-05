@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 public class Meal implements Parcelable {
-    ArrayList<FoodItem> mealElements = new ArrayList<FoodItem>();
+    ArrayList<FoodItem> mealElements = new ArrayList<>();
     String mealTime = "Breakfast";
 
     String date = "";

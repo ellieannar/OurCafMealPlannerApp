@@ -28,16 +28,12 @@ import com.example.cafmealplanner.MainActivity;
 import com.example.cafmealplanner.R;
 import com.example.cafmealplanner.databinding.FragmentScheduleBinding;
 import com.example.cafmealplanner.ui.Data.Day;
-import com.example.cafmealplanner.ui.Data.FoodItem;
 import com.example.cafmealplanner.ui.Data.Meal;
 import com.example.cafmealplanner.ui.Data.resource;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class ScheduleFragment extends Fragment implements View.OnClickListener{

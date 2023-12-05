@@ -7,12 +7,8 @@ import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
-import android.os.Parcel;
-import android.os.Parcelable;
 
-import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -55,10 +51,9 @@ public class FoodItem implements Parcelable {
 
     // Each food item stores the title, desc, restrictions, and location
     String location;
-    ArrayList<restrictionType> restrictions = new ArrayList<restrictionType>();
+    ArrayList<restrictionType> restrictions = new ArrayList<>();
     String title;
     String description;
-    int myRating;
 
     public FoodItem () {
         super();
@@ -123,9 +118,7 @@ public class FoodItem implements Parcelable {
     public void addRestrictions(ArrayList<restrictionType> r) {
         restrictions = r;
     }
-    public void setRating(int r) {
-        myRating = r;
-    }
+
     public ArrayList<String> getRestrictionStrings() {
         ArrayList<String> temp = new ArrayList<>();
         for (int i = 0; i < restrictions.size(); i++) {
@@ -134,9 +127,7 @@ public class FoodItem implements Parcelable {
 
         return temp;
     }
-    public int getRating(){
-        return myRating;
-    }
+
 
     public String getLocation() {
         return location;

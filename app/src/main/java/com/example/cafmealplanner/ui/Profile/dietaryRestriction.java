@@ -1,12 +1,8 @@
 package com.example.cafmealplanner.ui.Profile;
 
 import android.content.Context;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +11,6 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.example.cafmealplanner.R;
 
-import java.util.Vector;
 
 public class dietaryRestriction extends LinearLayout {
 
@@ -93,11 +88,7 @@ public class dietaryRestriction extends LinearLayout {
         return (String) restrictionTextView.getText();
     }
     public void setChecked(Boolean b) {
-        if (b) {
-            restrictionCheckBox.setChecked(true);
-        } else {
-            restrictionCheckBox.setChecked(false);
-        }
+        restrictionCheckBox.setChecked(b);
     }
 
 
